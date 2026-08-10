@@ -187,19 +187,19 @@ export default function Hero() {
                 boxShadow: "10px 10px 0 #0D0D0D",
                 background: "white",
                 overflow: "hidden",
-                maxWidth: 500,
+                maxWidth: 460,
                 width: "100%",
               }}
             >
               <Image
                 src="/hero_school.png"
-                alt="Siswa SMK Plus Melati"
-                width={500}
-                height={360}
-                style={{ objectFit: "cover", display: "block" }}
+                alt="Poster SPMB SMK Plus Melati Samarinda"
+                width={460}
+                height={580}
+                style={{ objectFit: "contain", display: "block", width: "100%", height: "auto" }}
                 priority
               />
-              {/* Corner badge */}
+              {/* Corner badge - hidden since poster already has SPMB info */}
               <div
                 style={{
                   position: "absolute",

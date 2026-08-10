@@ -87,7 +87,7 @@ export default function Navbar() {
               alt="Logo SMK Plus Melati"
               width={40}
               height={40}
-              style={{ objectFit: "contain" }}
+              style={{ objectFit: "contain", width: "auto", height: 40 }}
             />
           </div>
           <div>

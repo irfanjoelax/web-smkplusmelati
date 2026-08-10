@@ -105,7 +105,7 @@ export default function Footer() {
                   alt="Logo SMK Plus Melati"
                   width={46}
                   height={46}
-                  style={{ objectFit: "contain" }}
+                  style={{ objectFit: "contain", width: "auto", height: 46 }}
                 />
               </div>
               <div>
