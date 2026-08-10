@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const stats = [
@@ -191,22 +190,20 @@ export default function Hero() {
                 width: "100%",
               }}
             >
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src="/hero_school.png"
                 alt="Poster SPMB SMK Plus Melati Samarinda"
-                width={460}
-                height={580}
-                style={{ objectFit: "contain", display: "block", width: "100%", height: "auto" }}
-                priority
+                style={{ display: "block", width: "100%", height: "auto", objectFit: "contain" }}
               />
-              {/* Corner badge - hidden since poster already has SPMB info */}
+              {/* Corner badge placeholder - kept for structure */}
               <div
                 style={{
                   position: "absolute",
                   top: 12,
                   right: 12,
-                  background: "#FF3B3B",
-                  border: "2px solid #0D0D0D",
+                  background: "transparent",
+                  border: "none",
                   color: "white",
                   padding: "6px 12px",
                   fontFamily: "var(--font-space-grotesk), sans-serif",

@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    // Allow large image files (up to 10MB)
+    dangerouslyAllowSVG: true,
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
