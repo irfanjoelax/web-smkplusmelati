@@ -204,7 +204,7 @@ export default function About() {
                     lineHeight: 1,
                   }}
                 >
-                  8
+                  2
                 </div>
                 <div style={{ color: "white", fontSize: "0.85rem", fontWeight: 600, marginTop: "4px" }}>
                   Jurusan Tersedia

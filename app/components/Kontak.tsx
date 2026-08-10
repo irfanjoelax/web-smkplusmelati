@@ -286,12 +286,8 @@ export default function Kontak() {
                       onChange={(e) => setForm({ ...form, jurusan: e.target.value })}
                     >
                       <option value="">-- Pilih Jurusan --</option>
-                      <option value="rpl">Rekayasa Perangkat Lunak (RPL)</option>
-                      <option value="tkj">Teknik Komputer & Jaringan (TKJ)</option>
-                      <option value="dkv">Desain Komunikasi Visual (DKV)</option>
-                      <option value="tei">Teknik Elektronika Industri (TEI)</option>
-                      <option value="akl">Akuntansi & Keuangan Lembaga (AKL)</option>
-                      <option value="bdp">Bisnis Daring & Pemasaran (BDP)</option>
+                      <option value="tjkt">Teknik Jaringan Komputer &amp; Telekomunikasi (TJKT)</option>
+                      <option value="kuliner">Kuliner</option>
                     </select>
                   </div>
 

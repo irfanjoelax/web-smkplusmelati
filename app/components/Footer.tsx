@@ -8,7 +8,7 @@ const links = [
   },
   {
     title: "Program",
-    items: ["RPL", "TKJ", "DKV", "Teknik Elektronika", "Akuntansi", "Bisnis Digital"],
+    items: ["TJKT", "Kuliner"],
   },
   {
     title: "Informasi",

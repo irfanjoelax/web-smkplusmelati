@@ -2,56 +2,20 @@
 
 const jurusan = [
   {
-    icon: "💻",
-    kode: "RPL",
-    nama: "Rekayasa Perangkat Lunak",
-    desc: "Mempelajari pemrograman, pengembangan aplikasi web & mobile, database, dan software engineering.",
-    skills: ["Web Development", "Mobile App", "Database", "UI/UX"],
-    color: "#1E6FD9",
-    textColor: "white",
-  },
-  {
     icon: "🌐",
-    kode: "TKJ",
-    nama: "Teknik Komputer & Jaringan",
-    desc: "Keahlian instalasi jaringan komputer, administrasi server, cybersecurity, dan infrastruktur IT.",
-    skills: ["Networking", "Server Admin", "Cybersecurity", "Cloud"],
-    color: "#FFE033",
-    textColor: "#0D0D0D",
-  },
-  {
-    icon: "🎨",
-    kode: "DKV",
-    nama: "Desain Komunikasi Visual",
-    desc: "Mengembangkan kreativitas dalam desain grafis, fotografi, videografi, dan animasi digital.",
-    skills: ["Desain Grafis", "Fotografi", "Video Editing", "Animasi"],
-    color: "#FF3B3B",
-    textColor: "white",
-  },
-  {
-    icon: "⚡",
-    kode: "TEI",
-    nama: "Teknik Elektronika Industri",
-    desc: "Mempelajari elektronika, sistem kendali otomatis, PLC, robotika, dan instrumentasi industri.",
-    skills: ["PLC", "Robotika", "IoT", "Otomasi"],
-    color: "#0D0D0D",
-    textColor: "#FFE033",
-  },
-  {
-    icon: "📊",
-    kode: "AKL",
-    nama: "Akuntansi & Keuangan Lembaga",
-    desc: "Menguasai akuntansi, perpajakan, perbankan, manajemen keuangan, dan software akuntansi.",
-    skills: ["Akuntansi", "Perpajakan", "Perbankan", "MYOB"],
+    kode: "TJKT",
+    nama: "Teknik Jaringan Komputer & Telekomunikasi",
+    desc: "Mempelajari instalasi jaringan komputer, administrasi server, telekomunikasi, cybersecurity, dan infrastruktur IT modern. Dilengkapi program sertifikasi MTCNA & TOEIC.",
+    skills: ["Networking", "Server Admin", "Cybersecurity", "MTCNA", "TOEIC", "Digital Marketing"],
     color: "#1E6FD9",
     textColor: "white",
   },
   {
-    icon: "🏪",
-    kode: "BDP",
-    nama: "Bisnis Daring & Pemasaran",
-    desc: "Strategi pemasaran digital, e-commerce, manajemen bisnis online, dan kewirausahaan.",
-    skills: ["Digital Marketing", "E-Commerce", "Copywriting", "SEO"],
+    icon: "🍳",
+    kode: "KULINER",
+    nama: "Kuliner",
+    desc: "Program keahlian kuliner dengan kerjasama industri bersama perusahaan Boga & Hotel terkemuka di Kalimantan Timur. Tersedia jalur beasiswa dan peluang kerja langsung.",
+    skills: ["Memasak", "Food Plating", "Pastry & Bakery", "Manajemen Dapur", "Kerjasama Industri"],
     color: "#FFE033",
     textColor: "#0D0D0D",
   },
@@ -107,7 +71,7 @@ export default function Jurusan() {
               lineHeight: 1.7,
             }}
           >
-            Kami menawarkan berbagai program keahlian yang relevan dengan kebutuhan industri masa kini.
+            Kami menyediakan 2 program keahlian unggulan yang relevan dengan kebutuhan industri di Kalimantan Timur.
           </p>
         </div>
 
@@ -115,8 +79,10 @@ export default function Jurusan() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "24px",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: "32px",
+            maxWidth: 900,
+            margin: "0 auto",
           }}
           className="jurusan-grid"
         >
@@ -230,14 +196,11 @@ export default function Jurusan() {
         </div>
       </div>
 
-      <style>{`
-        @media (max-width: 1024px) {
-          .jurusan-grid { grid-template-columns: repeat(2, 1fr) !important; }
-        }
-        @media (max-width: 640px) {
-          .jurusan-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+        <style>{`
+          @media (max-width: 640px) {
+            .jurusan-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
     </section>
   );
 }
