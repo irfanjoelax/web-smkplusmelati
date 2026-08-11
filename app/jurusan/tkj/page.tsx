@@ -1,0 +1,91 @@
+import type { Metadata } from "next";
+import ClayCard from "@/app/components/ClayCard";
+import Footer from "@/app/components/Footer";
+import Header from "@/app/components/Header";
+import PageHero from "@/app/components/PageHero";
+
+export const metadata: Metadata = {
+  title: "Jurusan TKJ",
+};
+
+const skills = [
+  "Administrasi Infrastruktur Jaringan",
+  "Administrasi Sistem Jaringan",
+  "Perakitan & Troubleshooting Komputer",
+  "Jaringan Berbasis Mikrotik (MTCNA)",
+  "Administrasi Server",
+  "Keamanan Jaringan Dasar",
+];
+
+export default function TkjPage() {
+  return (
+    <>
+      <Header />
+      <main className="flex-1">
+        <PageHero
+          eyebrow="Bidang Keahlian"
+          title="Teknik Komputer & Jaringan (TKJ)"
+          description="Jurusan yang membekali siswa keterampilan jaringan komputer, administrasi sistem, dan teknologi informasi yang dibutuhkan industri."
+        />
+
+        <section className="px-4 py-16">
+          <div className="mx-auto max-w-5xl">
+            <ClayCard className="p-8 sm:p-12">
+              <h2 className="text-2xl font-extrabold text-primary-dark">
+                Mengapa Memilih TKJ?
+              </h2>
+              <p className="mt-4 leading-relaxed text-foreground/75">
+                Jurusan Teknik Komputer & Jaringan (TKJ) mempersiapkan siswa
+                untuk memahami dan menguasai infrastruktur serta sistem
+                jaringan komputer. Di SMK Plus Melati, siswa TKJ dilatih dengan
+                60% praktik sehingga lulusannya siap bekerja di dunia industri
+                maupun berwirausaha di bidang teknologi informasi.
+              </p>
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                {skills.map((skill) => (
+                  <div
+                    key={skill}
+                    className="clay-inset flex items-center gap-3 rounded-2xl px-5 py-4"
+                  >
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-extrabold text-primary-darker">
+                      ✓
+                    </span>
+                    <span className="text-sm font-semibold text-foreground/80">
+                      {skill}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </ClayCard>
+          </div>
+        </section>
+
+        <section className="px-4 pb-24">
+          <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
+            <ClayCard hover className="p-7">
+              <span className="clay-chip clay-chip-primary">Sertifikasi</span>
+              <h3 className="mt-4 text-lg font-extrabold text-primary-dark">
+                MTCNA (Mikrotik)
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-foreground/70">
+                Sertifikasi jaringan tingkat dasar berbasis Mikrotik sebagai
+                bukti kemampuan siswa di bidang jaringan komputer.
+              </p>
+            </ClayCard>
+            <ClayCard hover className="p-7">
+              <span className="clay-chip clay-chip-primary">Prospek</span>
+              <h3 className="mt-4 text-lg font-extrabold text-primary-dark">
+                Karier Lulusan TKJ
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-foreground/70">
+                Teknisi jaringan, administrator server, network engineer,
+                teknisi komputer, hingga technopreneur di bidang IT.
+              </p>
+            </ClayCard>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
+}
