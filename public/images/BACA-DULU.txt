@@ -30,6 +30,7 @@ Format bebas (JPG/PNG/WebP). Ukuran rekomendasi minimal 800px agar tajam.
 - konten-kreator.jpg
 - desain-grafis.png
 - pramuka.jpg
+- english-club.jpg
 - seni-vocal.png
 - e-sport.png
 

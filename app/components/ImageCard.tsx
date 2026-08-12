@@ -21,13 +21,13 @@ export default function ImageCard({
 }: ImageCardProps) {
   const content = (
     <ClayCard hover className="flex h-full flex-col overflow-hidden p-3">
-      <div className={`overflow-hidden rounded-[1.4rem] ${aspect}`}>
+      <div className={`overflow-hidden rounded-[1.4rem] bg-primary-soft/60 ${aspect}`}>
         <LocalImage
           src={src}
           alt={alt}
           width={800}
           height={600}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
         />
       </div>
       <div className="px-2 pb-2 pt-4">

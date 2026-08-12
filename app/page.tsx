@@ -293,13 +293,13 @@ export default function Home() {
                 <Reveal key={e.name} delay={i * 80}>
                   <Link href={e.href} className="group">
                     <ClayCard hover className="overflow-hidden p-3">
-                      <div className="overflow-hidden rounded-[1.4rem]">
+                      <div className="overflow-hidden rounded-[1.4rem] bg-primary-soft/60">
                         <LocalImage
                           src={e.image}
                           alt={e.name}
                           width={640}
                           height={400}
-                          className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          className="h-44 w-full object-contain transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
                       <p className="flex items-center justify-center gap-2 px-2 py-3 text-center text-sm font-extrabold text-primary-dark">
@@ -327,13 +327,13 @@ export default function Home() {
                 <Reveal key={f.name} delay={i * 80}>
                   <Link href="/fasilitas" className="group">
                     <ClayCard hover className="overflow-hidden p-3">
-                      <div className="overflow-hidden rounded-[1.4rem]">
+                      <div className="overflow-hidden rounded-[1.4rem] bg-primary-soft/60">
                         <LocalImage
                           src={f.image}
                           alt={f.name}
                           width={640}
                           height={400}
-                          className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          className="h-44 w-full object-contain transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
                       <p className="flex items-center justify-center gap-2 px-2 py-3 text-center text-sm font-extrabold text-primary-dark">

@@ -19,12 +19,12 @@ export const SOCIALS = [
   {
     label: "Facebook",
     handle: "SMK Plus Melati Samarinda",
-    url: "https://www.facebook.com/SMKPlusMelatiSamarinda",
+    url: "https://www.facebook.com/SMK.PLUS.MELATI.SAMARINDA.2020",
   },
   {
     label: "YouTube",
     handle: "SMK Plus Melati Samarinda",
-    url: "https://www.youtube.com/@smkplusmelatisamarinda",
+    url: "https://youtube.com/@esemkaplustivi3837?si=WXYYPJqHU7Wj_v0z",
   },
 ];
 

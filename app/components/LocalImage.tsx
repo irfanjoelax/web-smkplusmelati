@@ -12,6 +12,16 @@ export function imageExists(src: string): boolean {
   }
 }
 
+export function imageSrc(src: string): string {
+  try {
+    const filePath = path.join(process.cwd(), "public", src.replace(/^\//, ""));
+    const stat = fs.statSync(filePath);
+    return `${src}?v=${stat.mtimeMs}`;
+  } catch {
+    return src;
+  }
+}
+
 type LocalImageProps = {
   src: string;
   alt: string;
@@ -58,7 +68,7 @@ export default function LocalImage({
 
   return (
     <Image
-      src={src}
+      src={imageSrc(src)}
       alt={alt}
       width={width}
       height={height}

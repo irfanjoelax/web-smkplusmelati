@@ -9,12 +9,12 @@ export const metadata: Metadata = {
 };
 
 const teachers = [
-  { name: "Dr. Pazri Nur Aliansyah, M.P.W.K.", image: "/images/guru-1.jpg" },
-  { name: "Dr. Siti Nurbaya, M.Psi.", image: "/images/guru-2.jpg" },
-  { name: "Dr. Li Lian, M.Kom.", image: "/images/guru-3.jpg" },
-  { name: "Dr. Dewi Lestari, M.Pd.", image: "/images/guru-4.jpg" },
-  { name: "Dr. Yuna Rosse, M.Pd.", image: "/images/guru-5.jpg" },
-  { name: "Dr. Rina Wulandari, M.Kom.", image: "/images/guru-6.jpg" },
+  { name: "Kepala Sekolah", image: "/images/guru-1.jpg" },
+  { name: "Staff Tata Usaha", image: "/images/guru-2.jpg" },
+  { name: "Kepala Jurusan Teknik Komputer dan Jaringan", image: "/images/guru-3.jpg" },
+  { name: "Wali Kelas XII TKJ", image: "/images/guru-4.jpg" },
+  { name: "Pembina OSIS", image: "/images/guru-5.jpg" },
+  { name: "Guru Program Keahlian Tata Boga", image: "/images/guru-6.jpg" },
   { name: "Dr. Shakky Bella, M.Pd.", image: "/images/guru-7.jpg" },
   { name: "Dr. Putri Kusuma, M.Fil.", image: "/images/guru-8.jpg" },
 ];

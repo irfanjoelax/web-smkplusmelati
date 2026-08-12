@@ -20,6 +20,7 @@ export const IMAGES = {
   pramuka: "/images/pramuka.jpg",
   seniVocal: "/images/seni-vocal.png",
   esport: "/images/e-sport.png",
+  englishClub: "/images/english-club.jpg",
   pelatihanAndroid: "/images/pelatihan-android.jpg",
   pelatihanWirausaha: "/images/pelatihan-wirausaha.jpg",
   asramaMengaji: "/images/asrama-mengaji.png",
