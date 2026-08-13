@@ -9,11 +9,29 @@ import Reveal from "@/app/components/Reveal";
 import SectionHeading from "@/app/components/SectionHeading";
 import { IMAGES } from "@/app/components/images";
 import { CONTACT } from "@/app/components/site";
+import JsonLd from "@/app/components/JsonLd";
+import { websiteSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
-  title: "SMK Plus Melati Samarinda — Terampil Berakhlak",
   description:
-    "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, dan prestasi siswa.",
+    "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan PPDB 2026.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: "/",
+    title: "SMK Plus Melati Samarinda — Sekolah Kewirausahaan yang Bertakwa",
+    description:
+      "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan PPDB 2026.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SMK Plus Melati Samarinda — Sekolah Kewirausahaan yang Bertakwa",
+    description:
+      "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan PPDB 2026.",
+  },
 };
 
 const majors = [
@@ -112,6 +130,7 @@ export default function Home() {
   return (
     <>
       <Header />
+      <JsonLd data={websiteSchema()} />
 
       <main className="flex-1">
         {/* ===== HERO — dominan biru ===== */}
@@ -133,7 +152,7 @@ export default function Home() {
                   </span>
                 </h1>
                 <p className="mt-4 text-lg font-extrabold tracking-wider text-accent">
-                  Terampil Berakhlak
+Sekolah Kewirausahaan yang Bertakwa
                 </p>
                 <p className="mx-auto mt-5 max-w-xl leading-relaxed text-white/85 lg:mx-0">
                   Sekolah SMK Swasta Keunggulan di Samarinda Seberang. Mencetak
@@ -159,14 +178,6 @@ export default function Home() {
                     height={800}
                     className="h-72 w-full rounded-[1.6rem] object-cover sm:h-96"
                   />
-                </div>
-                <div className="clay-card animate-float-slow absolute -bottom-5 -left-4 hidden px-5 py-3 sm:block">
-                  <p className="text-xs font-semibold text-foreground/60">
-                    Didukung Yayasan Melati
-                  </p>
-                  <p className="text-lg font-extrabold text-primary-dark">
-                    30+ Tahun Mengabdi
-                  </p>
                 </div>
               </Reveal>
             </div>

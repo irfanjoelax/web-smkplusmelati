@@ -2,11 +2,33 @@ import type { Metadata } from "next";
 import ClayCard from "@/app/components/ClayCard";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
+import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
+import Reveal from "@/app/components/Reveal";
 import { CONTACT, SOCIALS } from "@/app/components/site";
+import { breadcrumbSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
   title: "Hubungi Kami",
+  description:
+    "Hubungi SMK Plus Melati Samarinda: alamat, telepon, email, media sosial, dan formulir kontak untuk informasi PPDB dan kegiatan sekolah.",
+  alternates: {
+    canonical: "/hubungi-kami",
+  },
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: "/hubungi-kami",
+    title: "Hubungi Kami | SMK Plus Melati Samarinda",
+    description:
+      "Hubungi SMK Plus Melati Samarinda: alamat, telepon, email, dan media sosial.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hubungi Kami | SMK Plus Melati Samarinda",
+    description:
+      "Hubungi SMK Plus Melati Samarinda: alamat, telepon, email, dan media sosial.",
+  },
 };
 
 const contactItems = [
@@ -47,6 +69,9 @@ export default function HubungiKamiPage() {
   return (
     <>
       <Header />
+      <JsonLd
+        data={breadcrumbSchema([{ name: "Hubungi Kami", path: "/hubungi-kami" }])}
+      />
       <main className="flex-1">
         <PageHero
           eyebrow="Kontak"
@@ -86,60 +111,64 @@ export default function HubungiKamiPage() {
                 );
               })}
 
-              <ClayCard className="p-6">
-                <p className="text-xs font-bold uppercase tracking-wide text-foreground/50">
-                  Ikuti Kami
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {SOCIALS.map((s) => (
-                    <a
-                      key={s.label}
-                      href={s.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="clay-chip"
-                    >
-                      {s.label}
-                    </a>
-                  ))}
-                </div>
-              </ClayCard>
+              <Reveal>
+                <ClayCard className="p-6">
+                  <p className="text-xs font-bold uppercase tracking-wide text-foreground/50">
+                    Ikuti Kami
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {SOCIALS.map((s) => (
+                      <a
+                        key={s.label}
+                        href={s.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="clay-chip"
+                      >
+                        {s.label}
+                      </a>
+                    ))}
+                  </div>
+                </ClayCard>
+              </Reveal>
             </div>
 
-            <ClayCard className="flex flex-col p-8 sm:p-10">
-              <span className="clay-chip clay-chip-primary mb-5">
-                Pesan Cepat
-              </span>
-              <h2 className="text-2xl font-extrabold text-primary-dark">
-                Kirim Pertanyaanmu
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-foreground/70">
-                Gunakan Google Form resmi SMK Plus Melati untuk menyampaikan
-                pertanyaan atau permohonan informasi.
-              </p>
-              <a
-                href={CONTACT.googleFormUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="clay-btn clay-btn-accent mt-8"
-              >
-                Buka Form Kontak
-              </a>
-              <div className="mt-auto pt-8">
-                <div className="clay-inset rounded-3xl p-6 text-sm leading-relaxed text-foreground/75">
-                  <p className="font-extrabold text-primary-dark">
-                    {CONTACT.name}
-                  </p>
-                  <p className="mt-1 font-semibold text-accent">
-                    {CONTACT.tagline}
-                  </p>
-                  <p className="mt-3">
-                    Kunjungi kami untuk melihat langsung fasilitas dan suasana
-                    belajar di SMK Plus Melati Samarinda.
-                  </p>
+            <Reveal delay={120}>
+              <ClayCard className="flex flex-col p-8 sm:p-10">
+                <span className="clay-chip clay-chip-primary mb-5">
+                  Pesan Cepat
+                </span>
+                <h2 className="text-2xl font-extrabold text-primary-dark">
+                  Kirim Pertanyaanmu
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-foreground/70">
+                  Gunakan Google Form resmi SMK Plus Melati untuk menyampaikan
+                  pertanyaan atau permohonan informasi.
+                </p>
+                <a
+                  href={CONTACT.googleFormUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="clay-btn clay-btn-accent mt-8"
+                >
+                  Buka Form Kontak
+                </a>
+                <div className="mt-auto pt-8">
+                  <div className="clay-inset rounded-3xl p-6 text-sm leading-relaxed text-foreground/75">
+                    <p className="font-extrabold text-primary-dark">
+                      {CONTACT.name}
+                    </p>
+                    <p className="mt-1 font-semibold text-accent">
+                      {CONTACT.tagline}
+                    </p>
+                    <p className="mt-3">
+                      Kunjungi kami untuk melihat langsung fasilitas dan suasana
+                      belajar di SMK Plus Melati Samarinda.
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </ClayCard>
+              </ClayCard>
+            </Reveal>
           </div>
         </section>
       </main>

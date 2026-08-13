@@ -24,7 +24,7 @@ export default function Footer() {
               <div className="leading-tight">
                 <p className="text-lg font-extrabold text-white">SMK Plus Melati</p>
                 <p className="text-sm font-semibold text-white/80">
-                  Samarinda — Terampil Berakhlak
+                  Sekolah Kewirausahaan Yang Bertakwa
                 </p>
               </div>
             </div>

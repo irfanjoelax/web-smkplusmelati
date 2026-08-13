@@ -56,7 +56,7 @@ export default function Header() {
               SMK Plus Melati
             </span>
             <span className="block text-[0.7rem] font-semibold text-primary/70">
-              Samarinda — Terampil Berakhlak
+             Sekolah Kewirausahaan Yang Bertakwa
             </span>
           </span>
         </Link>
@@ -66,7 +66,7 @@ export default function Header() {
             <div key={link.href} className="group relative">
               <Link
                 href={link.href}
-                className={`rounded-full px-3.5 py-2 text-sm font-semibold transition-all duration-200 ${
+                className={`rounded-full px-3.5 py-2 text-sm font-bold transition-all duration-200 ${
                   isActive(link.href)
                     ? "clay-chip-primary !py-2 text-white"
                     : "text-foreground hover:-translate-y-0.5 hover:bg-primary-soft hover:text-primary-dark"
@@ -81,7 +81,7 @@ export default function Header() {
                       <Link
                         key={child.href}
                         href={child.href}
-                        className={`block rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors ${
+                        className={`block rounded-xl px-4 py-2.5 text-sm font-bold transition-colors ${
                           isActive(child.href)
                             ? "bg-primary-soft text-primary-dark"
                             : "text-foreground hover:bg-primary-soft/60"
@@ -134,7 +134,7 @@ export default function Header() {
               <div key={link.href}>
                 <Link
                   href={link.href}
-                  className={`block rounded-xl px-4 py-2.5 text-sm font-semibold ${
+                  className={`block rounded-xl px-4 py-2.5 text-sm font-bold ${
                     isActive(link.href)
                       ? "bg-primary-soft text-primary-dark"
                       : "text-foreground"
@@ -148,7 +148,7 @@ export default function Header() {
                       <Link
                         key={child.href}
                         href={child.href}
-                        className={`block rounded-xl px-4 py-2 text-sm font-medium ${
+                        className={`block rounded-xl px-4 py-2 text-sm font-bold ${
                           isActive(child.href)
                             ? "bg-primary-soft/70 text-primary-dark"
                             : "text-foreground/80"

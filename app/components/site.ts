@@ -1,6 +1,6 @@
 export const CONTACT = {
   name: "SMK Plus Melati Samarinda",
-  tagline: "Terampil Berakhlak",
+  tagline: "Sekolah Kewirausahaan Yang Bertakwa",
   address: "Jl. H.A.M. Rifaddin No 1 RT 25, Harapan Baru, Samarinda Seberang",
   phone: "0851-9157-6889",
   phonePerson: "Yuzi Deliana, S.H",
@@ -59,6 +59,5 @@ export const NAV_LINKS = [
   },
   { label: "Fasilitas", href: "/fasilitas" },
   { label: "Ekskul", href: "/ekskul" },
-  { label: "PPDB", href: "/ppdb" },
   { label: "Hubungi Kami", href: "/hubungi-kami" },
 ];

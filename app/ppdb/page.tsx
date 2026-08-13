@@ -2,14 +2,55 @@ import type { Metadata } from "next";
 import ClayCard from "@/app/components/ClayCard";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
+import JsonLd from "@/app/components/JsonLd";
 import LocalImage from "@/app/components/LocalImage";
 import PageHero from "@/app/components/PageHero";
+import Reveal from "@/app/components/Reveal";
 import { IMAGES } from "@/app/components/images";
 import { CONTACT } from "@/app/components/site";
+import { breadcrumbSchema, faqSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
   title: "PPDB",
+  description:
+    "PPDB SMK Plus Melati Samarinda 2026/2027: daftar online, cetak bukti pendaftaran, verifikasi berkas, pengumuman, dan daftar ulang. Pendaftaran peserta didik baru dibuka.",
+  alternates: {
+    canonical: "/ppdb",
+  },
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: "/ppdb",
+    title: "PPDB 2026/2027 | SMK Plus Melati Samarinda",
+    description:
+      "PPDB SMK Plus Melati Samarinda: daftar online, verifikasi berkas, pengumuman, dan daftar ulang.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "PPDB 2026/2027 | SMK Plus Melati Samarinda",
+    description:
+      "PPDB SMK Plus Melati Samarinda: daftar online, verifikasi berkas, pengumuman, dan daftar ulang.",
+  },
 };
+
+const faqItems = [
+  {
+    q: "Bagaimana cara mendaftar PPDB SMK Plus Melati?",
+    a: "Calon peserta didik mendaftar secara online melalui website PPDB SMK Plus Melati di ppdb.smkplusmelati.sch.id, kemudian mencetak bukti pendaftaran.",
+  },
+  {
+    q: "Apa saja berkas persyaratan PPDB?",
+    a: "Bawa dan tunjukkan berkas persyaratan beserta bukti pendaftaran pada panitia PPDB untuk diverifikasi sesuai ketentuan yang berlaku.",
+  },
+  {
+    q: "Kapan pengumuman kelulusan PPDB diumumkan?",
+    a: "Setelah data terverifikasi sesuai syarat, hasil pengumuman kelulusan disampaikan di website SMK Plus Melati.",
+  },
+  {
+    q: "Bagaimana cara menghubungi panitia jika kesulitan mendaftar?",
+    a: "Hubungi SMK Plus Melati melalui telepon 0851-9157-6889 atau email plus@smkplusmelati.sch.id untuk bantuan pendaftaran.",
+  },
+];
 
 const steps = [
   {
@@ -38,6 +79,8 @@ export default function PPDBPage() {
   return (
     <>
       <Header />
+      <JsonLd data={breadcrumbSchema([{ name: "PPDB", path: "/ppdb" }])} />
+      <JsonLd data={faqSchema(faqItems)} />
       <main className="flex-1">
         <PageHero
           eyebrow="Penerimaan Peserta Didik Baru"
@@ -47,8 +90,9 @@ export default function PPDBPage() {
 
         <section className="px-4 py-14">
           <div className="mx-auto max-w-6xl">
-            <div className="clay-card overflow-hidden rounded-[2.5rem]">
-              <div className="grid items-center gap-8 p-8 sm:p-12 lg:grid-cols-2">
+            <Reveal>
+              <div className="clay-card overflow-hidden rounded-[2.5rem]">
+                <div className="grid items-center gap-8 p-8 sm:p-12 lg:grid-cols-2">
                 <div>
                   <span className="clay-chip clay-chip-primary mb-4">
                     Jalur Prestasi
@@ -84,13 +128,15 @@ export default function PPDBPage() {
                   />
                 </div>
               </div>
-            </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 
         <section className="px-4 pb-24">
           <div className="mx-auto max-w-4xl text-center">
-            <ClayCard className="p-10 sm:p-14">
+            <Reveal>
+              <ClayCard className="p-10 sm:p-14">
               <h2 className="text-2xl font-extrabold text-primary-dark sm:text-3xl">
                 Siap Bergabung?
               </h2>
@@ -115,6 +161,7 @@ export default function PPDBPage() {
                 </a>
               </div>
             </ClayCard>
+            </Reveal>
           </div>
         </section>
       </main>

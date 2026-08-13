@@ -33,7 +33,7 @@
   --color-accent-dark: var(--accent-dark);
   --color-accent-soft: var(--accent-soft);
   --color-clay-white: var(--white);
-  --font-sans: var(--font-jakarta);
+  --font-sans: var(--font-nunito);
 }
 
 @layer base {
@@ -46,7 +46,7 @@
       radial-gradient(70rem 70rem at 50% 120%, rgba(15, 91, 151, 0.35), transparent 60%);
     background-attachment: fixed;
     color: var(--foreground);
-    font-family: var(--font-jakarta), "Plus Jakarta Sans", Arial, sans-serif;
+    font-family: var(--font-nunito), "Nunito", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 
