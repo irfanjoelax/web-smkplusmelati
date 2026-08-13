@@ -1,0 +1,63 @@
+# Folder Gambar
+
+Tempatkan foto sekolah Anda di folder ini dengan nama file sesuai daftar di bawah.
+Situs otomatis menampilkan foto begitu file ada (jalankan `npm run dev` / `npm run build` ulang).
+
+Format bebas (JPG/PNG/WebP). Ukuran rekomendasi minimal 800px agar tajam.
+
+## Beranda & PPDB
+- hero.jpg
+- ppdb.jpg
+
+## Profil
+- profil-1.jpg
+- profil-2.jpg
+
+## Fasilitas
+- ruang-kelas.jpg
+- perpustakaan.jpg
+- masjid.jpg
+- auditorium.jpg
+- kolam-renang.jpg
+- lapangan-indoor.jpg
+- lapangan-sepak.jpg
+- lapangan-basket.jpg
+- lapangan-bulu.jpg
+- joging-track.jpg
+
+## Ekskul
+- podschool.jpg
+- konten-kreator.jpg
+- desain-grafis.png
+- pramuka.jpg
+- english-club.jpg
+- seni-vocal.png
+- e-sport.png
+
+## Program Pelatihan
+- pelatihan-android.jpg
+- pelatihan-wirausaha.jpg
+
+## Program Asrama
+- asrama-mengaji.png
+- asrama-sholat.jpg
+
+## Program Keagamaan
+- dhuha.png
+- mengaji.jpg
+- sholat.jpg
+- khataman.jpg
+
+## Prestasi Siswa
+- toeic.jpg
+- mtcna.jpg
+
+## Daftar Guru
+- guru-1.jpg
+- guru-2.jpg
+- guru-3.jpg
+- guru-4.jpg
+- guru-5.jpg
+- guru-6.jpg
+- guru-7.jpg
+- guru-8.jpg
