@@ -1,0 +1,42 @@
+{
+  "tkj": {
+    "skills": [
+      "Administrasi Infrastruktur Jaringan",
+      "Administrasi Sistem Jaringan",
+      "Perakitan & Troubleshooting Komputer",
+      "Jaringan Berbasis Mikrotik (MTCNA)",
+      "Administrasi Server",
+      "Keamanan Jaringan Dasar"
+    ],
+    "sertifikasi": {
+      "chip": "Sertifikasi",
+      "title": "MTCNA (Mikrotik)",
+      "description": "Sertifikasi jaringan tingkat dasar berbasis Mikrotik sebagai bukti kemampuan siswa di bidang jaringan komputer."
+    },
+    "prospek": {
+      "chip": "Prospek",
+      "title": "Karier Lulusan TKJ",
+      "description": "Teknisi jaringan, administrator server, network engineer, teknisi komputer, hingga technopreneur di bidang IT."
+    }
+  },
+  "tataBoga": {
+    "skills": [
+      "Dasar-Dasar Tata Boga",
+      "Seni Memasak & Teknik Penyajian",
+      "Pengolahan Makanan & Minuman",
+      "Higiene Sanitasi Makanan",
+      "Kewirausahaan Kuliner",
+      "Manajemen Dapur & Pelayanan"
+    ],
+    "keunggulan": {
+      "chip": "Keunggulan",
+      "title": "Pencetak Wirausaha",
+      "description": "Pelatihan dan fasilitas ruangan memasak dirancang untuk mencetak profesional di bidang tata boga yang mampu menciptakan lapangan kerja sendiri."
+    },
+    "prospek": {
+      "chip": "Prospek",
+      "title": "Karier Lulusan Tata Boga",
+      "description": "Chef, pastry, food stylist, manajer restoran, wirausahawan kuliner, hingga pelaku usaha catering dan UMKM makanan."
+    }
+  }
+}

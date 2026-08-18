@@ -5,6 +5,7 @@ import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
+import { getVisiMisi } from "@/app/lib/content";
 import { breadcrumbSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -30,17 +31,10 @@ export const metadata: Metadata = {
   },
 };
 
-const misi = [
-  "Membangun kultur sekolah yang mengutamakan pelayanan, kualitas pembelajaran, prestasi dan lulusan",
-  "Menanamkan keimanan dan ketaqwaan melalui pengalaman ajaran agama",
-  "Menyelenggarakan pendidikan dan latihan dalam membentuk jiwa entrepreneur",
-  "Membina peserta didik berwawasan global, cerdas intelektual, emosional, dan spiritual",
-  "Membangun kreatifitas dan keterampilan peserta didik agar mampu bersaing di dunia usaha dan dunia industri",
-  "Membiasakan budaya bersih dan disiplin tinggi",
-  "Membentuk karakter peserta didik agar memiliki sikap dan akhlak yang mulia",
-];
+const misi = getVisiMisi().misi;
 
 export default function VisiMisiPage() {
+  const { visi } = getVisiMisi();
   return (
     <>
       <Header />
@@ -65,9 +59,7 @@ export default function VisiMisiPage() {
                   <span className="clay-chip clay-chip-primary">Visi</span>
                 </div>
                 <p className="text-center text-2xl font-extrabold leading-snug text-primary-dark sm:text-4xl sm:leading-snug">
-                  &ldquo;Terwujudnya SMK Unggul dalam mencetak SDM yang beriman,
-                  berjiwa entrepreneur, berwawasan global, cerdas, terampil,
-                  disiplin, dan berakhlak mulia.&rdquo;
+                  &ldquo;{visi}&rdquo;
                 </p>
               </ClayCard>
             </Reveal>

@@ -20,6 +20,9 @@
 # production
 /build
 
+# upload admin
+/public/uploads/
+
 # misc
 .DS_Store
 *.pem
