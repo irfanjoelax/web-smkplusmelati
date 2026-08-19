@@ -11,9 +11,9 @@ import {
   ExternalIcon,
   EyeIcon,
   HomeIcon,
-  ImageIcon,
   LogoutIcon,
   MenuIcon,
+  StarIcon,
   TrophyIcon,
   UsersIcon,
 } from "./icons";
@@ -25,8 +25,8 @@ const NAV = [
   { href: "/admin/jurusan", label: "Jurusan", icon: BookIcon },
   { href: "/admin/prestasi", label: "Prestasi Siswa", icon: TrophyIcon },
   { href: "/admin/fasilitas", label: "Fasilitas", icon: BuildingIcon },
+  { href: "/admin/ekskul", label: "Ekskul", icon: StarIcon },
   { href: "/admin/beranda", label: "Beranda", icon: HomeIcon },
-  { href: "/admin/media", label: "Media", icon: ImageIcon },
 ];
 
 function Brand({ onNavigate }: { onNavigate?: () => void }) {

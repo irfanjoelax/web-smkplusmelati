@@ -1,0 +1,37 @@
+[
+  {
+    "title": "PodSchool Zaman Now",
+    "desc": "Podcast milik SMK Plus Melati sebagai sarana siswa menggali informasi, dapat disaksikan di YouTube, Instagram, dan Facebook.",
+    "image": "/images/podschool.jpg"
+  },
+  {
+    "title": "Konten Kreator",
+    "desc": "Tim kreator yang memanfaatkan teknologi dengan unsur pendidikan, hiburan, komedi, dan motivasi.",
+    "image": "/images/konten-kreator.jpg"
+  },
+  {
+    "title": "Desain Grafis",
+    "desc": "Wadah berkreasi membuat karya rancangan gambar untuk kepentingan percetakan dan informasi.",
+    "image": "/images/desain-grafis.png"
+  },
+  {
+    "title": "Pramuka",
+    "desc": "Melatih kemandirian, kedisiplinan, mental, serta fisik melalui metode belajar interaktif progresif.",
+    "image": "/images/pramuka.jpg"
+  },
+  {
+    "title": "English Club",
+    "desc": "Melatih keberanian siswa berbahasa Inggris di luar jam pembelajaran.",
+    "image": "/images/english-club.jpg"
+  },
+  {
+    "title": "Seni Vocal",
+    "desc": "Mengembangkan bakat vokal: beatbox, acapella, pernapasan, intonasi, dan artikulasi.",
+    "image": "/images/seni-vocal.png"
+  },
+  {
+    "title": "E-Sport",
+    "desc": "Olahraga elektronik berbasis game kompetitif yang melatih sistem berpikir otak.",
+    "image": "/images/e-sport.png"
+  }
+]

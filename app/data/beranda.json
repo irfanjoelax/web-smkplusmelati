@@ -11,6 +11,11 @@
       "label": "Ekskul Aktif"
     },
     {
+      "value": 15,
+      "suffix": "",
+      "label": "Tahun Berdiri"
+    },
+    {
       "value": 100,
       "suffix": "%",
       "label": "Praktik & Teori"

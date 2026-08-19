@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   getBeranda,
+  getEkskul,
   getFasilitas,
   getGuru,
   getJurusan,
@@ -13,6 +14,7 @@ import {
   EyeIcon,
   HomeIcon,
   ImageIcon,
+  StarIcon,
   TrophyIcon,
   UsersIcon,
 } from "@/app/admin/components/icons";
@@ -24,6 +26,7 @@ const sections = [
   { href: "/admin/jurusan", title: "Jurusan", desc: "Skill, keunggulan, dan prospek TKJ & Tata Boga.", icon: BookIcon },
   { href: "/admin/prestasi", title: "Prestasi Siswa", desc: "Kartu prestasi dan kutipan.", icon: TrophyIcon },
   { href: "/admin/fasilitas", title: "Fasilitas", desc: "Kartu sarana dan prasarana.", icon: BuildingIcon },
+  { href: "/admin/ekskul", title: "Ekskul", desc: "Kartu ekstrakurikuler.", icon: StarIcon },
   { href: "/admin/beranda", title: "Beranda", desc: "Statistik, jurusan, program, ekskul, dan fasilitas.", icon: HomeIcon },
   { href: "/admin/media", title: "Media", desc: "Kelola gambar yang diunggah.", icon: ImageIcon },
 ];
@@ -34,6 +37,7 @@ export default function DashboardPage() {
   const misi = getVisiMisi().misi.length;
   const stats = getBeranda().stats.length;
   const prestasi = getPrestasi().items.length;
+  const ekskul = getEkskul().length;
   const jurusan = getJurusan();
 
   const statCards = [
@@ -42,6 +46,7 @@ export default function DashboardPage() {
     { label: "Skill Jurusan", value: jurusan.tkj.skills.length + jurusan.tataBoga.skills.length, icon: <BookIcon className="h-5 w-5" />, tone: "cyan" as const },
     { label: "Prestasi", value: prestasi, icon: <TrophyIcon className="h-5 w-5" />, tone: "gold" as const },
     { label: "Fasilitas", value: fasilitas, icon: <BuildingIcon className="h-5 w-5" />, tone: "emerald" as const },
+    { label: "Ekskul", value: ekskul, icon: <StarIcon className="h-5 w-5" />, tone: "cyan" as const },
     { label: "Statistik Beranda", value: stats, icon: <HomeIcon className="h-5 w-5" />, tone: "rose" as const },
   ];
 
@@ -51,6 +56,7 @@ export default function DashboardPage() {
     Jurusan: jurusan.tkj.skills.length + jurusan.tataBoga.skills.length,
     "Prestasi Siswa": prestasi,
     Fasilitas: fasilitas,
+    Ekskul: ekskul,
     Beranda: stats,
   };
 

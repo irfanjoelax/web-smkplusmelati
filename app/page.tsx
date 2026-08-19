@@ -14,6 +14,8 @@ import { getBeranda } from "@/app/lib/content";
 import JsonLd from "@/app/components/JsonLd";
 import { websiteSchema } from "@/app/lib/seo";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   description:
     "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan PPDB 2026.",
@@ -36,9 +38,8 @@ export const metadata: Metadata = {
   },
 };
 
-const { stats, majors, programs, ekskulPreview, facilities } = getBeranda();
-
 export default function Home() {
+  const { stats, majors, programs, ekskulPreview, facilities } = getBeranda();
   return (
     <>
       <Header />

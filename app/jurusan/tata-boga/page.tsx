@@ -31,10 +31,11 @@ export const metadata: Metadata = {
   },
 };
 
-const skills = getJurusan().tataBoga.skills;
+export const revalidate = 60;
 
 export default function TataBogaPage() {
   const { keunggulan, prospek } = getJurusan().tataBoga;
+  const skills = getJurusan().tataBoga.skills;
   return (
     <>
       <Header />

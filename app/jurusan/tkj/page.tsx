@@ -31,10 +31,11 @@ export const metadata: Metadata = {
   },
 };
 
-const skills = getJurusan().tkj.skills;
+export const revalidate = 60;
 
 export default function TkjPage() {
   const { sertifikasi, prospek } = getJurusan().tkj;
+  const skills = getJurusan().tkj.skills;
   return (
     <>
       <Header />

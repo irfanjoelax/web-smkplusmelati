@@ -8,7 +8,8 @@ export type ContentSaveKey =
   | "jurusan"
   | "prestasi"
   | "fasilitas"
-  | "beranda";
+  | "beranda"
+  | "ekskul";
 
 const DEBOUNCE_MS = 700;
 

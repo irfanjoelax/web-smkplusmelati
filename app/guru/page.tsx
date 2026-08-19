@@ -31,9 +31,10 @@ export const metadata: Metadata = {
   },
 };
 
-const teachers = getGuru();
+export const revalidate = 60;
 
 export default function GuruPage() {
+  const teachers = getGuru();
   return (
     <>
       <Header />

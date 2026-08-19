@@ -11,6 +11,16 @@ import { requireAdmin } from "@/app/lib/admin-guard";
 
 const KEYS = Object.keys(COLLECTION_FILES) as ContentKey[];
 
+const REVALIDATE_ROUTES: Record<ContentKey, string[]> = {
+  guru: ["/guru"],
+  visiMisi: ["/visi-misi"],
+  jurusan: ["/jurusan/tkj", "/jurusan/tata-boga"],
+  prestasi: ["/prestasi-siswa"],
+  fasilitas: ["/fasilitas"],
+  beranda: ["/"],
+  ekskul: ["/ekskul"],
+};
+
 export async function GET(
   _req: Request,
   { params }: { params: Promise<{ collection: string }> }
@@ -54,6 +64,9 @@ export async function PUT(
   saveContent(collection as ContentKey, body);
 
   // Regenerasi semua halaman yang bersumber dari data ini.
+  for (const route of REVALIDATE_ROUTES[collection as ContentKey]) {
+    revalidatePath(route);
+  }
   revalidatePath("/", "layout");
 
   return NextResponse.json({ ok: true });

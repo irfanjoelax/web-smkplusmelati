@@ -2,6 +2,7 @@ import { readFileSync, renameSync, writeFileSync } from "fs";
 import path from "path";
 import type {
   Beranda,
+  EkskulItem,
   FasilitasItem,
   JurusanData,
   Prestasi,
@@ -17,7 +18,8 @@ export type ContentKey =
   | "jurusan"
   | "prestasi"
   | "fasilitas"
-  | "beranda";
+  | "beranda"
+  | "ekskul";
 
 function load<T>(file: string): T {
   return JSON.parse(readFileSync(path.join(dataDir, file), "utf-8")) as T;
@@ -47,6 +49,10 @@ export function getBeranda(): Beranda {
   return load<Beranda>("beranda.json");
 }
 
+export function getEkskul(): EkskulItem[] {
+  return load<EkskulItem[]>("ekskul.json");
+}
+
 export const COLLECTION_FILES: Record<ContentKey, string> = {
   guru: "guru.json",
   visiMisi: "visi-misi.json",
@@ -54,6 +60,7 @@ export const COLLECTION_FILES: Record<ContentKey, string> = {
   prestasi: "prestasi.json",
   fasilitas: "fasilitas.json",
   beranda: "beranda.json",
+  ekskul: "ekskul.json",
 };
 
 export function saveContent(key: ContentKey, data: unknown): void {

@@ -31,10 +31,11 @@ export const metadata: Metadata = {
   },
 };
 
-const misi = getVisiMisi().misi;
+export const revalidate = 60;
 
 export default function VisiMisiPage() {
   const { visi } = getVisiMisi();
+  const misi = getVisiMisi().misi;
   return (
     <>
       <Header />

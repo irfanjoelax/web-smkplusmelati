@@ -31,9 +31,10 @@ export const metadata: Metadata = {
   },
 };
 
-const facilities = getFasilitas();
+export const revalidate = 60;
 
 export default function FasilitasPage() {
+  const facilities = getFasilitas();
   return (
     <>
       <Header />

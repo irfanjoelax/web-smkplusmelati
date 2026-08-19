@@ -35,6 +35,12 @@ export type PrestasiItem = {
   alt: string;
 };
 
+export type EkskulItem = {
+  title: string;
+  desc: string;
+  image: string;
+};
+
 export type Prestasi = {
   quote: string;
   items: PrestasiItem[];

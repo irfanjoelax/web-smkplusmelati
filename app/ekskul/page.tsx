@@ -5,7 +5,7 @@ import ImageCard from "@/app/components/ImageCard";
 import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
-import { IMAGES } from "@/app/components/images";
+import { getEkskul } from "@/app/lib/content";
 import { breadcrumbSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -31,45 +31,10 @@ export const metadata: Metadata = {
   },
 };
 
-const ekskul = [
-  {
-    title: "PodSchool Zaman Now",
-    desc: "Podcast milik SMK Plus Melati sebagai sarana siswa menggali informasi, dapat disaksikan di YouTube, Instagram, dan Facebook.",
-    image: IMAGES.podschoool,
-  },
-  {
-    title: "Konten Kreator",
-    desc: "Tim kreator yang memanfaatkan teknologi dengan unsur pendidikan, hiburan, komedi, dan motivasi.",
-    image: IMAGES.kontenKreator,
-  },
-  {
-    title: "Desain Grafis",
-    desc: "Wadah berkreasi membuat karya rancangan gambar untuk kepentingan percetakan dan informasi.",
-    image: IMAGES.desainGrafis,
-  },
-  {
-    title: "Pramuka",
-    desc: "Melatih kemandirian, kedisiplinan, mental, serta fisik melalui metode belajar interaktif progresif.",
-    image: IMAGES.pramuka,
-  },
-  {
-    title: "English Club",
-    desc: "Melatih keberanian siswa berbahasa Inggris di luar jam pembelajaran.",
-    image: IMAGES.englishClub,
-  },
-  {
-    title: "Seni Vocal",
-    desc: "Mengembangkan bakat vokal: beatbox, acapella, pernapasan, intonasi, dan artikulasi.",
-    image: IMAGES.seniVocal,
-  },
-  {
-    title: "E-Sport",
-    desc: "Olahraga elektronik berbasis game kompetitif yang melatih sistem berpikir otak.",
-    image: IMAGES.esport,
-  },
-];
+export const revalidate = 60;
 
 export default function EkskulPage() {
+  const ekskul = getEkskul();
   return (
     <>
       <Header />
