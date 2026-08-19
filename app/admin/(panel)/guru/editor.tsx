@@ -3,6 +3,7 @@
 import { useState } from "react";
 import ImagePicker from "@/app/admin/components/ImagePicker";
 import { useAutoSave } from "@/app/admin/components/useAutoSave";
+import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
 import { AddButton, Field, IconBtn, Input, PageHeader, Panel } from "@/app/admin/components/ui";
 import type { Teacher } from "@/app/lib/types";
 
@@ -74,13 +75,13 @@ export default function GuruEditor({ initial }: { initial: Teacher[] }) {
               </div>
               <div className="flex shrink-0 gap-1">
                 <IconBtn label="Naikkan" onClick={() => move(i, -1)}>
-                  ↑
+                  <ArrowUpIcon className="h-4 w-4" />
                 </IconBtn>
                 <IconBtn label="Turunkan" onClick={() => move(i, 1)}>
-                  ↓
+                  <ArrowDownIcon className="h-4 w-4" />
                 </IconBtn>
                 <IconBtn label="Hapus" danger onClick={() => remove(i)}>
-                  ✕
+                  <TrashIcon className="h-4 w-4" />
                 </IconBtn>
               </div>
             </div>

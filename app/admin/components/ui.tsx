@@ -76,10 +76,10 @@ export function IconBtn({
       title={label}
       aria-label={label}
       {...props}
-      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-sm font-bold transition ${
+      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border shadow-sm transition active:scale-95 ${
         danger
-          ? "text-red-500 hover:bg-red-50"
-          : "text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+          ? "border-red-200 bg-white text-red-500 hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+          : "border-slate-200 bg-white text-slate-400 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-600"
       } ${props.className ?? ""}`}
     />
   );
@@ -128,18 +128,27 @@ export function Panel({
 export function PageHeader({
   title,
   description,
+  right,
 }: {
   title: string;
   description?: string;
+  right?: ReactNode;
 }) {
   return (
-    <div className="mb-6">
-      <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">
-        {title}
-      </h1>
-      {description && (
-        <p className="mt-1 text-sm text-slate-500">{description}</p>
-      )}
+    <div className="relative mb-6 overflow-hidden rounded-xl bg-gradient-to-br from-[#0e5f9c] via-[#0b5c97] to-[#083f68] px-6 py-5 text-white shadow-lg shadow-blue-900/20">
+      <div className="pointer-events-none absolute inset-0 opacity-[0.08] [background-image:linear-gradient(rgba(255,255,255,0.6)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.6)_1px,transparent_1px)] [background-size:22px_22px]" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-1 bg-amber-400" />
+      <div className="relative flex items-center justify-between gap-4">
+        <div className="min-w-0">
+          <h1 className="text-xl font-extrabold tracking-tight text-white">
+            {title}
+          </h1>
+          {description && (
+            <p className="mt-0.5 text-sm text-white/70">{description}</p>
+          )}
+        </div>
+        {right && <div className="shrink-0">{right}</div>}
+      </div>
     </div>
   );
 }

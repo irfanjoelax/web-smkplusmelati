@@ -1,6 +1,7 @@
 "use client";
 
 import { Input, IconBtn } from "./ui";
+import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "./icons";
 
 export default function StringListEditor({
   value,
@@ -39,13 +40,13 @@ export default function StringListEditor({
             onChange={(e) => update(i, e.target.value)}
           />
           <IconBtn label="Naikkan" onClick={() => move(i, -1)}>
-            ↑
+            <ArrowUpIcon className="h-4 w-4" />
           </IconBtn>
           <IconBtn label="Turunkan" onClick={() => move(i, 1)}>
-            ↓
+            <ArrowDownIcon className="h-4 w-4" />
           </IconBtn>
           <IconBtn label="Hapus" danger onClick={() => remove(i)}>
-            ✕
+            <TrashIcon className="h-4 w-4" />
           </IconBtn>
         </div>
       ))}

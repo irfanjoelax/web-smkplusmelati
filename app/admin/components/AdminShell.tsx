@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
@@ -31,12 +32,23 @@ const NAV = [
 
 function Brand({ onNavigate }: { onNavigate?: () => void }) {
   return (
-    <Link href="/admin" onClick={onNavigate} className="mb-6 block">
-      <span className="block text-lg font-extrabold tracking-tight text-white">
-        Admin Panel
+    <Link href="/admin" onClick={onNavigate} className="mb-6 flex items-center gap-3">
+      <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white p-1 shadow-md shadow-black/10">
+        <Image
+          src="/logo melati.png"
+          alt="Logo SMK Plus Melati"
+          width={44}
+          height={44}
+          className="h-full w-full object-contain"
+        />
       </span>
-      <span className="block text-xs font-semibold text-white/60">
-        SMK Plus Melati
+      <span>
+        <span className="block text-lg font-extrabold tracking-tight text-white">
+          Admin Panel
+        </span>
+        <span className="block text-xs font-semibold text-white/60">
+          SMK Plus Melati
+        </span>
       </span>
     </Link>
   );
