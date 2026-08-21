@@ -1,0 +1,112 @@
+{
+  "stats": [
+    {
+      "value": 2,
+      "suffix": "",
+      "label": "Jurusan Keunggulan"
+    },
+    {
+      "value": 7,
+      "suffix": "+",
+      "label": "Ekskul Aktif"
+    },
+    {
+      "value": 15,
+      "suffix": "",
+      "label": "Tahun Berdiri"
+    },
+    {
+      "value": 100,
+      "suffix": "%",
+      "label": "Praktik & Teori"
+    }
+  ],
+  "majors": [
+    {
+      "id": "tkj",
+      "title": "TKJ",
+      "full": "Teknik Komputer & Jaringan",
+      "desc": "Menguasai jaringan komputer, administrasi server, dan teknologi informasi berbasis Mikrotik.",
+      "href": "/jurusan/tkj",
+      "icon": "network"
+    },
+    {
+      "id": "tata-boga",
+      "title": "Tata Boga",
+      "full": "Seni & Industri Kuliner",
+      "desc": "Mengasah seni memasak, penyajian menarik, dan nilai jual produk kuliner profesional.",
+      "href": "/jurusan/tata-boga",
+      "icon": "chef"
+    }
+  ],
+  "programs": [
+    {
+      "id": "pelatihan",
+      "title": "Program Pelatihan",
+      "desc": "Pembuatan aplikasi Android & pencetak wirausaha dengan praktik langsung.",
+      "href": "/program-pelatihan",
+      "icon": "training"
+    },
+    {
+      "id": "asrama",
+      "title": "Program Asrama",
+      "desc": "Kedisiplinan, apel pagi/sore/malam, dan pembinaan karakter melalui kebersamaan.",
+      "href": "/program-asrama",
+      "icon": "dormitory"
+    },
+    {
+      "id": "keagamaan",
+      "title": "Program Keagamaan",
+      "desc": "Sholat dhuha, mengaji pagi, khataman Al-Qur'an, dan perayaan hari besar.",
+      "href": "/program-keagamaan",
+      "icon": "religion"
+    },
+    {
+      "id": "prestasi",
+      "title": "Prestasi Siswa",
+      "desc": "Sertifikasi internasional TOEIC dan MTCNA sebagai bukti kemampuan siswa.",
+      "href": "/prestasi-siswa",
+      "icon": "award"
+    }
+  ],
+  "ekskulPreview": [
+    {
+      "name": "PodSchool",
+      "href": "/ekskul",
+      "image": "/images/podschool.jpg"
+    },
+    {
+      "name": "Konten Kreator",
+      "href": "/ekskul",
+      "image": "/images/konten-kreator.jpg"
+    },
+    {
+      "name": "Desain Grafis",
+      "href": "/ekskul",
+      "image": "/images/desain-grafis.png"
+    },
+    {
+      "name": "Pramuka",
+      "href": "/ekskul",
+      "image": "/images/pramuka.jpg"
+    }
+  ],
+  "facilities": [
+    {
+      "name": "Ruang Kelas Ber-AC",
+      "image": "/images/ruang-kelas.jpg"
+    },
+    {
+      "name": "Masjid Qiwamul Ummah",
+      "image": "/images/masjid.jpg"
+    },
+    {
+      "name": "Kolam Renang",
+      "image": "/images/kolam-renang.jpg"
+    },
+    {
+      "name": "Gedung Auditorium",
+      "image": "/images/auditorium.jpg"
+    }
+  ]
+}

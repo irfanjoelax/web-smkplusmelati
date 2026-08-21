@@ -5,7 +5,7 @@ import ImageCard from "@/app/components/ImageCard";
 import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
-import { IMAGES } from "@/app/components/images";
+import { getPrestasi } from "@/app/lib/content";
 import { breadcrumbSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -31,7 +31,10 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 60;
+
 export default function PrestasiSiswaPage() {
+  const { items, quote } = getPrestasi();
   return (
     <>
       <Header />
@@ -50,22 +53,16 @@ export default function PrestasiSiswaPage() {
 
         <section className="px-4 py-16">
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
-            <Reveal>
-              <ImageCard
-                src={IMAGES.prestasiToeic}
-                alt="Sertifikat TOEIC"
-                title="Peraih Sertifikat TOEIC"
-                description="TOEIC (Test of English for International Communication) adalah ujian bahasa Inggris terstandar yang diakui ribuan lembaga pendidikan dan perusahaan di seluruh dunia. Lulusan SMK Plus Melati Samarinda telah tersertifikasi secara internasional."
-              />
-            </Reveal>
-            <Reveal delay={120}>
-              <ImageCard
-                src={IMAGES.prestasiMtcna}
-                alt="Sertifikat MTCNA"
-                title="Peraih Sertifikat MTCNA"
-                description="MTCNA adalah sertifikasi jaringan komputer tingkat dasar berbasis teknologi Mikrotik. Selain skill yang dimiliki, SMK Plus Melati juga memiliki bukti akan kemampuan yang dimiliki oleh siswa/i-nya."
-              />
-            </Reveal>
+            {items.map((item, i) => (
+              <Reveal key={item.title} delay={i * 120}>
+                <ImageCard
+                  src={item.image}
+                  alt={item.alt}
+                  title={item.title}
+                  description={item.description}
+                />
+              </Reveal>
+            ))}
           </div>
         </section>
 
@@ -74,10 +71,7 @@ export default function PrestasiSiswaPage() {
             <Reveal>
               <div className="clay-card p-8 sm:p-12">
                 <p className="text-center text-lg font-extrabold text-primary-dark">
-                  &ldquo;Saat ini perkembangan zaman sangat pesat. Tidak semua
-                  bisa dilakukan dengan skill, namun harus ada bukti atau
-                  pengakuan bahwa skill itu memang ada — tentunya dalam bentuk
-                  sertifikat.&rdquo;
+                  &ldquo;{quote}&rdquo;
                 </p>
               </div>
             </Reveal>

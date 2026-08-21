@@ -6,6 +6,7 @@ import JsonLd from "@/app/components/JsonLd";
 import LocalImage from "@/app/components/LocalImage";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
+import { getGuru } from "@/app/lib/content";
 import { breadcrumbSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -30,18 +31,10 @@ export const metadata: Metadata = {
   },
 };
 
-const teachers = [
-  { name: "Muji Hariandi, S.Tr.Kom", role: "Kepala Sekolah", image: "/images/guru-1.jpg" },
-  { name: "Dina, S.Pd", role: "", image: "/images/guru-2.jpg" },
-  { name: "Muhammad Fadhil, S.Kom", role: "", image: "/images/guru-3.jpg" },
-  { name: "Muhammad Fadli, S.Pd", role: "", image: "/images/guru-4.jpg" },
-  { name: "Abdul Rajak Kelwar, S.Pd", role: "Pembina Osis", image: "/images/guru-5.jpg" },
-  { name: "", role: "", image: "/images/guru-6.jpg" },
-  { name: "", role: "", image: "/images/guru-7.jpg" },
-  { name: "", role: "", image: "/images/guru-8.jpg" },
-];
+export const revalidate = 60;
 
 export default function GuruPage() {
+  const teachers = getGuru();
   return (
     <>
       <Header />

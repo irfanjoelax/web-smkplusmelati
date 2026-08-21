@@ -5,6 +5,7 @@ import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
+import { getJurusan } from "@/app/lib/content";
 import { breadcrumbSchema, programSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -30,16 +31,11 @@ export const metadata: Metadata = {
   },
 };
 
-const skills = [
-  "Dasar-Dasar Tata Boga",
-  "Seni Memasak & Teknik Penyajian",
-  "Pengolahan Makanan & Minuman",
-  "Higiene Sanitasi Makanan",
-  "Kewirausahaan Kuliner",
-  "Manajemen Dapur & Pelayanan",
-];
+export const revalidate = 60;
 
 export default function TataBogaPage() {
+  const { keunggulan, prospek } = getJurusan().tataBoga;
+  const skills = getJurusan().tataBoga.skills;
   return (
     <>
       <Header />
@@ -102,26 +98,23 @@ export default function TataBogaPage() {
           <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
             <Reveal className="h-full">
               <ClayCard hover className="h-full p-7">
-                <span className="clay-chip clay-chip-primary">Keunggulan</span>
+                <span className="clay-chip clay-chip-primary">{keunggulan.chip}</span>
                 <h3 className="mt-4 text-lg font-extrabold text-primary-dark">
-                  Pencetak Wirausaha
+                  {keunggulan.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-foreground/70">
-                  Pelatihan dan fasilitas ruangan memasak dirancang untuk
-                  mencetak profesional di bidang tata boga yang mampu
-                  menciptakan lapangan kerja sendiri.
+                  {keunggulan.description}
                 </p>
               </ClayCard>
             </Reveal>
             <Reveal className="h-full" delay={120}>
               <ClayCard hover className="h-full p-7">
-                <span className="clay-chip clay-chip-primary">Prospek</span>
+                <span className="clay-chip clay-chip-primary">{prospek.chip}</span>
                 <h3 className="mt-4 text-lg font-extrabold text-primary-dark">
-                  Karier Lulusan Tata Boga
+                  {prospek.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-foreground/70">
-                  Chef, pastry, food stylist, manajer restoran, wirausahawan
-                  kuliner, hingga pelaku usaha catering dan UMKM makanan.
+                  {prospek.description}
                 </p>
               </ClayCard>
             </Reveal>

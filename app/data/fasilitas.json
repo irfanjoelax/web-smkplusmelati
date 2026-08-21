@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Ruang Kelas",
+    "description": "Suasana belajar siswa/i dengan fasilitas ruangan ber-AC yang nyaman.",
+    "image": "/images/ruang-kelas.jpg"
+  },
+  {
+    "title": "Perpustakaan",
+    "description": "Ruangan perpustakaan yang nyaman, bersih, dan adem — lokasi favorit saat rehat.",
+    "image": "/images/perpustakaan.jpg"
+  },
+  {
+    "title": "Mesjid Qiwamul Ummah",
+    "description": "Digunakan saat acara besar keagamaan, sholat berjamaah, dan ngaji setiap malam.",
+    "image": "/images/masjid.jpg"
+  },
+  {
+    "title": "Gedung Auditorium",
+    "description": "Ruang untuk event-event besar dengan kapasitas mencapai ribuan orang.",
+    "image": "/images/auditorium.jpg"
+  },
+  {
+    "title": "Kolam Renang",
+    "description": "Digunakan saat kegiatan olahraga dan waktu senggang setelah pembelajaran.",
+    "image": "/images/kolam-renang.jpg"
+  },
+  {
+    "title": "Lapangan Indoor",
+    "description": "Digunakan untuk kegiatan besar, seperti bazar olahraga dan lainnya.",
+    "image": "/images/lapangan-indoor.jpg"
+  },
+  {
+    "title": "Lapangan Sepak Bola",
+    "description": "Dilengkapi bola dan gawang, digunakan saat jam olahraga dan waktu senggang.",
+    "image": "/images/lapangan-sepak.jpg"
+  },
+  {
+    "title": "Lapangan Basket",
+    "description": "Sudah difasilitasi ring dan bola untuk kegiatan olahraga siswa dan guru.",
+    "image": "/images/lapangan-basket.jpg"
+  },
+  {
+    "title": "Lapangan Bulu Tangkis",
+    "description": "Lapangan indoor lengkap dengan tiang net, jaring net, dan bola.",
+    "image": "/images/lapangan-bulu.jpg"
+  },
+  {
+    "title": "Joging Track",
+    "description": "Fasilitas untuk bersantai sambil berolahraga di lokasi yang nyaman dan sejuk.",
+    "image": "/images/joging-track.jpg"
+  }
+]
