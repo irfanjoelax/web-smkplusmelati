@@ -90,7 +90,7 @@ export default function Footer() {
                 </a>
               </p>
             </address>
-            <Link href="/ppdb" className="clay-btn clay-btn-accent mt-5 text-sm">
+            <Link href="/hubungi-ppdb" className="clay-btn clay-btn-accent mt-5 text-sm">
               Daftar PPDB Sekarang
             </Link>
           </div>

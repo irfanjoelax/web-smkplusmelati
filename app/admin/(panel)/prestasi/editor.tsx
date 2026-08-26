@@ -2,15 +2,15 @@
 
 import { useState } from "react";
 import ImagePicker from "@/app/admin/components/ImagePicker";
-import { useAutoSave } from "@/app/admin/components/useAutoSave";
+import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
-import { AddButton, Field, IconBtn, Input, PageHeader, Panel, Textarea } from "@/app/admin/components/ui";
+import { AddButton, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { Prestasi, PrestasiItem } from "@/app/lib/types";
 
 export default function PrestasiEditor({ initial }: { initial: Prestasi }) {
   const [quote, setQuote] = useState(initial.quote);
   const [items, setItems] = useState<PrestasiItem[]>(initial.items);
-  useAutoSave("prestasi", { quote, items });
+  const { save } = useManualSave("prestasi", { quote, items });
 
   function update(i: number, patch: Partial<PrestasiItem>) {
     const next = [...items];
@@ -27,7 +27,8 @@ export default function PrestasiEditor({ initial }: { initial: Prestasi }) {
   }
 
   function remove(i: number) {
-    setItems(items.filter((_, idx) => idx !== i));
+    const next = items.filter((_, idx) => idx !== i);
+    setItems(next);
   }
 
   return (
@@ -38,7 +39,12 @@ export default function PrestasiEditor({ initial }: { initial: Prestasi }) {
       />
 
       <div className="space-y-6">
-        <Panel title="Kutipan Halaman">
+        <Panel
+          title="Kutipan Halaman"
+          action={
+            <SaveButton onSave={save} />
+          }
+        >
           <Field label="Teks Kutipan (tanpa tanda kutip)">
             <Textarea value={quote} onChange={(e) => setQuote(e.target.value)} />
           </Field>
@@ -48,13 +54,19 @@ export default function PrestasiEditor({ initial }: { initial: Prestasi }) {
           title="Kartu Prestasi"
           description={`${items.length} kartu`}
           action={
-            <AddButton
-              onClick={() =>
-                setItems([...items, { title: "", description: "", image: "", alt: "" }])
-              }
-            >
-              Tambah Kartu
-            </AddButton>
+            <div className="flex items-center gap-2">
+              <SaveButton onSave={save} />
+              <AddButton
+                onClick={() =>
+                  setItems([
+                    ...items,
+                    { title: "", description: "", image: "", alt: "" },
+                  ])
+                }
+              >
+                Tambah
+              </AddButton>
+            </div>
           }
         >
           <div className="space-y-4">

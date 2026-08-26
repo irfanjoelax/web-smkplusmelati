@@ -10,6 +10,11 @@
     "image": "/images/konten-kreator.jpg"
   },
   {
+    "title": "English Club",
+    "desc": "Melatih keberanian siswa berbahasa Inggris di luar jam pembelajaran.",
+    "image": "/images/english-club.jpg"
+  },
+  {
     "title": "Desain Grafis",
     "desc": "Wadah berkreasi membuat karya rancangan gambar untuk kepentingan percetakan dan informasi.",
     "image": "/images/desain-grafis.png"
@@ -18,11 +23,6 @@
     "title": "Pramuka",
     "desc": "Melatih kemandirian, kedisiplinan, mental, serta fisik melalui metode belajar interaktif progresif.",
     "image": "/images/pramuka.jpg"
-  },
-  {
-    "title": "English Club",
-    "desc": "Melatih keberanian siswa berbahasa Inggris di luar jam pembelajaran.",
-    "image": "/images/english-club.jpg"
   },
   {
     "title": "Seni Vocal",

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import ImagePicker from "@/app/admin/components/ImagePicker";
-import { useAutoSave } from "@/app/admin/components/useAutoSave";
+import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
 import {
   AddButton,
@@ -12,6 +12,7 @@ import {
   PageHeader,
   Panel,
   Textarea,
+  SaveButton,
 } from "@/app/admin/components/ui";
 import type {
   Beranda,
@@ -64,7 +65,7 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
   const [facilities, setFacilities] = useState<FacilityPreview[]>(initial.facilities);
 
   const data: Beranda = { stats, majors, programs, ekskulPreview, facilities };
-  useAutoSave("beranda", data);
+  const { save } = useManualSave("beranda", data);
 
   return (
     <div>
@@ -78,11 +79,14 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
           title="Statistik"
           description="Angka besar di bagian tengah beranda"
           action={
-            <AddButton
-              onClick={() => setStats([...stats, { value: 0, suffix: "", label: "" }])}
-            >
-              Tambah
-            </AddButton>
+            <div className="flex items-center gap-2">
+              <SaveButton onSave={save} />
+              <AddButton
+                onClick={() => setStats([...stats, { value: 0, suffix: "", label: "" }])}
+              >
+                Tambah
+              </AddButton>
+            </div>
           }
         >
           <div className="space-y-3">
@@ -127,7 +131,10 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
                   const next = [...stats];
                   [next[idx], next[j]] = [next[j], next[idx]];
                   setStats(next);
-                }} onRemove={(idx) => setStats(stats.filter((_, x) => x !== idx))} />
+                }} onRemove={(idx) => {
+                  const next = stats.filter((_, x) => x !== idx);
+                  setStats(next);
+                }} />
               </div>
             ))}
           </div>
@@ -137,13 +144,16 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
           title="Jurusan"
           description="Dua kartu bidang keahlian"
           action={
-            <AddButton
-              onClick={() =>
-                setMajors([...majors, { id: "", title: "", full: "", desc: "", href: "/jurusan", icon: "network" }])
-              }
-            >
-              Tambah
-            </AddButton>
+            <div className="flex items-center gap-2">
+              <SaveButton onSave={save} />
+              <AddButton
+                onClick={() =>
+                  setMajors([...majors, { id: "", title: "", full: "", desc: "", href: "/jurusan", icon: "network" }])
+                }
+              >
+                Tambah
+              </AddButton>
+            </div>
           }
         >
           <div className="space-y-4">
@@ -182,7 +192,10 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
                   const n = [...majors];
                   [n[idx], n[j]] = [n[j], n[idx]];
                   setMajors(n);
-                }} onRemove={(idx) => setMajors(majors.filter((_, x) => x !== idx))} />
+                }} onRemove={(idx) => {
+                  const next = majors.filter((_, x) => x !== idx);
+                  setMajors(next);
+                }} />
               </div>
             ))}
           </div>
@@ -192,13 +205,16 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
           title="Program"
           description="Empat kartu program unggulan"
           action={
-            <AddButton
-              onClick={() =>
-                setPrograms([...programs, { id: "", title: "", desc: "", href: "/program-pelatihan", icon: "training" }])
-              }
-            >
-              Tambah
-            </AddButton>
+            <div className="flex items-center gap-2">
+              <SaveButton onSave={save} />
+              <AddButton
+                onClick={() =>
+                  setPrograms([...programs, { id: "", title: "", desc: "", href: "/program-pelatihan", icon: "training" }])
+                }
+              >
+                Tambah
+              </AddButton>
+            </div>
           }
         >
           <div className="space-y-4">
@@ -234,7 +250,10 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
                   const n = [...programs];
                   [n[idx], n[j]] = [n[j], n[idx]];
                   setPrograms(n);
-                }} onRemove={(idx) => setPrograms(programs.filter((_, x) => x !== idx))} />
+                }} onRemove={(idx) => {
+                  const next = programs.filter((_, x) => x !== idx);
+                  setPrograms(next);
+                }} />
               </div>
             ))}
           </div>
@@ -244,11 +263,14 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
           title="Pratinjau Ekskul"
           description="Empat ekskul yang tampil di beranda"
           action={
-            <AddButton
-              onClick={() => setEkskulPreview([...ekskulPreview, { name: "", href: "/ekskul", image: "" }])}
-            >
-              Tambah
-            </AddButton>
+            <div className="flex items-center gap-2">
+              <SaveButton onSave={save} />
+              <AddButton
+                onClick={() => setEkskulPreview([...ekskulPreview, { name: "", href: "/ekskul", image: "" }])}
+              >
+                Tambah
+              </AddButton>
+            </div>
           }
         >
           <div className="space-y-4">
@@ -272,7 +294,10 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
                   const n = [...ekskulPreview];
                   [n[idx], n[j]] = [n[j], n[idx]];
                   setEkskulPreview(n);
-                }} onRemove={(idx) => setEkskulPreview(ekskulPreview.filter((_, x) => x !== idx))} />
+                }} onRemove={(idx) => {
+                  const next = ekskulPreview.filter((_, x) => x !== idx);
+                  setEkskulPreview(next);
+                }} />
               </div>
             ))}
           </div>
@@ -282,11 +307,14 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
           title="Pratinjau Fasilitas"
           description="Empat fasilitas yang tampil di beranda"
           action={
-            <AddButton
-              onClick={() => setFacilities([...facilities, { name: "", image: "" }])}
-            >
-              Tambah
-            </AddButton>
+            <div className="flex items-center gap-2">
+              <SaveButton onSave={save} />
+              <AddButton
+                onClick={() => setFacilities([...facilities, { name: "", image: "" }])}
+              >
+                Tambah
+              </AddButton>
+            </div>
           }
         >
           <div className="space-y-4">
@@ -307,7 +335,10 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
                   const n = [...facilities];
                   [n[idx], n[j]] = [n[j], n[idx]];
                   setFacilities(n);
-                }} onRemove={(idx) => setFacilities(facilities.filter((_, x) => x !== idx))} />
+                }} onRemove={(idx) => {
+                  const next = facilities.filter((_, x) => x !== idx);
+                  setFacilities(next);
+                }} />
               </div>
             ))}
           </div>
