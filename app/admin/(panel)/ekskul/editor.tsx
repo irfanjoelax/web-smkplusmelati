@@ -4,12 +4,13 @@ import { useState } from "react";
 import ImagePicker from "@/app/admin/components/ImagePicker";
 import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
-import { AddButton, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
+import { AddButton, ConfirmDialog, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { EkskulItem } from "@/app/lib/types";
 
 export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
   const [items, setItems] = useState<EkskulItem[]>(initial);
   const { save } = useManualSave("ekskul", items);
+  const [confirmIdx, setConfirmIdx] = useState<number | null>(null);
 
   function update(i: number, patch: Partial<EkskulItem>) {
     const next = [...items];
@@ -32,6 +33,11 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
 
   return (
     <div>
+      <ConfirmDialog
+        open={confirmIdx !== null}
+        onConfirm={() => { remove(confirmIdx!); setConfirmIdx(null); }}
+        onCancel={() => setConfirmIdx(null)}
+      />
       <PageHeader
         title="Ekskul"
         description="Kelola kartu ekstrakurikuler yang tampil di halaman publik."
@@ -81,7 +87,7 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
                 <IconBtn label="Turunkan" onClick={() => move(i, 1)}>
                   <ArrowDownIcon className="h-4 w-4" />
                 </IconBtn>
-                <IconBtn label="Hapus" danger onClick={() => remove(i)}>
+                <IconBtn label="Hapus" danger onClick={() => setConfirmIdx(i)}>
                   <TrashIcon className="h-4 w-4" />
                 </IconBtn>
               </div>

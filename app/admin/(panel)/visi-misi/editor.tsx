@@ -3,7 +3,7 @@
 import { useState } from "react";
 import StringListEditor from "@/app/admin/components/StringListEditor";
 import { useManualSave } from "@/app/admin/components/useManualSave";
-import { AddButton, Field, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
+import { Field, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { VisiMisi } from "@/app/lib/types";
 
 export default function VisiMisiEditor({ initial }: { initial: VisiMisi }) {

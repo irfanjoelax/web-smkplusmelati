@@ -1,23 +1,19 @@
 {
   "stats": [
     {
-      "value": 2,
-      "suffix": "",
+      "value": "2",
       "label": "Jurusan Keunggulan"
     },
     {
-      "value": 7,
-      "suffix": "+",
+      "value": "7+",
       "label": "Ekskul Aktif"
     },
     {
-      "value": 15,
-      "suffix": "",
+      "value": "15",
       "label": "Tahun Berdiri"
     },
     {
-      "value": 100,
-      "suffix": "%",
+      "value": "100%",
       "label": "Praktik & Teori"
     }
   ],

@@ -53,8 +53,7 @@ export type FasilitasItem = {
 };
 
 export type Stat = {
-  value: number;
-  suffix: string;
+  value: string;
   label: string;
 };
 

@@ -96,7 +96,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="relative border-t border-white/15 bg-white/10 px-8 py-4 text-center text-xs font-medium text-white/70">
-          © {new Date().getFullYear()} SMK Plus Melati Samarinda. Terampil
+          © <span suppressHydrationWarning>{new Date().getFullYear()}</span> SMK Plus Melati Samarinda. Terampil
           Berakhlak.
         </div>
       </div>

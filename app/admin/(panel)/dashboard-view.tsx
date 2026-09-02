@@ -28,7 +28,6 @@ type Props = {
   fasilitas: number;
   ekskul: number;
   stats: number;
-  total: number;
 };
 
 const SECTIONS = [
@@ -88,7 +87,6 @@ export default function DashboardView({
   fasilitas,
   ekskul,
   stats,
-  total,
 }: Props) {
   const router = useRouter();
   const handleTotalClick = () => {
@@ -130,11 +128,12 @@ export default function DashboardView({
     { label: "Fasilitas", count: fasilitas, color: "#10b981" },
     { label: "Ekskul", count: ekskul, color: "#6366f1" },
   ];
+  const chartTotal = chartData.reduce((sum, item) => sum + item.count, 0);
 
   const quick = [
     {
-      label: "Total Konten",
-      value: total,
+      label: "Statistik Konten",
+      value: chartTotal,
       onClick: handleTotalClick,
       icon: DashboardIcon,
       card: "bg-gradient-to-br from-blue-50 to-blue-100",
