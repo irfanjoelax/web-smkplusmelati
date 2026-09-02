@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import StringListEditor from "@/app/admin/components/StringListEditor";
-import { useAutoSave } from "@/app/admin/components/useAutoSave";
-import { AddButton, Field, PageHeader, Panel, Textarea } from "@/app/admin/components/ui";
+import { useManualSave } from "@/app/admin/components/useManualSave";
+import { AddButton, Field, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { VisiMisi } from "@/app/lib/types";
 
 export default function VisiMisiEditor({ initial }: { initial: VisiMisi }) {
   const [visi, setVisi] = useState(initial.visi);
   const [misi, setMisi] = useState<string[]>(initial.misi);
-  useAutoSave("visiMisi", { visi, misi });
+  const { save } = useManualSave("visiMisi", { visi, misi });
 
   return (
     <div>
@@ -19,7 +19,12 @@ export default function VisiMisiEditor({ initial }: { initial: VisiMisi }) {
       />
 
       <div className="space-y-6">
-        <Panel title="Visi">
+        <Panel
+          title="Visi"
+          action={
+            <SaveButton onSave={save} />
+          }
+        >
           <Field label="Teks Visi">
             <Textarea
               value={visi}
@@ -32,9 +37,7 @@ export default function VisiMisiEditor({ initial }: { initial: VisiMisi }) {
           title="Misi"
           description={`${misi.length} butir misi`}
           action={
-            <AddButton onClick={() => setMisi([...misi, ""])}>
-              Tambah Misi
-            </AddButton>
+            <SaveButton onSave={save} />
           }
         >
           <StringListEditor

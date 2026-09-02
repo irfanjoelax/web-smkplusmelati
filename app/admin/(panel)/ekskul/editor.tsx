@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import ImagePicker from "@/app/admin/components/ImagePicker";
-import { useAutoSave } from "@/app/admin/components/useAutoSave";
+import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
-import { AddButton, Field, IconBtn, Input, PageHeader, Panel, Textarea } from "@/app/admin/components/ui";
+import { AddButton, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { EkskulItem } from "@/app/lib/types";
 
 export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
   const [items, setItems] = useState<EkskulItem[]>(initial);
-  useAutoSave("ekskul", items);
+  const { save } = useManualSave("ekskul", items);
 
   function update(i: number, patch: Partial<EkskulItem>) {
     const next = [...items];
@@ -26,7 +26,8 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
   }
 
   function remove(i: number) {
-    setItems(items.filter((_, idx) => idx !== i));
+    const next = items.filter((_, idx) => idx !== i);
+    setItems(next);
   }
 
   return (
@@ -40,9 +41,19 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
         title="Ekskul"
         description={`${items.length} ekstrakurikuler`}
         action={
-          <AddButton onClick={() => setItems([...items, { title: "", desc: "", image: "" }])}>
-            Tambah Ekskul
-          </AddButton>
+          <div className="flex items-center gap-2">
+            <SaveButton onSave={save} />
+            <AddButton
+              onClick={() =>
+                setItems([
+                  ...items,
+                  { title: "", desc: "", image: "" },
+                ])
+              }
+            >
+              Tambah
+            </AddButton>
+          </div>
         }
       >
         <div className="space-y-4">

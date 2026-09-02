@@ -233,7 +233,7 @@ export function ContentChart({
                   className="shrink-0 text-sm font-extrabold"
                   style={{ color: isActive ? seg.color : "#94a3b8" }}
                 >
-                  {pct}%
+                  {seg.count}
                 </span>
               </button>
             );

@@ -43,12 +43,10 @@ const SECTIONS = [
 
 const CHART_LINKS: Record<string, string> = {
   Guru: "/admin/guru",
-  "Butir Misi": "/admin/visi-misi",
-  "Skill Jurusan": "/admin/jurusan",
+  "Jurusan": "/admin/jurusan",
   Prestasi: "/admin/prestasi",
   Fasilitas: "/admin/fasilitas",
   Ekskul: "/admin/ekskul",
-  "Statistik Beranda": "/admin/beranda",
 };
 
 function FadeUp({
@@ -93,6 +91,12 @@ export default function DashboardView({
   total,
 }: Props) {
   const router = useRouter();
+  const handleTotalClick = () => {
+    router.push('/admin?refresh=true');
+    setTimeout(() => {
+      document.getElementById('chart')?.scrollIntoView({ behavior: 'smooth' });
+    }, 200);
+  };
   const [date, setDate] = useState("");
 
   useEffect(() => {
@@ -121,19 +125,17 @@ export default function DashboardView({
 
   const chartData: ChartDatum[] = [
     { label: "Guru", count: guru, color: "#f59e0b" },
-    { label: "Butir Misi", count: misi, color: "#8b5cf6" },
-    { label: "Skill Jurusan", count: skills, color: "#06b6d4" },
+    { label: "Jurusan", count: skills, color: "#06b6d4" },
     { label: "Prestasi", count: prestasi, color: "#f43f5e" },
     { label: "Fasilitas", count: fasilitas, color: "#10b981" },
     { label: "Ekskul", count: ekskul, color: "#6366f1" },
-    { label: "Statistik Beranda", count: stats, color: "#3b82f6" },
   ];
 
   const quick = [
     {
       label: "Total Konten",
       value: total,
-      href: "/admin",
+      onClick: handleTotalClick,
       icon: DashboardIcon,
       card: "bg-gradient-to-br from-blue-50 to-blue-100",
       iconBox: "bg-white/70 text-blue-600 shadow-sm",
@@ -190,13 +192,7 @@ export default function DashboardView({
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-bold text-white/90">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-                </span>
-                Autosave: Aktif
-              </span>
+
               <span className="rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-bold text-white/80">
                 {date || "—"}
               </span>
@@ -207,34 +203,62 @@ export default function DashboardView({
 
       <FadeUp delay={80}>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {quick.map((q) => (
-            <Link
-              key={q.label}
-              href={q.href}
-              className={`group rounded-xl border border-slate-200/70 p-5 text-slate-900 shadow-sm transition-all duration-200 hover:-translate-y-1 ${q.card} ${q.shadow}`}
-            >
-              <div className="flex items-start justify-between">
-                <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${q.iconBox}`}>
-                  <q.icon className="h-5 w-5" />
+          {quick.map((q) => {
+            if (q.onClick) {
+              return (
+                <div
+                  key={q.label}
+                  onClick={q.onClick}
+                  className={`group rounded-xl border border-slate-200/70 p-5 text-slate-900 shadow-sm transition-all duration-200 hover:-translate-y-1 ${q.card} ${q.shadow} cursor-pointer`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${q.iconBox}`}>
+                      <q.icon className="h-5 w-5" />
+                    </div>
+                    <span className="text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-slate-500">
+                      →
+                    </span>
+                  </div>
+                  <CountUp
+                    value={q.value}
+                    className="mt-4 block text-3xl font-extrabold tracking-tight text-slate-900"
+                  />
+                  <p className="mt-1 text-xs font-bold uppercase tracking-wide text-slate-500">
+                    {q.label}
+                  </p>
                 </div>
-                <span className="text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-slate-500">
-                  →
-                </span>
-              </div>
-              <CountUp
-                value={q.value}
-                className="mt-4 block text-3xl font-extrabold tracking-tight text-slate-900"
-              />
-              <p className="mt-1 text-xs font-bold uppercase tracking-wide text-slate-500">
-                {q.label}
-              </p>
-            </Link>
-          ))}
+              );
+            } else {
+              return (
+                <Link
+                  key={q.label}
+                  href={q.href}
+                  className={`group rounded-xl border border-slate-200/70 p-5 text-slate-900 shadow-sm transition-all duration-200 hover:-translate-y-1 ${q.card} ${q.shadow}`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${q.iconBox}`}>
+                      <q.icon className="h-5 w-5" />
+                    </div>
+                    <span className="text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-slate-500">
+                      →
+                    </span>
+                  </div>
+                  <CountUp
+                    value={q.value}
+                    className="mt-4 block text-3xl font-extrabold tracking-tight text-slate-900"
+                  />
+                  <p className="mt-1 text-xs font-bold uppercase tracking-wide text-slate-500">
+                    {q.label}
+                  </p>
+                </Link>
+              );
+            }
+          })}
         </div>
       </FadeUp>
 
       <FadeUp delay={160}>
-        <ContentChart data={chartData} onSelect={handleSelect} />
+        <div id="chart"><ContentChart data={chartData} onSelect={handleSelect} /></div>
       </FadeUp>
 
       <FadeUp delay={240}>

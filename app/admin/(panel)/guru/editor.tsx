@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import ImagePicker from "@/app/admin/components/ImagePicker";
-import { useAutoSave } from "@/app/admin/components/useAutoSave";
+import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
-import { AddButton, Field, IconBtn, Input, PageHeader, Panel } from "@/app/admin/components/ui";
+import { AddButton, Field, IconBtn, Input, PageHeader, Panel, SaveButton } from "@/app/admin/components/ui";
 import type { Teacher } from "@/app/lib/types";
 
 export default function GuruEditor({ initial }: { initial: Teacher[] }) {
   const [items, setItems] = useState<Teacher[]>(initial);
-  useAutoSave("guru", items);
+  const { save } = useManualSave("guru", items);
 
   function update(i: number, patch: Partial<Teacher>) {
     const next = [...items];
@@ -26,7 +26,8 @@ export default function GuruEditor({ initial }: { initial: Teacher[] }) {
   }
 
   function remove(i: number) {
-    setItems(items.filter((_, idx) => idx !== i));
+    const next = items.filter((_, idx) => idx !== i);
+    setItems(next);
   }
 
   return (
@@ -40,13 +41,14 @@ export default function GuruEditor({ initial }: { initial: Teacher[] }) {
         title="Guru"
         description={`${items.length} guru terdaftar`}
         action={
-          <AddButton
-            onClick={() =>
-              setItems([...items, { name: "", role: "", image: "" }])
-            }
-          >
-            Tambah Guru
-          </AddButton>
+          <div className="flex items-center gap-2">
+            <SaveButton onSave={save} />
+            <AddButton
+              onClick={() => setItems([...items, { name: "", role: "", image: "" }])}
+            >
+              Tambah
+            </AddButton>
+          </div>
         }
       >
         <div className="space-y-4">

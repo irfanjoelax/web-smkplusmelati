@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import ImagePicker from "@/app/admin/components/ImagePicker";
-import { useAutoSave } from "@/app/admin/components/useAutoSave";
+import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
-import { AddButton, Field, IconBtn, Input, PageHeader, Panel, Textarea } from "@/app/admin/components/ui";
+import { AddButton, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { FasilitasItem } from "@/app/lib/types";
 
 export default function FasilitasEditor({ initial }: { initial: FasilitasItem[] }) {
   const [items, setItems] = useState<FasilitasItem[]>(initial);
-  useAutoSave("fasilitas", items);
+  const { save } = useManualSave("fasilitas", items);
 
   function update(i: number, patch: Partial<FasilitasItem>) {
     const next = [...items];
@@ -26,7 +26,8 @@ export default function FasilitasEditor({ initial }: { initial: FasilitasItem[] 
   }
 
   function remove(i: number) {
-    setItems(items.filter((_, idx) => idx !== i));
+    const next = items.filter((_, idx) => idx !== i);
+    setItems(next);
   }
 
   return (
@@ -40,9 +41,16 @@ export default function FasilitasEditor({ initial }: { initial: FasilitasItem[] 
         title="Fasilitas"
         description={`${items.length} fasilitas`}
         action={
-          <AddButton onClick={() => setItems([...items, { title: "", description: "", image: "" }])}>
-              Tambah Fasilitas
+          <div className="flex items-center gap-2">
+            <SaveButton onSave={save} />
+            <AddButton
+              onClick={() =>
+                setItems([...items, { title: "", description: "", image: "" }])
+              }
+            >
+              Tambah
             </AddButton>
+          </div>
         }
       >
         <div className="space-y-4">

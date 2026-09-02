@@ -89,7 +89,7 @@ Sekolah Kewirausahaan yang Bertakwa
                     alt="Suasana SMK Plus Melati Samarinda"
                     width={1280}
                     height={800}
-                    className="h-72 w-full rounded-[1.6rem] object-cover sm:h-96"
+                    className="h-72 w-full rounded-[1.6rem] object-fill sm:h-96"
                   />
                 </div>
               </Reveal>
@@ -300,12 +300,10 @@ Sekolah Kewirausahaan yang Bertakwa
                   </p>
                   <div className="mt-7 flex flex-wrap gap-3">
                     <a
-                      href={CONTACT.ppdbUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href="/hubungi-ppdb"
                       className="clay-btn clay-btn-accent"
                     >
-                      Menuju Link PPDB
+                      Hubungi Panitia PPDB
                     </a>
                     <Link href="/ppdb" className="clay-btn clay-btn-light">
                       Lihat Prosedur
@@ -318,7 +316,7 @@ Sekolah Kewirausahaan yang Bertakwa
                     alt="PPDB SMK Plus Melati"
                     width={1280}
                     height={800}
-                    className="h-80 w-full rounded-[1.6rem] object-cover"
+                    className="h-80 w-full rounded-[1.6rem] object-fill"
                   />
                 </div>
               </div>

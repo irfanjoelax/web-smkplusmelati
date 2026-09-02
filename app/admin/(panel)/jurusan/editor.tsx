@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import StringListEditor from "@/app/admin/components/StringListEditor";
-import { useAutoSave } from "@/app/admin/components/useAutoSave";
-import { AddButton, Field, Input, PageHeader, Panel, Textarea } from "@/app/admin/components/ui";
+import { useManualSave } from "@/app/admin/components/useManualSave";
+import { AddButton, Field, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { JurusanCard, JurusanData } from "@/app/lib/types";
 
 function CardEditor({
@@ -36,7 +36,7 @@ function CardEditor({
 export default function JurusanEditor({ initial }: { initial: JurusanData }) {
   const [tkj, setTkj] = useState(initial.tkj);
   const [tataBoga, setTataBoga] = useState(initial.tataBoga);
-  useAutoSave("jurusan", { tkj, tataBoga });
+  const { save } = useManualSave("jurusan", { tkj, tataBoga });
 
   return (
     <div>
@@ -49,9 +49,7 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
         <Panel
           title="Teknik Komputer & Jaringan (TKJ)"
           action={
-            <AddButton onClick={() => setTkj({ ...tkj, skills: [...tkj.skills, ""] })}>
-              Tambah Skill
-            </AddButton>
+            <SaveButton onSave={save} />
           }
         >
           <div className="grid gap-4 lg:grid-cols-2">
@@ -66,7 +64,7 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
             </div>
             <div className="space-y-4">
               <CardEditor
-                label="Kartu Sertifikasi"
+                label="Kartu Keunggulan"
                 value={tkj.sertifikasi}
                 onChange={(sertifikasi) => setTkj({ ...tkj, sertifikasi })}
               />
@@ -82,9 +80,7 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
         <Panel
           title="Tata Boga"
           action={
-            <AddButton onClick={() => setTataBoga({ ...tataBoga, skills: [...tataBoga.skills, ""] })}>
-              Tambah Skill
-            </AddButton>
+            <SaveButton onSave={save} />
           }
         >
           <div className="grid gap-4 lg:grid-cols-2">

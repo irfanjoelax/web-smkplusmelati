@@ -118,13 +118,13 @@ export default function PPDBPage() {
                     ))}
                   </ol>
                 </div>
-                <div className="clay-inset overflow-hidden rounded-[2rem] p-2">
+                <div className="clay-inset flex justify-center overflow-hidden rounded-[2rem] p-2 w-full">
                   <LocalImage
                     src={IMAGES.ppdb2}
                     alt="PPDB SMK Plus Melati"
                     width={800}
                     height={600}
-                    className="h-80 w-full rounded-[1.6rem] object-cover"
+                    className="w-full h-auto max-h-80 rounded-[1.6rem] object-fill"
                   />
                 </div>
               </div>
@@ -146,18 +146,10 @@ export default function PPDBPage() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <a
-                  href={CONTACT.ppdbUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/hubungi-ppdb"
                   className="clay-btn clay-btn-accent"
                 >
-                  Menuju Link PPDB
-                </a>
-                <a
-                  href={`mailto:${CONTACT.email}`}
-                  className="clay-btn"
-                >
-                  Tanya via Email
+                  Hubungi Panitia PPDB
                 </a>
               </div>
             </ClayCard>

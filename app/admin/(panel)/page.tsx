@@ -17,7 +17,7 @@ export default function DashboardPage() {
   const prestasi = getPrestasi().items.length;
   const ekskul = getEkskul().length;
   const jurusan = getJurusan();
-  const skills = jurusan.tkj.skills.length + jurusan.tataBoga.skills.length;
+  const skills = Object.keys(jurusan).length;
   const total = guru + fasilitas + misi + stats + prestasi + ekskul + skills;
 
   return (

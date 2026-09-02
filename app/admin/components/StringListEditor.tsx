@@ -6,10 +6,12 @@ import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "./icons";
 export default function StringListEditor({
   value,
   onChange,
+  onRemove: onRemoveProp,
   placeholder = "Teks…",
 }: {
   value: string[];
   onChange: (next: string[]) => void;
+  onRemove?: (index: number, next: string[]) => void;
   placeholder?: string;
 }) {
   function update(i: number, v: string) {
@@ -27,7 +29,12 @@ export default function StringListEditor({
   }
 
   function remove(i: number) {
-    onChange(value.filter((_, idx) => idx !== i));
+    const next = value.filter((_, idx) => idx !== i);
+    if (onRemoveProp) {
+      onRemoveProp(i, next);
+    } else {
+      onChange(next);
+    }
   }
 
   return (

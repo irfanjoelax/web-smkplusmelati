@@ -1,11 +1,6 @@
 "use client";
 
-import type {
-  ButtonHTMLAttributes,
-  InputHTMLAttributes,
-  ReactNode,
-  TextareaHTMLAttributes,
-} from "react";
+import { useState, useEffect, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type TextareaHTMLAttributes } from "react";
 import { PlusIcon } from "./icons";
 
 const inputCls =
@@ -168,6 +163,41 @@ export function AddButton({
     >
       <PlusIcon className="h-3.5 w-3.5" />
       {children}
+    </button>
+  );
+}
+
+export function SaveButton({ onSave, className = "" }: { onSave: () => Promise<void>; className?: string }) {
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+
+  useEffect(() => {
+    if (!isSaved) return;
+    const t = setTimeout(() => setIsSaved(false), 2000);
+    return () => clearTimeout(t);
+  }, [isSaved]);
+
+  const handleClick = async () => {
+    if (isSaving) return;
+    setIsSaving(true);
+    setIsSaved(false);
+    try {
+      await onSave();
+      setIsSaved(true);
+    } catch (e) {
+      // ignore
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      disabled={isSaving}
+      className={`rounded-xl bg-gradient-to-b from-blue-500 to-blue-700 px-4 py-2 text-xs font-bold text-white shadow-md shadow-blue-600/20 transition hover:from-blue-600 hover:to-blue-800 active:scale-[0.98] disabled:opacity-50 ${className}`}
+    >
+      {isSaving ? "Menyimpan..." : isSaved ? "✓ Tersimpan" : "Simpan"}
     </button>
   );
 }
