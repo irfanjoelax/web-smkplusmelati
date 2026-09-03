@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
+    remotePatterns: [
+      {
+        // Vercel Blob CDN hostname — format: <store-id>.public.blob.vercel-storage.com
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
+        pathname: "/**",
+      },
+    ],
   },
 };
 

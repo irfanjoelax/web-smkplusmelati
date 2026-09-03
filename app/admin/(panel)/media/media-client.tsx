@@ -73,7 +73,7 @@ export default function MediaClient({ initial }: { initial: string[] }) {
             />
           </label>
           <span className="text-xs text-slate-500">
-            Path yang bisa dipakai: <code>/uploads/…</code>
+            Salin URL gambar dari tombol di bawah tiap gambar
           </span>
           {error && <span className="text-sm font-semibold text-red-600">{error}</span>}
         </div>

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { randomBytes } from "crypto";
-import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "fs";
-import path from "path";
+import { put, del } from "@vercel/blob";
 import { requireAdmin } from "@/app/lib/admin-guard";
 
 const ALLOWED = new Map([
@@ -35,16 +34,13 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Ukuran maksimal 3 MB" }, { status: 400 });
   }
 
-  const dir = path.join(process.cwd(), "public", "uploads");
-  if (!existsSync(dir)) {
-    mkdirSync(dir, { recursive: true });
-  }
+  const name = `uploads/${Date.now()}-${randomBytes(6).toString("hex")}${ext}`;
+  const blob = await put(name, file, {
+    access: "public",
+    contentType: file.type,
+  });
 
-  const name = `${Date.now()}-${randomBytes(6).toString("hex")}${ext}`;
-  const buffer = Buffer.from(await file.arrayBuffer());
-  writeFileSync(path.join(dir, name), buffer);
-
-  return NextResponse.json({ url: `/uploads/${name}` });
+  return NextResponse.json({ url: blob.url });
 }
 
 export async function DELETE(req: Request) {
@@ -53,18 +49,14 @@ export async function DELETE(req: Request) {
   }
 
   const { searchParams } = new URL(req.url);
-  const target = searchParams.get("path") ?? "";
-  const uploadsDir = path.join(process.cwd(), "public", "uploads");
-  const filePath = path.join(uploadsDir, path.basename(target));
+  const url = searchParams.get("path") ?? "";
 
-  if (!target.startsWith("/uploads/") || !filePath.startsWith(uploadsDir)) {
-    return NextResponse.json({ error: "Path tidak valid" }, { status: 400 });
+  if (!url.startsWith("https://")) {
+    return NextResponse.json({ error: "URL tidak valid" }, { status: 400 });
   }
 
   try {
-    if (existsSync(filePath)) {
-      unlinkSync(filePath);
-    }
+    await del(url);
   } catch {
     // abaikan error saat menghapus
   }

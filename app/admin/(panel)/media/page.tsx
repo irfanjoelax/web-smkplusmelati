@@ -1,19 +1,21 @@
-import { readdirSync, existsSync } from "fs";
-import path from "path";
+import { list } from "@vercel/blob";
 import MediaClient from "./media-client";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Media | Admin Panel",
 };
 
-export default function MediaPage() {
-  const dir = path.join(process.cwd(), "public", "uploads");
+export default async function MediaPage() {
   let files: string[] = [];
-  if (existsSync(dir)) {
-    files = readdirSync(dir)
-      .filter((f) => !f.startsWith("."))
-      .map((f) => `/uploads/${f}`)
+  try {
+    const { blobs } = await list({ prefix: "uploads/" });
+    files = blobs
+      .map((b) => b.url)
       .sort((a, b) => b.localeCompare(a));
+  } catch {
+    // BLOB_READ_WRITE_TOKEN belum di-set (dev lokal) — tampilkan kosong
   }
 
   return <MediaClient initial={files} />;
