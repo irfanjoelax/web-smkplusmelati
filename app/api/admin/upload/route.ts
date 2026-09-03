@@ -79,8 +79,9 @@ export async function DELETE(req: Request) {
     } else {
       return NextResponse.json({ error: "URL tidak valid" }, { status: 400 });
     }
-  } catch {
-    // abaikan error saat menghapus
+  } catch (error) {
+    console.error("Gagal menghapus media:", error);
+    return NextResponse.json({ error: "Gagal menghapus media" }, { status: 500 });
   }
 
   return NextResponse.json({ ok: true });

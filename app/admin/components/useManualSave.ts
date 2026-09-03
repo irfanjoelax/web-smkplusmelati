@@ -39,10 +39,12 @@ export function useManualSave(key: ContentSaveKey, data: unknown) {
       if (res.ok) {
         setIsSaved(true);
       } else {
-        console.error("Save failed:", res.status);
+        const json = await res.json().catch(() => null);
+        throw new Error(json?.error ?? `Gagal menyimpan (${res.status})`);
       }
     } catch (err) {
       console.error("Save error:", err);
+      throw err;
     } finally {
       setIsSaving(false);
     }

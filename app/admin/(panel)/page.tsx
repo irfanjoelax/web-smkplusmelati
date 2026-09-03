@@ -5,6 +5,8 @@ import {
 import type { Beranda, EkskulItem, FasilitasItem, JurusanData, Prestasi, Teacher, VisiMisi } from "@/app/lib/types";
 import DashboardView from "./dashboard-view";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const [guruData, fasilitasData, visiMisiData, berandaData, prestasiData, ekskulData, jurusanData] =
     await Promise.all([
