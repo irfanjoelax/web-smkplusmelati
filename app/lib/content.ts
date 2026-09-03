@@ -1,15 +1,7 @@
 import { readFileSync, writeFileSync, renameSync } from "fs";
 import path from "path";
-import { put } from "@vercel/blob";
-import type {
-  Beranda,
-  EkskulItem,
-  FasilitasItem,
-  JurusanData,
-  Prestasi,
-  Teacher,
-  VisiMisi,
-} from "./types";
+import { unstable_noStore as noStore } from "next/cache";
+import { get, put } from "@vercel/blob";
 
 const dataDir = path.join(process.cwd(), "app", "data");
 
@@ -32,26 +24,27 @@ export const COLLECTION_FILES: Record<ContentKey, string> = {
   ekskul: "ekskul.json",
 };
 
-// Env var name per collection — set di Vercel dashboard setelah upload pertama
-// Contoh: BLOB_URL_GURU, BLOB_URL_VISIMISI, dst.
-function envKey(key: ContentKey) {
-  return `BLOB_URL_${key.toUpperCase()}`;
-}
-
 /**
  * Baca data collection.
- * - Production (BLOB_READ_WRITE_TOKEN ada + BLOB_URL_<KEY> ada): fetch dari Vercel Blob
+ * - Production (BLOB_READ_WRITE_TOKEN ada): baca dari Vercel Blob
  * - Dev / fallback: baca dari file lokal app/data/*.json
  */
 export async function getContent<T>(key: ContentKey): Promise<T> {
-  const blobUrl = process.env[envKey(key)];
-  if (blobUrl) {
-    const res = await fetch(blobUrl, { cache: "no-store" });
-    if (!res.ok) throw new Error(`Gagal fetch blob ${key}: ${res.status}`);
-    return res.json() as Promise<T>;
-  }
-  // Fallback lokal
+  // Opt-out dari Next.js Data Cache agar selalu baca data terbaru.
+  noStore();
+
   const file = COLLECTION_FILES[key];
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const result = await get(`data/${file}`, {
+      access: "public",
+      useCache: false,
+    });
+    if (result) {
+      return new Response(result.stream).json() as Promise<T>;
+    }
+  }
+
+  // Blob belum dibuat: JSON bawaan menjadi data awal collection.
   return JSON.parse(readFileSync(path.join(dataDir, file), "utf-8")) as T;
 }
 
@@ -67,6 +60,8 @@ export async function saveContent(key: ContentKey, data: unknown): Promise<void>
       access: "public",
       contentType: "application/json",
       addRandomSuffix: false,
+      allowOverwrite: true,
+      cacheControlMaxAge: 60,
     });
   } else {
     const target = path.join(dataDir, file);
@@ -75,19 +70,3 @@ export async function saveContent(key: ContentKey, data: unknown): Promise<void>
     renameSync(tmp, target);
   }
 }
-
-// ──────────────────────────────────────────────────────────────
-// Typed getters (sync) — untuk Server Components yang baca saat build/SSR
-// Di production, gunakan getContent() versi async di API route.
-// ──────────────────────────────────────────────────────────────
-function loadLocal<T>(file: string): T {
-  return JSON.parse(readFileSync(path.join(dataDir, file), "utf-8")) as T;
-}
-
-export function getGuru(): Teacher[] { return loadLocal("guru.json"); }
-export function getVisiMisi(): VisiMisi { return loadLocal("visi-misi.json"); }
-export function getJurusan(): JurusanData { return loadLocal("jurusan.json"); }
-export function getPrestasi(): Prestasi { return loadLocal("prestasi.json"); }
-export function getFasilitas(): FasilitasItem[] { return loadLocal("fasilitas.json"); }
-export function getBeranda(): Beranda { return loadLocal("beranda.json"); }
-export function getEkskul(): EkskulItem[] { return loadLocal("ekskul.json"); }

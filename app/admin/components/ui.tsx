@@ -219,6 +219,7 @@ export function AddButton({
 export function SaveButton({ onSave, className = "" }: { onSave: () => Promise<void>; className?: string }) {
   const [isSaving, setIsSaving] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     if (!isSaved) return;
@@ -230,11 +231,12 @@ export function SaveButton({ onSave, className = "" }: { onSave: () => Promise<v
     if (isSaving) return;
     setIsSaving(true);
     setIsSaved(false);
+    setHasError(false);
     try {
       await onSave();
       setIsSaved(true);
     } catch {
-      // ignore
+      setHasError(true);
     } finally {
       setIsSaving(false);
     }
@@ -246,7 +248,7 @@ export function SaveButton({ onSave, className = "" }: { onSave: () => Promise<v
       disabled={isSaving}
       className={`rounded-xl bg-gradient-to-b from-blue-500 to-blue-700 px-4 py-2 text-xs font-bold text-white shadow-md shadow-blue-600/20 transition hover:from-blue-600 hover:to-blue-800 active:scale-[0.98] disabled:opacity-50 ${className}`}
     >
-      {isSaving ? "Menyimpan..." : isSaved ? "✓ Tersimpan" : "Simpan"}
+      {isSaving ? "Menyimpan..." : isSaved ? "Tersimpan" : hasError ? "Gagal, coba lagi" : "Simpan"}
     </button>
   );
 }

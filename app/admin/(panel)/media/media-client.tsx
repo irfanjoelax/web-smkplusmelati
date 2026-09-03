@@ -31,11 +31,19 @@ export default function MediaClient({ initial }: { initial: string[] }) {
   }
 
   async function remove(url: string) {
-    const res = await fetch(`/api/admin/upload?path=${encodeURIComponent(url)}`, {
-      method: "DELETE",
-    });
-    if (res.ok) {
+    setError("");
+    try {
+      const res = await fetch(`/api/admin/upload?path=${encodeURIComponent(url)}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        const json = await res.json().catch(() => null);
+        setError(json?.error ?? "Gagal menghapus media");
+        return;
+      }
       setFiles((prev) => prev.filter((f) => f !== url));
+    } catch {
+      setError("Terjadi kesalahan saat menghapus media");
     }
   }
 
