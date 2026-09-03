@@ -5,7 +5,8 @@ import ImageCard from "@/app/components/ImageCard";
 import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
-import { getFasilitas } from "@/app/lib/content";
+import { getContent } from "@/app/lib/content";
+import type { FasilitasItem } from "@/app/lib/types";
 import { breadcrumbSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -33,8 +34,8 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-export default function FasilitasPage() {
-  const facilities = getFasilitas();
+export default async function FasilitasPage() {
+  const facilities = await getContent<FasilitasItem[]>("fasilitas");
   return (
     <>
       <Header />

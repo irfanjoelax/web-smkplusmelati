@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync, renameSync } from "fs";
 import path from "path";
 import { put } from "@vercel/blob";
 import type {
@@ -56,18 +56,24 @@ export async function getContent<T>(key: ContentKey): Promise<T> {
 }
 
 /**
- * Simpan data collection ke Vercel Blob.
- * Returns blob URL — perlu di-set sebagai env var BLOB_URL_<KEY> di Vercel dashboard.
- * Setelah upload pertama, URL tidak berubah (addRandomSuffix: false).
+ * Simpan data collection.
+ * - Production (BLOB_READ_WRITE_TOKEN ada): tulis ke Vercel Blob
+ * - Dev lokal: tulis ke file lokal app/data/*.json
  */
-export async function saveContent(key: ContentKey, data: unknown): Promise<string> {
+export async function saveContent(key: ContentKey, data: unknown): Promise<void> {
   const file = COLLECTION_FILES[key];
-  const blob = await put(`data/${file}`, JSON.stringify(data, null, 2), {
-    access: "public",
-    contentType: "application/json",
-    addRandomSuffix: false,
-  });
-  return blob.url;
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    await put(`data/${file}`, JSON.stringify(data, null, 2), {
+      access: "public",
+      contentType: "application/json",
+      addRandomSuffix: false,
+    });
+  } else {
+    const target = path.join(dataDir, file);
+    const tmp = `${target}.tmp`;
+    writeFileSync(tmp, JSON.stringify(data, null, 2), "utf-8");
+    renameSync(tmp, target);
+  }
 }
 
 // ──────────────────────────────────────────────────────────────

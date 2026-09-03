@@ -5,7 +5,8 @@ import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
-import { getJurusan } from "@/app/lib/content";
+import { getContent } from "@/app/lib/content";
+import type { JurusanData } from "@/app/lib/types";
 import { breadcrumbSchema, programSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -33,9 +34,10 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-export default function TataBogaPage() {
-  const { keunggulan, prospek } = getJurusan().tataBoga;
-  const skills = getJurusan().tataBoga.skills;
+export default async function TataBogaPage() {
+  const jurusan = await getContent<JurusanData>("jurusan");
+  const { keunggulan, prospek } = jurusan.tataBoga;
+  const skills = jurusan.tataBoga.skills;
   return (
     <>
       <Header />

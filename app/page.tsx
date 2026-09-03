@@ -9,7 +9,8 @@ import Reveal from "@/app/components/Reveal";
 import SectionHeading from "@/app/components/SectionHeading";
 import { Icon } from "@/app/lib/icons";
 import { IMAGES } from "@/app/components/images";
-import { getBeranda } from "@/app/lib/content";
+import { getContent } from "@/app/lib/content";
+import type { Beranda } from "@/app/lib/types";
 import JsonLd from "@/app/components/JsonLd";
 import { websiteSchema } from "@/app/lib/seo";
 
@@ -37,8 +38,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
-  const { stats, majors, programs, ekskulPreview, facilities } = getBeranda();
+export default async function Home() {
+  const { stats, majors, programs, ekskulPreview, facilities } = await getContent<Beranda>("beranda");
   return (
     <>
       <Header />

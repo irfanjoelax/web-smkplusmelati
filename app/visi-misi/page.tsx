@@ -5,7 +5,8 @@ import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
-import { getVisiMisi } from "@/app/lib/content";
+import { getContent } from "@/app/lib/content";
+import type { VisiMisi } from "@/app/lib/types";
 import { breadcrumbSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -33,9 +34,8 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-export default function VisiMisiPage() {
-  const { visi } = getVisiMisi();
-  const misi = getVisiMisi().misi;
+export default async function VisiMisiPage() {
+  const { visi, misi } = await getContent<VisiMisi>("visiMisi");
   return (
     <>
       <Header />

@@ -5,7 +5,8 @@ import ImageCard from "@/app/components/ImageCard";
 import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
-import { getEkskul } from "@/app/lib/content";
+import { getContent } from "@/app/lib/content";
+import type { EkskulItem } from "@/app/lib/types";
 import { breadcrumbSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -33,8 +34,8 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-export default function EkskulPage() {
-  const ekskul = getEkskul();
+export default async function EkskulPage() {
+  const ekskul = await getContent<EkskulItem[]>("ekskul");
   return (
     <>
       <Header />

@@ -6,7 +6,8 @@ import JsonLd from "@/app/components/JsonLd";
 import LocalImage from "@/app/components/LocalImage";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
-import { getGuru } from "@/app/lib/content";
+import { getContent } from "@/app/lib/content";
+import type { Teacher } from "@/app/lib/types";
 import { breadcrumbSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -33,8 +34,8 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-export default function GuruPage() {
-  const teachers = getGuru();
+export default async function GuruPage() {
+  const teachers = await getContent<Teacher[]>("guru");
   return (
     <>
       <Header />
