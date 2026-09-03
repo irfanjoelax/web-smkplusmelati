@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
-import { readFileSync } from "fs";
-import path from "path";
 import {
   COLLECTION_FILES,
   type ContentKey,
+  getContent,
   saveContent,
 } from "@/app/lib/content";
 import { requireAdmin } from "@/app/lib/admin-guard";
@@ -29,13 +28,7 @@ export async function GET(
   if (!KEYS.includes(collection as ContentKey)) {
     return NextResponse.json({ error: "Koleksi tidak dikenal" }, { status: 404 });
   }
-  const file = path.join(
-    process.cwd(),
-    "app",
-    "data",
-    COLLECTION_FILES[collection as ContentKey]
-  );
-  const data = JSON.parse(readFileSync(file, "utf-8"));
+  const data = await getContent(collection as ContentKey);
   return NextResponse.json(data);
 }
 
@@ -61,7 +54,7 @@ export async function PUT(
     return NextResponse.json({ error: "Data tidak valid" }, { status: 400 });
   }
 
-  saveContent(collection as ContentKey, body);
+  await saveContent(collection as ContentKey, body);
 
   // Regenerasi semua halaman yang bersumber dari data ini.
   for (const route of REVALIDATE_ROUTES[collection as ContentKey]) {

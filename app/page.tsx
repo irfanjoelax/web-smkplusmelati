@@ -9,8 +9,8 @@ import Reveal from "@/app/components/Reveal";
 import SectionHeading from "@/app/components/SectionHeading";
 import { Icon } from "@/app/lib/icons";
 import { IMAGES } from "@/app/components/images";
-import { CONTACT } from "@/app/components/site";
-import { getBeranda } from "@/app/lib/content";
+import { getContent } from "@/app/lib/content";
+import type { Beranda } from "@/app/lib/types";
 import JsonLd from "@/app/components/JsonLd";
 import { websiteSchema } from "@/app/lib/seo";
 
@@ -38,8 +38,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
-  const { stats, majors, programs, ekskulPreview, facilities } = getBeranda();
+export default async function Home() {
+  const { stats, majors, programs, ekskulPreview, facilities } = await getContent<Beranda>("beranda");
   return (
     <>
       <Header />
@@ -110,7 +110,7 @@ Sekolah Kewirausahaan yang Bertakwa
                   >
                     <span className="clay-orb-ghost h-16 w-16 -right-6 -top-6 opacity-60" />
                     <p className="text-3xl font-extrabold text-primary">
-                      <AnimatedNumber value={s.value} suffix={s.suffix} />
+              <AnimatedNumber value={s.value} />
                     </p>
                     <p className="mt-1 text-sm font-semibold text-foreground/60">
                       {s.label}

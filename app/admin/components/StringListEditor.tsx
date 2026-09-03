@@ -1,6 +1,7 @@
 "use client";
 
-import { Input, IconBtn } from "./ui";
+import { useState } from "react";
+import { Input, IconBtn, ConfirmDialog } from "./ui";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "./icons";
 
 export default function StringListEditor({
@@ -14,6 +15,8 @@ export default function StringListEditor({
   onRemove?: (index: number, next: string[]) => void;
   placeholder?: string;
 }) {
+  const [confirmIdx, setConfirmIdx] = useState<number | null>(null);
+
   function update(i: number, v: string) {
     const next = [...value];
     next[i] = v;
@@ -39,6 +42,11 @@ export default function StringListEditor({
 
   return (
     <div className="space-y-2">
+      <ConfirmDialog
+        open={confirmIdx !== null}
+        onConfirm={() => { remove(confirmIdx!); setConfirmIdx(null); }}
+        onCancel={() => setConfirmIdx(null)}
+      />
       {value.map((item, i) => (
         <div key={i} className="flex items-center gap-2">
           <Input
@@ -52,7 +60,7 @@ export default function StringListEditor({
           <IconBtn label="Turunkan" onClick={() => move(i, 1)}>
             <ArrowDownIcon className="h-4 w-4" />
           </IconBtn>
-          <IconBtn label="Hapus" danger onClick={() => remove(i)}>
+          <IconBtn label="Hapus" danger onClick={() => setConfirmIdx(i)}>
             <TrashIcon className="h-4 w-4" />
           </IconBtn>
         </div>

@@ -5,7 +5,8 @@ import ImageCard from "@/app/components/ImageCard";
 import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
-import { getPrestasi } from "@/app/lib/content";
+import { getContent } from "@/app/lib/content";
+import type { Prestasi } from "@/app/lib/types";
 import { breadcrumbSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -33,8 +34,8 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-export default function PrestasiSiswaPage() {
-  const { items, quote } = getPrestasi();
+export default async function PrestasiSiswaPage() {
+  const { items, quote } = await getContent<Prestasi>("prestasi");
   return (
     <>
       <Header />

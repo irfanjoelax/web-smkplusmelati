@@ -4,13 +4,14 @@ import { useState } from "react";
 import ImagePicker from "@/app/admin/components/ImagePicker";
 import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
-import { AddButton, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
+import { AddButton, ConfirmDialog, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { Prestasi, PrestasiItem } from "@/app/lib/types";
 
 export default function PrestasiEditor({ initial }: { initial: Prestasi }) {
   const [quote, setQuote] = useState(initial.quote);
   const [items, setItems] = useState<PrestasiItem[]>(initial.items);
   const { save } = useManualSave("prestasi", { quote, items });
+  const [confirmIdx, setConfirmIdx] = useState<number | null>(null);
 
   function update(i: number, patch: Partial<PrestasiItem>) {
     const next = [...items];
@@ -33,6 +34,11 @@ export default function PrestasiEditor({ initial }: { initial: Prestasi }) {
 
   return (
     <div>
+      <ConfirmDialog
+        open={confirmIdx !== null}
+        onConfirm={() => { remove(confirmIdx!); setConfirmIdx(null); }}
+        onCancel={() => setConfirmIdx(null)}
+      />
       <PageHeader
         title="Prestasi Siswa"
         description="Kartu prestasi, gambar sertifikat, dan kutipan halaman."
@@ -97,7 +103,7 @@ export default function PrestasiEditor({ initial }: { initial: Prestasi }) {
                   <IconBtn label="Turunkan" onClick={() => move(i, 1)}>
                     <ArrowDownIcon className="h-4 w-4" />
                   </IconBtn>
-                  <IconBtn label="Hapus" danger onClick={() => remove(i)}>
+                  <IconBtn label="Hapus" danger onClick={() => setConfirmIdx(i)}>
                     <TrashIcon className="h-4 w-4" />
                   </IconBtn>
                 </div>

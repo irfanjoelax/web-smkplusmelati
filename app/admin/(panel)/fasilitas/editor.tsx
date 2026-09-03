@@ -4,12 +4,13 @@ import { useState } from "react";
 import ImagePicker from "@/app/admin/components/ImagePicker";
 import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
-import { AddButton, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
+import { AddButton, ConfirmDialog, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { FasilitasItem } from "@/app/lib/types";
 
 export default function FasilitasEditor({ initial }: { initial: FasilitasItem[] }) {
   const [items, setItems] = useState<FasilitasItem[]>(initial);
   const { save } = useManualSave("fasilitas", items);
+  const [confirmIdx, setConfirmIdx] = useState<number | null>(null);
 
   function update(i: number, patch: Partial<FasilitasItem>) {
     const next = [...items];
@@ -32,6 +33,11 @@ export default function FasilitasEditor({ initial }: { initial: FasilitasItem[] 
 
   return (
     <div>
+      <ConfirmDialog
+        open={confirmIdx !== null}
+        onConfirm={() => { remove(confirmIdx!); setConfirmIdx(null); }}
+        onCancel={() => setConfirmIdx(null)}
+      />
       <PageHeader
         title="Fasilitas"
         description="Kelola kartu sarana dan prasarana sekolah."
@@ -75,7 +81,7 @@ export default function FasilitasEditor({ initial }: { initial: FasilitasItem[] 
                 <IconBtn label="Turunkan" onClick={() => move(i, 1)}>
                   <ArrowDownIcon className="h-4 w-4" />
                 </IconBtn>
-                <IconBtn label="Hapus" danger onClick={() => remove(i)}>
+                <IconBtn label="Hapus" danger onClick={() => setConfirmIdx(i)}>
                   <TrashIcon className="h-4 w-4" />
                 </IconBtn>
               </div>

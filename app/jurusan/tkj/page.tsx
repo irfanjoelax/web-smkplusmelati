@@ -5,7 +5,8 @@ import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
-import { getJurusan } from "@/app/lib/content";
+import { getContent } from "@/app/lib/content";
+import type { JurusanData } from "@/app/lib/types";
 import { breadcrumbSchema, programSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -33,9 +34,10 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-export default function TkjPage() {
-  const { sertifikasi, prospek } = getJurusan().tkj;
-  const skills = getJurusan().tkj.skills;
+export default async function TkjPage() {
+  const jurusan = await getContent<JurusanData>("jurusan");
+  const { sertifikasi, prospek } = jurusan.tkj;
+  const skills = jurusan.tkj.skills;
   return (
     <>
       <Header />

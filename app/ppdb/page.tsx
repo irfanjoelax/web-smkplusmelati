@@ -7,7 +7,6 @@ import LocalImage from "@/app/components/LocalImage";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
 import { IMAGES } from "@/app/components/images";
-import { CONTACT } from "@/app/components/site";
 import { breadcrumbSchema, faqSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {

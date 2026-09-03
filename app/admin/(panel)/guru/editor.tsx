@@ -4,12 +4,13 @@ import { useState } from "react";
 import ImagePicker from "@/app/admin/components/ImagePicker";
 import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
-import { AddButton, Field, IconBtn, Input, PageHeader, Panel, SaveButton } from "@/app/admin/components/ui";
+import { AddButton, ConfirmDialog, Field, IconBtn, Input, PageHeader, Panel, SaveButton } from "@/app/admin/components/ui";
 import type { Teacher } from "@/app/lib/types";
 
 export default function GuruEditor({ initial }: { initial: Teacher[] }) {
   const [items, setItems] = useState<Teacher[]>(initial);
   const { save } = useManualSave("guru", items);
+  const [confirmIdx, setConfirmIdx] = useState<number | null>(null);
 
   function update(i: number, patch: Partial<Teacher>) {
     const next = [...items];
@@ -32,6 +33,11 @@ export default function GuruEditor({ initial }: { initial: Teacher[] }) {
 
   return (
     <div>
+      <ConfirmDialog
+        open={confirmIdx !== null}
+        onConfirm={() => { remove(confirmIdx!); setConfirmIdx(null); }}
+        onCancel={() => setConfirmIdx(null)}
+      />
       <PageHeader
         title="Daftar Guru"
         description="Kelola nama, jabatan, dan foto setiap guru."
@@ -82,7 +88,7 @@ export default function GuruEditor({ initial }: { initial: Teacher[] }) {
                 <IconBtn label="Turunkan" onClick={() => move(i, 1)}>
                   <ArrowDownIcon className="h-4 w-4" />
                 </IconBtn>
-                <IconBtn label="Hapus" danger onClick={() => remove(i)}>
+                <IconBtn label="Hapus" danger onClick={() => setConfirmIdx(i)}>
                   <TrashIcon className="h-4 w-4" />
                 </IconBtn>
               </div>

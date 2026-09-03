@@ -192,7 +192,6 @@ export function ContentChart({
         <div className="w-full flex-1 space-y-1.5">
           {segments.map((seg, i) => {
             const isActive = active === i;
-            const pct = total > 0 ? Math.round((seg.count / total) * 100) : 0;
             return (
               <button
                 key={seg.label}

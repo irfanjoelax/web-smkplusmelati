@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { ImageIcon } from "@/app/admin/components/icons";
-import { PageHeader, Panel } from "@/app/admin/components/ui";
+import { ConfirmDialog, PageHeader, Panel } from "@/app/admin/components/ui";
 
 export default function MediaClient({ initial }: { initial: string[] }) {
   const [files, setFiles] = useState<string[]>(initial);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [confirmUrl, setConfirmUrl] = useState<string | null>(null);
 
   async function upload(file: File) {
     setBusy(true);
@@ -40,6 +41,12 @@ export default function MediaClient({ initial }: { initial: string[] }) {
 
   return (
     <div>
+      <ConfirmDialog
+        open={confirmUrl !== null}
+        message="Yakin ingin menghapus gambar ini? Tindakan tidak bisa dibatalkan."
+        onConfirm={() => { remove(confirmUrl!); setConfirmUrl(null); }}
+        onCancel={() => setConfirmUrl(null)}
+      />
       <PageHeader
         title="Media"
         description="Gambar hasil unggahan dari panel admin."
@@ -66,7 +73,7 @@ export default function MediaClient({ initial }: { initial: string[] }) {
             />
           </label>
           <span className="text-xs text-slate-500">
-            Path yang bisa dipakai: <code>/uploads/…</code>
+            Salin URL gambar dari tombol di bawah tiap gambar
           </span>
           {error && <span className="text-sm font-semibold text-red-600">{error}</span>}
         </div>
@@ -86,7 +93,7 @@ export default function MediaClient({ initial }: { initial: string[] }) {
               <span className="truncate text-[0.65rem] font-medium text-slate-500">{f}</span>
               <button
                 type="button"
-                onClick={() => remove(f)}
+                onClick={() => setConfirmUrl(f)}
                 className="shrink-0 rounded-lg bg-red-50 px-2 py-1 text-[0.65rem] font-bold text-red-600 transition hover:bg-red-100"
               >
                 Hapus

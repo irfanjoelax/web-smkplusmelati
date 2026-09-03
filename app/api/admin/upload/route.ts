@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { randomBytes } from "crypto";
 import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "fs";
 import path from "path";
+import { put, del } from "@vercel/blob";
 import { requireAdmin } from "@/app/lib/admin-guard";
 
 const ALLOWED = new Map([
@@ -35,16 +36,24 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Ukuran maksimal 3 MB" }, { status: 400 });
   }
 
-  const dir = path.join(process.cwd(), "public", "uploads");
-  if (!existsSync(dir)) {
-    mkdirSync(dir, { recursive: true });
-  }
-
   const name = `${Date.now()}-${randomBytes(6).toString("hex")}${ext}`;
-  const buffer = Buffer.from(await file.arrayBuffer());
-  writeFileSync(path.join(dir, name), buffer);
 
-  return NextResponse.json({ url: `/uploads/${name}` });
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const blob = await put(`uploads/${name}`, file, {
+      access: "public",
+      contentType: file.type,
+    });
+    return NextResponse.json({ url: blob.url });
+  } else {
+    // Dev lokal → simpan ke public/uploads/
+    const dir = path.join(process.cwd(), "public", "uploads");
+    if (!existsSync(dir)) {
+      mkdirSync(dir, { recursive: true });
+    }
+    const buffer = Buffer.from(await file.arrayBuffer());
+    writeFileSync(path.join(dir, name), buffer);
+    return NextResponse.json({ url: `/uploads/${name}` });
+  }
 }
 
 export async function DELETE(req: Request) {
@@ -53,17 +62,22 @@ export async function DELETE(req: Request) {
   }
 
   const { searchParams } = new URL(req.url);
-  const target = searchParams.get("path") ?? "";
-  const uploadsDir = path.join(process.cwd(), "public", "uploads");
-  const filePath = path.join(uploadsDir, path.basename(target));
-
-  if (!target.startsWith("/uploads/") || !filePath.startsWith(uploadsDir)) {
-    return NextResponse.json({ error: "Path tidak valid" }, { status: 400 });
-  }
+  const url = searchParams.get("path") ?? "";
 
   try {
-    if (existsSync(filePath)) {
-      unlinkSync(filePath);
+    if (url.startsWith("https://")) {
+      // Production → hapus dari Blob
+      await del(url);
+    } else if (url.startsWith("/uploads/")) {
+      // Dev lokal → hapus dari public/uploads/
+      const uploadsDir = path.join(process.cwd(), "public", "uploads");
+      const filePath = path.join(uploadsDir, path.basename(url));
+      if (!filePath.startsWith(uploadsDir)) {
+        return NextResponse.json({ error: "Path tidak valid" }, { status: 400 });
+      }
+      if (existsSync(filePath)) unlinkSync(filePath);
+    } else {
+      return NextResponse.json({ error: "URL tidak valid" }, { status: 400 });
     }
   } catch {
     // abaikan error saat menghapus

@@ -1,10 +1,11 @@
-import { getJurusan } from "@/app/lib/content";
+import { getContent } from "@/app/lib/content";
+import type { JurusanData } from "@/app/lib/types";
 import JurusanEditor from "./editor";
 
 export const metadata = {
   title: "Jurusan | Admin Panel",
 };
 
-export default function JurusanAdminPage() {
-  return <JurusanEditor initial={getJurusan()} />;
+export default async function JurusanAdminPage() {
+  return <JurusanEditor initial={await getContent<JurusanData>("jurusan")} />;
 }

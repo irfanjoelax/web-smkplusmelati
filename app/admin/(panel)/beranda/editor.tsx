@@ -18,20 +18,10 @@ import type {
   Beranda,
   EkskulPreview,
   FacilityPreview,
-  IconKey,
   Major,
   ProgramItem,
   Stat,
 } from "@/app/lib/types";
-
-const ICON_KEYS: IconKey[] = [
-  "network",
-  "chef",
-  "training",
-  "dormitory",
-  "religion",
-  "award",
-];
 
 function MoveDelete({
   i,
@@ -82,7 +72,7 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
             <div className="flex items-center gap-2">
               <SaveButton onSave={save} />
               <AddButton
-                onClick={() => setStats([...stats, { value: 0, suffix: "", label: "" }])}
+                onClick={() => setStats([...stats, { value: "", label: "" }])}
               >
                 Tambah
               </AddButton>
@@ -92,23 +82,13 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
           <div className="space-y-3">
             {stats.map((s, i) => (
               <div key={i} className="flex flex-wrap items-end gap-3 rounded-xl border border-slate-200 p-3">
-                <Field label="Angka" className="w-24">
+                <Field label="Nilai" className="w-24">
                   <Input
-                    type="number"
+                    type="text"
                     value={s.value}
                     onChange={(e) => {
                       const next = [...stats];
-                      next[i] = { ...s, value: Number(e.target.value) };
-                      setStats(next);
-                    }}
-                  />
-                </Field>
-                <Field label="Sufiks" className="w-20">
-                  <Input
-                    value={s.suffix}
-                    onChange={(e) => {
-                      const next = [...stats];
-                      next[i] = { ...s, suffix: e.target.value };
+                      next[i] = { ...s, value: e.target.value };
                       setStats(next);
                     }}
                   />
@@ -160,30 +140,16 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
             {majors.map((m, i) => (
               <div key={i} className="flex flex-wrap items-start gap-4 rounded-xl border border-slate-200 p-4">
                 <div className="min-w-0 flex-1 space-y-3">
-                  <div className="grid gap-3 sm:grid-cols-3">
+                  <div className="grid gap-3 sm:grid-cols-2">
                     <Field label="Judul Singkat">
                       <Input value={m.title} onChange={(e) => { const n = [...majors]; n[i] = { ...m, title: e.target.value }; setMajors(n); }} />
                     </Field>
                     <Field label="Judul Lengkap">
                       <Input value={m.full} onChange={(e) => { const n = [...majors]; n[i] = { ...m, full: e.target.value }; setMajors(n); }} />
                     </Field>
-                    <Field label="Icon">
-                      <select
-                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-blue-400"
-                        value={m.icon}
-                        onChange={(e) => { const n = [...majors]; n[i] = { ...m, icon: e.target.value as IconKey }; setMajors(n); }}
-                      >
-                        {ICON_KEYS.map((k) => (
-                          <option key={k} value={k}>{k}</option>
-                        ))}
-                      </select>
-                    </Field>
                   </div>
                   <Field label="Deskripsi">
                     <Textarea value={m.desc} onChange={(e) => { const n = [...majors]; n[i] = { ...m, desc: e.target.value }; setMajors(n); }} />
-                  </Field>
-                  <Field label="Tautan (href)">
-                    <Input value={m.href} onChange={(e) => { const n = [...majors]; n[i] = { ...m, href: e.target.value }; setMajors(n); }} />
                   </Field>
                 </div>
                 <MoveDelete i={i} onMove={(idx, d) => {
@@ -221,25 +187,9 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
             {programs.map((p, i) => (
               <div key={i} className="flex flex-wrap items-start gap-4 rounded-xl border border-slate-200 p-4">
                 <div className="min-w-0 flex-1 space-y-3">
-                  <div className="grid gap-3 sm:grid-cols-3">
-                    <Field label="Judul">
-                      <Input value={p.title} onChange={(e) => { const n = [...programs]; n[i] = { ...p, title: e.target.value }; setPrograms(n); }} />
-                    </Field>
-                    <Field label="Tautan (href)">
-                      <Input value={p.href} onChange={(e) => { const n = [...programs]; n[i] = { ...p, href: e.target.value }; setPrograms(n); }} />
-                    </Field>
-                    <Field label="Icon">
-                      <select
-                        className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-800 outline-none focus:border-blue-400"
-                        value={p.icon}
-                        onChange={(e) => { const n = [...programs]; n[i] = { ...p, icon: e.target.value as IconKey }; setPrograms(n); }}
-                      >
-                        {ICON_KEYS.map((k) => (
-                          <option key={k} value={k}>{k}</option>
-                        ))}
-                      </select>
-                    </Field>
-                  </div>
+                  <Field label="Judul">
+                    <Input value={p.title} onChange={(e) => { const n = [...programs]; n[i] = { ...p, title: e.target.value }; setPrograms(n); }} />
+                  </Field>
                   <Field label="Deskripsi">
                     <Textarea value={p.desc} onChange={(e) => { const n = [...programs]; n[i] = { ...p, desc: e.target.value }; setPrograms(n); }} />
                   </Field>
@@ -283,9 +233,6 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
                 <div className="min-w-0 flex-1 space-y-3">
                   <Field label="Nama">
                     <Input value={e.name} onChange={(ev) => { const n = [...ekskulPreview]; n[i] = { ...e, name: ev.target.value }; setEkskulPreview(n); }} />
-                  </Field>
-                  <Field label="Tautan (href)">
-                    <Input value={e.href} onChange={(ev) => { const n = [...ekskulPreview]; n[i] = { ...e, href: ev.target.value }; setEkskulPreview(n); }} />
                   </Field>
                 </div>
                 <MoveDelete i={i} onMove={(idx, d) => {

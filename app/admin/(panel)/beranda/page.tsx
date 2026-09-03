@@ -1,10 +1,11 @@
-import { getBeranda } from "@/app/lib/content";
+import { getContent } from "@/app/lib/content";
+import type { Beranda } from "@/app/lib/types";
 import BerandaEditor from "./editor";
 
 export const metadata = {
   title: "Beranda | Admin Panel",
 };
 
-export default function BerandaAdminPage() {
-  return <BerandaEditor initial={getBeranda()} />;
+export default async function BerandaAdminPage() {
+  return <BerandaEditor initial={await getContent<Beranda>("beranda")} />;
 }

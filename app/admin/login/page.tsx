@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import LoginForm from "./LoginForm";
 import { currentAdmin } from "@/app/lib/admin-guard";
@@ -20,12 +21,25 @@ export default async function LoginPage() {
       <div className="relative hidden w-1/2 overflow-hidden bg-gradient-to-br from-[#4aa7e0] via-[#0e5f9c] to-[#083f68] lg:block">
         <div className="relative z-10 flex h-full flex-col justify-between p-12">
           <div>
-            <span className="text-lg font-extrabold tracking-tight text-white">
-              Admin Panel
-            </span>
-            <span className="block text-xs font-semibold text-white/60">
-              SMK Plus Melati
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full bg-white p-1 shadow-md shadow-black/10">
+                <Image
+                  src="/logo melati.png"
+                  alt="Logo SMK Plus Melati"
+                  width={44}
+                  height={44}
+                  className="h-full w-full object-contain"
+                />
+              </span>
+              <span>
+                <span className="block text-lg font-extrabold tracking-tight text-white">
+                  Admin Panel
+                </span>
+                <span className="block text-xs font-semibold text-white/60">
+                  SMK Plus Melati
+                </span>
+              </span>
+            </div>
           </div>
           <div>
             <h1 className="text-3xl font-extrabold leading-tight text-white">
@@ -50,12 +64,25 @@ export default async function LoginPage() {
       <div className="flex flex-1 items-center justify-center bg-slate-50 px-4 py-12">
         <div className="w-full max-w-sm">
           <div className="mb-6 lg:hidden">
-            <span className="text-lg font-extrabold tracking-tight text-slate-900">
-              Admin Panel
-            </span>
-            <span className="block text-xs font-semibold text-slate-500">
-              SMK Plus Melati
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white p-1 shadow-sm">
+                <Image
+                  src="/logo melati.png"
+                  alt="Logo SMK Plus Melati"
+                  width={40}
+                  height={40}
+                  className="h-full w-full object-contain"
+                />
+              </span>
+              <span>
+                <span className="block text-lg font-extrabold tracking-tight text-slate-900">
+                  Admin Panel
+                </span>
+                <span className="block text-xs font-semibold text-slate-500">
+                  SMK Plus Melati
+                </span>
+              </span>
+            </div>
           </div>
           <div className="rounded-3xl border border-slate-200/70 bg-white p-8 shadow-lg shadow-slate-200/60">
             <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">

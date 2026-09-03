@@ -3,7 +3,7 @@
 import { useState } from "react";
 import StringListEditor from "@/app/admin/components/StringListEditor";
 import { useManualSave } from "@/app/admin/components/useManualSave";
-import { AddButton, Field, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
+import { Field, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { JurusanCard, JurusanData } from "@/app/lib/types";
 
 function CardEditor({

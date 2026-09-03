@@ -1,10 +1,11 @@
-import { getVisiMisi } from "@/app/lib/content";
+import { getContent } from "@/app/lib/content";
+import type { VisiMisi } from "@/app/lib/types";
 import VisiMisiEditor from "./editor";
 
 export const metadata = {
   title: "Visi & Misi | Admin Panel",
 };
 
-export default function VisiMisiAdminPage() {
-  return <VisiMisiEditor initial={getVisiMisi()} />;
+export default async function VisiMisiAdminPage() {
+  return <VisiMisiEditor initial={await getContent<VisiMisi>("visiMisi")} />;
 }
