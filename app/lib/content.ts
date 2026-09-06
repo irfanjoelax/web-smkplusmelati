@@ -12,7 +12,8 @@ export type ContentKey =
   | "prestasi"
   | "fasilitas"
   | "beranda"
-  | "ekskul";
+  | "ekskul"
+  | "berita";
 
 export const COLLECTION_FILES: Record<ContentKey, string> = {
   guru: "guru.json",
@@ -22,6 +23,7 @@ export const COLLECTION_FILES: Record<ContentKey, string> = {
   fasilitas: "fasilitas.json",
   beranda: "beranda.json",
   ekskul: "ekskul.json",
+  berita: "berita.json",
 };
 
 /**

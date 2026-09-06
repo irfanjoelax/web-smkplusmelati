@@ -18,6 +18,7 @@ const REVALIDATE_ROUTES: Record<ContentKey, string[]> = {
   fasilitas: ["/fasilitas"],
   beranda: ["/"],
   ekskul: ["/ekskul"],
+  berita: ["/berita"],
 };
 
 export async function GET(

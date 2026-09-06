@@ -9,7 +9,8 @@ export type ContentSaveKey =
   | "prestasi"
   | "fasilitas"
   | "beranda"
-  | "ekskul";
+  | "ekskul"
+  | "berita";
 
 export function useManualSave(key: ContentSaveKey, data: unknown) {
   const [isSaving, setIsSaving] = useState(false);

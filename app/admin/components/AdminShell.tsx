@@ -14,6 +14,7 @@ import {
   HomeIcon,
   LogoutIcon,
   MenuIcon,
+  NewspaperIcon,
   StarIcon,
   TrophyIcon,
   UsersIcon,
@@ -27,6 +28,7 @@ const NAV = [
   { href: "/admin/prestasi", label: "Prestasi Siswa", icon: TrophyIcon },
   { href: "/admin/fasilitas", label: "Fasilitas", icon: BuildingIcon },
   { href: "/admin/ekskul", label: "Ekskul", icon: StarIcon },
+  { href: "/admin/berita", label: "Berita", icon: NewspaperIcon },
   { href: "/admin/beranda", label: "Beranda", icon: HomeIcon },
 ];
 

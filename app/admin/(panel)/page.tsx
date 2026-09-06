@@ -2,13 +2,13 @@ import {
   getContent,
   type ContentKey,
 } from "@/app/lib/content";
-import type { Beranda, EkskulItem, FasilitasItem, JurusanData, Prestasi, Teacher, VisiMisi } from "@/app/lib/types";
+import type { Beranda, BeritaItem, EkskulItem, FasilitasItem, JurusanData, Prestasi, Teacher, VisiMisi } from "@/app/lib/types";
 import DashboardView from "./dashboard-view";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const [guruData, fasilitasData, visiMisiData, berandaData, prestasiData, ekskulData, jurusanData] =
+  const [guruData, fasilitasData, visiMisiData, berandaData, prestasiData, ekskulData, jurusanData, beritaData] =
     await Promise.all([
       getContent<Teacher[]>("guru"),
       getContent<FasilitasItem[]>("fasilitas"),
@@ -17,6 +17,7 @@ export default async function DashboardPage() {
       getContent<Prestasi>("prestasi"),
       getContent<EkskulItem[]>("ekskul"),
       getContent<JurusanData>("jurusan"),
+      getContent<BeritaItem[]>("berita"),
     ]);
 
   const guru = guruData.length;
@@ -26,6 +27,7 @@ export default async function DashboardPage() {
   const prestasi = prestasiData.items.length;
   const ekskul = ekskulData.length;
   const skills = Object.keys(jurusanData).length;
+  const berita = beritaData.length;
   return (
     <DashboardView
       guru={guru}
@@ -35,6 +37,7 @@ export default async function DashboardPage() {
       fasilitas={fasilitas}
       ekskul={ekskul}
       stats={stats}
+      berita={berita}
     />
   );
 }

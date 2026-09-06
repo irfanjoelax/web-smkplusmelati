@@ -30,6 +30,7 @@ export const SOCIALS = [
 
 export const NAV_LINKS = [
   { label: "Beranda", href: "/" },
+  { label: "Berita", href: "/berita" },
   {
     label: "Profil",
     href: "/profil",

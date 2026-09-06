@@ -9,6 +9,7 @@ import {
   DashboardIcon,
   EyeIcon,
   HomeIcon,
+  NewspaperIcon,
   StarIcon,
   TrophyIcon,
   UsersIcon,
@@ -28,6 +29,7 @@ type Props = {
   fasilitas: number;
   ekskul: number;
   stats: number;
+  berita: number;
 };
 
 const SECTIONS = [
@@ -37,6 +39,7 @@ const SECTIONS = [
   { href: "/admin/prestasi", title: "Prestasi Siswa", desc: "Kartu prestasi dan kutipan.", icon: TrophyIcon },
   { href: "/admin/fasilitas", title: "Fasilitas", desc: "Kartu sarana dan prasarana.", icon: BuildingIcon },
   { href: "/admin/ekskul", title: "Ekskul", desc: "Kartu ekstrakurikuler.", icon: StarIcon },
+  { href: "/admin/berita", title: "Berita", desc: "Artikel berita sekolah.", icon: NewspaperIcon },
   { href: "/admin/beranda", title: "Beranda", desc: "Statistik, jurusan, program, ekskul, dan fasilitas.", icon: HomeIcon },
 ];
 
@@ -46,6 +49,7 @@ const CHART_LINKS: Record<string, string> = {
   Prestasi: "/admin/prestasi",
   Fasilitas: "/admin/fasilitas",
   Ekskul: "/admin/ekskul",
+  Berita: "/admin/berita",
 };
 
 function FadeUp({
@@ -87,6 +91,7 @@ export default function DashboardView({
   fasilitas,
   ekskul,
   stats,
+  berita,
 }: Props) {
   const router = useRouter();
   const handleTotalClick = () => {
@@ -118,6 +123,7 @@ export default function DashboardView({
     "Prestasi Siswa": prestasi,
     Fasilitas: fasilitas,
     Ekskul: ekskul,
+    Berita: berita,
     Beranda: stats,
   };
 
@@ -127,6 +133,7 @@ export default function DashboardView({
     { label: "Prestasi", count: prestasi, color: "#f43f5e" },
     { label: "Fasilitas", count: fasilitas, color: "#10b981" },
     { label: "Ekskul", count: ekskul, color: "#6366f1" },
+    { label: "Berita", count: berita, color: "#8b5cf6" },
   ];
   const chartTotal = chartData.reduce((sum, item) => sum + item.count, 0);
 

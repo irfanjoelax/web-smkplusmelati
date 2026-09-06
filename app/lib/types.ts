@@ -41,6 +41,15 @@ export type EkskulItem = {
   image: string;
 };
 
+export type BeritaItem = {
+  slug: string;
+  title: string;
+  desc: string;
+  content: string;
+  image: string;
+  date: string;
+};
+
 export type Prestasi = {
   quote: string;
   items: PrestasiItem[];
