@@ -1,19 +1,19 @@
 [
   {
-    "slug": "kegiatan-bakti-sosial",
-    "title": "Kegiatan Bakti Sosial SMK Plus Melati",
-    "desc": "SMK Plus Melati mengadakan bakti sosial di sekitar lingkungan sekolah sebagai wujud kepedulian terhadap masyarakat.",
-    "content": "SMK Plus Melati Samarinda menggelar kegiatan bakti sosial pada tanggal 15 Agustus 2026. Kegiatan ini diikuti oleh seluruh siswa dan guru, dengan berbagai aksi seperti pembagian sembako, bakti lingkungan, dan pemeriksaan kesehatan gratis. Kegiatan ini bertujuan untuk menumbuhkan rasa kepedulian dan gotong royong di kalangan siswa.\n\nSelain itu, kegiatan ini juga menjadi ajang untuk mempererat hubungan antara sekolah dan masyarakat sekitar. Diharapkan kegiatan serupa dapat dilaksanakan secara rutin setiap tahunnya.",
-    "image": "",
-    "date": "2026-08-15"
-  },
-  {
     "slug": "lomba-pidato-bahasa-inggris",
     "title": "Juara Lomba Pidato Bahasa Inggris",
     "desc": "Siswa SMK Plus Melati meraih juara pertama dalam lomba pidato bahasa Inggris tingkat kota.",
     "content": "Siswa SMK Plus Melati, Ananda Putri, berhasil meraih juara pertama dalam lomba pidato bahasa Inggris yang diselenggarakan oleh Dinas Pendidikan Samarinda pada tanggal 20 Agustus 2026. Ananda berhasil mengalahkan peserta dari berbagai sekolah menengah kejuruan lainnya dengan pidato bertema \"Pendidikan Karakter di Era Digital\".\n\nPrestasi ini menjadi kebanggaan bagi sekolah dan diharapkan dapat memotivasi siswa lain untuk berprestasi di bidang akademik maupun non-akademik.",
     "image": "/images/lomba-pidato.jpg",
     "date": "2026-08-20"
+  },
+  {
+    "slug": "kegiatan-bakti-sosial",
+    "title": "Kegiatan Bakti Sosial SMK Plus Melati",
+    "desc": "SMK Plus Melati mengadakan bakti sosial di sekitar lingkungan sekolah sebagai wujud kepedulian terhadap masyarakat.",
+    "content": "SMK Plus Melati Samarinda menggelar kegiatan bakti sosial pada tanggal 15 Agustus 2026. Kegiatan ini diikuti oleh seluruh siswa dan guru, dengan berbagai aksi seperti pembagian sembako, bakti lingkungan, dan pemeriksaan kesehatan gratis. Kegiatan ini bertujuan untuk menumbuhkan rasa kepedulian dan gotong royong di kalangan siswa.\n\nSelain itu, kegiatan ini juga menjadi ajang untuk mempererat hubungan antara sekolah dan masyarakat sekitar. Diharapkan kegiatan serupa dapat dilaksanakan secara rutin setiap tahunnya.",
+    "image": "",
+    "date": "2026-08-15"
   },
   {
     "slug": "penerimaan-siswa-baru-2027",
@@ -38,5 +38,13 @@
     "content": "Tim e-sport SMK Plus Melati yang terdiri dari 5 siswa berhasil meraih juara pertama dalam turnamen Mobile Legends tingkat pelajar se-Kalimantan Timur yang diselenggarakan di Balikpapan. Mereka berhasil mengalahkan 16 tim lainnya setelah melalui pertandingan sengit.\n\nKeberhasilan ini diharapkan dapat mendorong pengembangan ekstrakurikuler e-sport di sekolah dan menjadi bibit atlet e-sport tingkat provinsi.",
     "image": "/images/e-sport.png",
     "date": "2026-08-10"
+  },
+  {
+    "title": "",
+    "slug": "",
+    "desc": "",
+    "content": "",
+    "image": "",
+    "date": "2026-09-09"
   }
 ]

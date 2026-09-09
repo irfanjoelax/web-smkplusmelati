@@ -7,6 +7,7 @@ import {
   saveContent,
 } from "@/app/lib/content";
 import { requireAdmin } from "@/app/lib/admin-guard";
+import { deleteContentItem } from "@/app/lib/deleteContentItem";
 
 const KEYS = Object.keys(COLLECTION_FILES) as ContentKey[];
 
@@ -20,6 +21,24 @@ const REVALIDATE_ROUTES: Record<ContentKey, string[]> = {
   ekskul: ["/ekskul"],
   berita: ["/berita"],
 };
+
+const DELETE_SECTIONS: Record<ContentKey, (string | null)[]> = {
+  guru: [null],
+  visiMisi: ["misi"],
+  jurusan: ["tkj.skills", "tataBoga.skills"],
+  prestasi: ["items"],
+  fasilitas: [null],
+  beranda: ["stats", "majors", "programs", "ekskulPreview", "facilities"],
+  ekskul: [null],
+  berita: [null],
+};
+
+function revalidateCollection(key: ContentKey) {
+  for (const route of REVALIDATE_ROUTES[key]) {
+    revalidatePath(route);
+  }
+  revalidatePath("/", "layout");
+}
 
 export async function GET(
   _req: Request,
@@ -57,11 +76,61 @@ export async function PUT(
 
   await saveContent(collection as ContentKey, body);
 
-  // Regenerasi semua halaman yang bersumber dari data ini.
-  for (const route of REVALIDATE_ROUTES[collection as ContentKey]) {
-    revalidatePath(route);
-  }
-  revalidatePath("/", "layout");
+  revalidateCollection(collection as ContentKey);
 
+  return NextResponse.json({ ok: true });
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ collection: string }> },
+) {
+  const { collection } = await params;
+  if (!KEYS.includes(collection as ContentKey)) {
+    return NextResponse.json({ error: "Koleksi tidak dikenal" }, { status: 404 });
+  }
+  if (!(await requireAdmin())) {
+    return NextResponse.json({ error: "Tidak diizinkan" }, { status: 401 });
+  }
+
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Permintaan tidak valid" }, { status: 400 });
+  }
+
+  const key = collection as ContentKey;
+  const section = (body as { section?: unknown })?.section;
+  if (
+    (section !== null && typeof section !== "string") ||
+    !DELETE_SECTIONS[key].includes(section as string | null) ||
+    !(body && typeof body === "object" && "target" in body)
+  ) {
+    return NextResponse.json({ error: "Target hapus tidak valid" }, { status: 400 });
+  }
+
+  const data = await getContent(key);
+  let result = deleteContentItem(
+    data,
+    section as string | null,
+    (body as { target: unknown }).target,
+  );
+  if (!result.ok && "fallback" in body) {
+    result = deleteContentItem(
+      data,
+      section as string | null,
+      (body as { fallback: unknown }).fallback,
+    );
+  }
+  if (!result.ok) {
+    return NextResponse.json(
+      { error: "Item sudah berubah atau tidak ditemukan. Muat ulang halaman." },
+      { status: 409 },
+    );
+  }
+
+  await saveContent(key, result.data);
+  revalidateCollection(key);
   return NextResponse.json({ ok: true });
 }

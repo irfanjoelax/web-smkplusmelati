@@ -6,10 +6,11 @@ import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
 import { AddButton, ConfirmDialog, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { Prestasi, PrestasiItem } from "@/app/lib/types";
+import { deleteEditorItem, tagPersistedItems } from "@/app/admin/components/deleteContent";
 
 export default function PrestasiEditor({ initial }: { initial: Prestasi }) {
   const [quote, setQuote] = useState(initial.quote);
-  const [items, setItems] = useState<PrestasiItem[]>(initial.items);
+  const [items, setItems] = useState<PrestasiItem[]>(() => tagPersistedItems(initial.items));
   const { save } = useManualSave("prestasi", { quote, items });
   const [confirmIdx, setConfirmIdx] = useState<number | null>(null);
 
@@ -27,16 +28,18 @@ export default function PrestasiEditor({ initial }: { initial: Prestasi }) {
     setItems(next);
   }
 
-  function remove(i: number) {
-    const next = items.filter((_, idx) => idx !== i);
-    setItems(next);
+  async function remove(i: number) {
+    await deleteEditorItem("prestasi", "items", items[i], () => {
+      setItems(items.filter((_, idx) => idx !== i));
+      setConfirmIdx(null);
+    });
   }
 
   return (
     <div>
       <ConfirmDialog
         open={confirmIdx !== null}
-        onConfirm={() => { remove(confirmIdx!); setConfirmIdx(null); }}
+        onConfirm={() => remove(confirmIdx!)}
         onCancel={() => setConfirmIdx(null)}
       />
       <PageHeader

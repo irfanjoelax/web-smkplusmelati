@@ -11,7 +11,7 @@ import {
   DashboardIcon,
   ExternalIcon,
   EyeIcon,
-  HomeIcon,
+  GearIcon,
   LogoutIcon,
   MenuIcon,
   NewspaperIcon,
@@ -29,7 +29,7 @@ const NAV = [
   { href: "/admin/fasilitas", label: "Fasilitas", icon: BuildingIcon },
   { href: "/admin/ekskul", label: "Ekskul", icon: StarIcon },
   { href: "/admin/berita", label: "Berita", icon: NewspaperIcon },
-  { href: "/admin/beranda", label: "Beranda", icon: HomeIcon },
+  { href: "/admin/beranda", label: "Pengaturan", icon: GearIcon },
 ];
 
 function Brand({ onNavigate }: { onNavigate?: () => void }) {

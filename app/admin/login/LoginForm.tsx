@@ -11,6 +11,7 @@ export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -22,7 +23,7 @@ export default function LoginForm() {
       const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, rememberMe }),
       });
       if (res.ok) {
         const next = searchParams.get("next") ?? "/admin";
@@ -73,6 +74,15 @@ export default function LoginForm() {
             <EyeIcon className="h-5 w-5" />
           </button>
         </div>
+      </label>
+      <label className="flex items-center gap-2 text-sm text-slate-600">
+        <input
+          type="checkbox"
+          checked={rememberMe}
+          onChange={(e) => setRememberMe(e.target.checked)}
+          className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+        />
+        Ingat Saya
       </label>
       {error && <p className="text-sm font-semibold text-red-600">{error}</p>}
       <Button type="submit" disabled={busy} className="w-full">

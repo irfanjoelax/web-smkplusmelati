@@ -6,9 +6,10 @@ import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
 import { AddButton, ConfirmDialog, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { FasilitasItem } from "@/app/lib/types";
+import { deleteEditorItem, tagPersistedItems } from "@/app/admin/components/deleteContent";
 
 export default function FasilitasEditor({ initial }: { initial: FasilitasItem[] }) {
-  const [items, setItems] = useState<FasilitasItem[]>(initial);
+  const [items, setItems] = useState<FasilitasItem[]>(() => tagPersistedItems(initial));
   const { save } = useManualSave("fasilitas", items);
   const [confirmIdx, setConfirmIdx] = useState<number | null>(null);
 
@@ -26,16 +27,18 @@ export default function FasilitasEditor({ initial }: { initial: FasilitasItem[] 
     setItems(next);
   }
 
-  function remove(i: number) {
-    const next = items.filter((_, idx) => idx !== i);
-    setItems(next);
+  async function remove(i: number) {
+    await deleteEditorItem("fasilitas", null, items[i], () => {
+      setItems(items.filter((_, idx) => idx !== i));
+      setConfirmIdx(null);
+    });
   }
 
   return (
     <div>
       <ConfirmDialog
         open={confirmIdx !== null}
-        onConfirm={() => { remove(confirmIdx!); setConfirmIdx(null); }}
+        onConfirm={() => remove(confirmIdx!)}
         onCancel={() => setConfirmIdx(null)}
       />
       <PageHeader

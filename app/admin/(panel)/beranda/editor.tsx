@@ -6,6 +6,7 @@ import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
 import {
   AddButton,
+  ConfirmDialog,
   Field,
   IconBtn,
   Input,
@@ -22,6 +23,12 @@ import type {
   ProgramItem,
   Stat,
 } from "@/app/lib/types";
+import { deleteEditorItem, tagPersistedItems } from "@/app/admin/components/deleteContent";
+
+type DeleteTarget = {
+  section: "stats" | "majors" | "programs" | "ekskulPreview" | "facilities";
+  index: number;
+};
 
 function MoveDelete({
   i,
@@ -48,17 +55,61 @@ function MoveDelete({
 }
 
 export default function BerandaEditor({ initial }: { initial: Beranda }) {
-  const [stats, setStats] = useState<Stat[]>(initial.stats);
-  const [majors, setMajors] = useState<Major[]>(initial.majors);
-  const [programs, setPrograms] = useState<ProgramItem[]>(initial.programs);
-  const [ekskulPreview, setEkskulPreview] = useState<EkskulPreview[]>(initial.ekskulPreview);
-  const [facilities, setFacilities] = useState<FacilityPreview[]>(initial.facilities);
+  const [stats, setStats] = useState<Stat[]>(() => tagPersistedItems(initial.stats));
+  const [majors, setMajors] = useState<Major[]>(() => tagPersistedItems(initial.majors));
+  const [programs, setPrograms] = useState<ProgramItem[]>(() => tagPersistedItems(initial.programs));
+  const [ekskulPreview, setEkskulPreview] = useState<EkskulPreview[]>(() => tagPersistedItems(initial.ekskulPreview));
+  const [facilities, setFacilities] = useState<FacilityPreview[]>(() => tagPersistedItems(initial.facilities));
+  const [deleteTarget, setDeleteTarget] = useState<DeleteTarget | null>(null);
 
   const data: Beranda = { stats, majors, programs, ekskulPreview, facilities };
   const { save } = useManualSave("beranda", data);
 
+  async function remove() {
+    if (!deleteTarget) return;
+    const { section, index } = deleteTarget;
+    const done = () => setDeleteTarget(null);
+
+    switch (section) {
+      case "stats":
+        await deleteEditorItem("beranda", section, stats[index], () => {
+          setStats(stats.filter((_, i) => i !== index));
+          done();
+        });
+        break;
+      case "majors":
+        await deleteEditorItem("beranda", section, majors[index], () => {
+          setMajors(majors.filter((_, i) => i !== index));
+          done();
+        });
+        break;
+      case "programs":
+        await deleteEditorItem("beranda", section, programs[index], () => {
+          setPrograms(programs.filter((_, i) => i !== index));
+          done();
+        });
+        break;
+      case "ekskulPreview":
+        await deleteEditorItem("beranda", section, ekskulPreview[index], () => {
+          setEkskulPreview(ekskulPreview.filter((_, i) => i !== index));
+          done();
+        });
+        break;
+      case "facilities":
+        await deleteEditorItem("beranda", section, facilities[index], () => {
+          setFacilities(facilities.filter((_, i) => i !== index));
+          done();
+        });
+    }
+  }
+
   return (
     <div>
+      <ConfirmDialog
+        open={deleteTarget !== null}
+        onConfirm={remove}
+        onCancel={() => setDeleteTarget(null)}
+      />
       <PageHeader
         title="Beranda"
         description="Statistik, jurusan, program, pratinjau ekskul, dan pratinjau fasilitas."
@@ -111,10 +162,7 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
                   const next = [...stats];
                   [next[idx], next[j]] = [next[j], next[idx]];
                   setStats(next);
-                }} onRemove={(idx) => {
-                  const next = stats.filter((_, x) => x !== idx);
-                  setStats(next);
-                }} />
+                }} onRemove={(index) => setDeleteTarget({ section: "stats", index })} />
               </div>
             ))}
           </div>
@@ -158,10 +206,7 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
                   const n = [...majors];
                   [n[idx], n[j]] = [n[j], n[idx]];
                   setMajors(n);
-                }} onRemove={(idx) => {
-                  const next = majors.filter((_, x) => x !== idx);
-                  setMajors(next);
-                }} />
+                }} onRemove={(index) => setDeleteTarget({ section: "majors", index })} />
               </div>
             ))}
           </div>
@@ -200,10 +245,7 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
                   const n = [...programs];
                   [n[idx], n[j]] = [n[j], n[idx]];
                   setPrograms(n);
-                }} onRemove={(idx) => {
-                  const next = programs.filter((_, x) => x !== idx);
-                  setPrograms(next);
-                }} />
+                }} onRemove={(index) => setDeleteTarget({ section: "programs", index })} />
               </div>
             ))}
           </div>
@@ -241,10 +283,7 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
                   const n = [...ekskulPreview];
                   [n[idx], n[j]] = [n[j], n[idx]];
                   setEkskulPreview(n);
-                }} onRemove={(idx) => {
-                  const next = ekskulPreview.filter((_, x) => x !== idx);
-                  setEkskulPreview(next);
-                }} />
+                }} onRemove={(index) => setDeleteTarget({ section: "ekskulPreview", index })} />
               </div>
             ))}
           </div>
@@ -282,10 +321,7 @@ export default function BerandaEditor({ initial }: { initial: Beranda }) {
                   const n = [...facilities];
                   [n[idx], n[j]] = [n[j], n[idx]];
                   setFacilities(n);
-                }} onRemove={(idx) => {
-                  const next = facilities.filter((_, x) => x !== idx);
-                  setFacilities(next);
-                }} />
+                }} onRemove={(index) => setDeleteTarget({ section: "facilities", index })} />
               </div>
             ))}
           </div>

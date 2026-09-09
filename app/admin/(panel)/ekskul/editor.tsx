@@ -6,9 +6,10 @@ import { useManualSave } from "@/app/admin/components/useManualSave";
 import { ArrowDownIcon, ArrowUpIcon, TrashIcon } from "@/app/admin/components/icons";
 import { AddButton, ConfirmDialog, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { EkskulItem } from "@/app/lib/types";
+import { deleteEditorItem, tagPersistedItems } from "@/app/admin/components/deleteContent";
 
 export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
-  const [items, setItems] = useState<EkskulItem[]>(initial);
+  const [items, setItems] = useState<EkskulItem[]>(() => tagPersistedItems(initial));
   const { save } = useManualSave("ekskul", items);
   const [confirmIdx, setConfirmIdx] = useState<number | null>(null);
 
@@ -26,16 +27,18 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
     setItems(next);
   }
 
-  function remove(i: number) {
-    const next = items.filter((_, idx) => idx !== i);
-    setItems(next);
+  async function remove(i: number) {
+    await deleteEditorItem("ekskul", null, items[i], () => {
+      setItems(items.filter((_, idx) => idx !== i));
+      setConfirmIdx(null);
+    });
   }
 
   return (
     <div>
       <ConfirmDialog
         open={confirmIdx !== null}
-        onConfirm={() => { remove(confirmIdx!); setConfirmIdx(null); }}
+        onConfirm={() => remove(confirmIdx!)}
         onCancel={() => setConfirmIdx(null)}
       />
       <PageHeader

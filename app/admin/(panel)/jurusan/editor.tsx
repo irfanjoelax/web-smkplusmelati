@@ -5,6 +5,7 @@ import StringListEditor from "@/app/admin/components/StringListEditor";
 import { useManualSave } from "@/app/admin/components/useManualSave";
 import { Field, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { JurusanCard, JurusanData } from "@/app/lib/types";
+import { deletePersistedItem } from "@/app/admin/components/deleteContent";
 
 function CardEditor({
   label,
@@ -60,6 +61,12 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
               <StringListEditor
                 value={tkj.skills}
                 onChange={(skills) => setTkj({ ...tkj, skills })}
+                onRemove={async (index, skills, persisted) => {
+                  if (persisted !== undefined) {
+                    await deletePersistedItem("jurusan", "tkj.skills", persisted, tkj.skills[index]);
+                  }
+                  setTkj({ ...tkj, skills });
+                }}
               />
             </div>
             <div className="space-y-4">
@@ -91,6 +98,12 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
               <StringListEditor
                 value={tataBoga.skills}
                 onChange={(skills) => setTataBoga({ ...tataBoga, skills })}
+                onRemove={async (index, skills, persisted) => {
+                  if (persisted !== undefined) {
+                    await deletePersistedItem("jurusan", "tataBoga.skills", persisted, tataBoga.skills[index]);
+                  }
+                  setTataBoga({ ...tataBoga, skills });
+                }}
               />
             </div>
             <div className="space-y-4">

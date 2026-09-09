@@ -11,14 +11,37 @@ export function ConfirmDialog({
 }: {
   open: boolean;
   message?: string;
-  onConfirm: () => void;
+  onConfirm: () => void | Promise<void>;
   onCancel: () => void;
 }) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
   if (!open) return null;
+
+  async function confirm() {
+    if (busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      await onConfirm();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Gagal menghapus item");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function cancel() {
+    if (busy) return;
+    setError("");
+    onCancel();
+  }
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
-      onClick={onCancel}
+      onClick={cancel}
     >
       <div
         className="mx-4 w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-6 shadow-xl"
@@ -31,20 +54,23 @@ export function ConfirmDialog({
         </div>
         <h3 className="mb-1 text-base font-extrabold text-slate-900">Konfirmasi Hapus</h3>
         <p className="mb-6 text-sm text-slate-500">{message}</p>
+        {error && <p className="mb-4 text-sm font-semibold text-red-600">{error}</p>}
         <div className="flex justify-end gap-2">
           <button
             type="button"
-            onClick={onCancel}
+            onClick={cancel}
+            disabled={busy}
             className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-600 transition hover:bg-slate-50"
           >
             Batal
           </button>
           <button
             type="button"
-            onClick={onConfirm}
-            className="rounded-xl bg-red-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-red-700"
+            onClick={confirm}
+            disabled={busy}
+            className="rounded-xl bg-red-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-red-700 disabled:opacity-50"
           >
-            Hapus
+            {busy ? "Menghapus..." : "Hapus"}
           </button>
         </div>
       </div>

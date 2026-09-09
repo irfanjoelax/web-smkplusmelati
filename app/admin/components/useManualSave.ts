@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { markPersistedContent } from "./deleteContent";
 
 export type ContentSaveKey =
   | "guru"
@@ -38,6 +39,7 @@ export function useManualSave(key: ContentSaveKey, data: unknown) {
         body: JSON.stringify(dataRef.current),
       });
       if (res.ok) {
+        markPersistedContent(dataRef.current);
         setIsSaved(true);
       } else {
         const json = await res.json().catch(() => null);

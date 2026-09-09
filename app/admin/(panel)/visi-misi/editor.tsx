@@ -5,6 +5,7 @@ import StringListEditor from "@/app/admin/components/StringListEditor";
 import { useManualSave } from "@/app/admin/components/useManualSave";
 import { Field, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { VisiMisi } from "@/app/lib/types";
+import { deletePersistedItem } from "@/app/admin/components/deleteContent";
 
 export default function VisiMisiEditor({ initial }: { initial: VisiMisi }) {
   const [visi, setVisi] = useState(initial.visi);
@@ -43,6 +44,12 @@ export default function VisiMisiEditor({ initial }: { initial: VisiMisi }) {
           <StringListEditor
             value={misi}
             onChange={setMisi}
+            onRemove={async (index, next, persisted) => {
+              if (persisted !== undefined) {
+                await deletePersistedItem("visiMisi", "misi", persisted, misi[index]);
+              }
+              setMisi(next);
+            }}
             placeholder="Tulis misi…"
           />
         </Panel>
