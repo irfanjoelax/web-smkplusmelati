@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { randomBytes } from "crypto";
-import { existsSync, mkdirSync, unlinkSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 import path from "path";
-import { put, del } from "@vercel/blob";
+import { put } from "@vercel/blob";
 import { requireAdmin } from "@/app/lib/admin-guard";
+import { deleteUploadIfUnused } from "@/app/lib/unusedUpload";
 
 const ALLOWED = new Map([
   ["image/png", ".png"],
@@ -63,21 +64,15 @@ export async function DELETE(req: Request) {
 
   const { searchParams } = new URL(req.url);
   const url = searchParams.get("path") ?? "";
+  const cleanup = searchParams.get("cleanup") === "1";
 
   try {
-    if (url.startsWith("https://")) {
-      // Production → hapus dari Blob
-      await del(url);
-    } else if (url.startsWith("/uploads/")) {
-      // Dev lokal → hapus dari public/uploads/
-      const uploadsDir = path.join(process.cwd(), "public", "uploads");
-      const filePath = path.join(uploadsDir, path.basename(url));
-      if (!filePath.startsWith(uploadsDir)) {
-        return NextResponse.json({ error: "Path tidak valid" }, { status: 400 });
-      }
-      if (existsSync(filePath)) unlinkSync(filePath);
-    } else {
-      return NextResponse.json({ error: "URL tidak valid" }, { status: 400 });
+    if (!(await deleteUploadIfUnused(url))) {
+      if (cleanup) return NextResponse.json({ ok: true, deleted: false });
+      return NextResponse.json(
+        { error: "Gambar masih digunakan atau bukan file unggahan admin" },
+        { status: 409 },
+      );
     }
   } catch (error) {
     console.error("Gagal menghapus media:", error);

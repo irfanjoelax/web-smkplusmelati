@@ -50,7 +50,7 @@ export default async function EkskulPage() {
         <section className="px-4 py-16">
           <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {ekskul.map((e, i) => (
-              <Reveal key={e.title} delay={i * 80}>
+              <Reveal key={`${e.title}-${i}`} delay={i * 80}>
                 <ImageCard
                   src={e.image}
                   alt={e.title}

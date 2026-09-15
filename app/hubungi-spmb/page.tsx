@@ -7,19 +7,19 @@ import Reveal from "@/app/components/Reveal";
 import { CONTACT } from "@/app/components/site";
 
 export const metadata: Metadata = {
-  title: "Hubungi Panitia PPDB",
-  description: "Hubungi panitia PPDB SMK Plus Melati Samarinda untuk informasi pendaftaran dan bantuan.",
+  title: "Hubungi Panitia SPMB",
+  description: "Hubungi panitia SPMB SMK Plus Melati Samarinda untuk informasi pendaftaran dan bantuan.",
 };
 
-export default function HubungiPPDBPage() {
+export default function HubungiSPMBPage() {
   return (
     <>
       <Header />
       <main className="flex-1">
         <PageHero
-          eyebrow="Kontak PPDB"
-          title="Hubungi Panitia PPDB"
-          description="Butuh bantuan pendaftaran? Hubungi panitia PPDB SMK Plus Melati melalui kontak di bawah ini."
+          eyebrow="Kontak SPMB"
+          title="Hubungi Panitia SPMB"
+          description="Butuh bantuan pendaftaran? Hubungi panitia SPMB SMK Plus Melati melalui kontak di bawah ini."
         />
 
         <section className="px-4 py-14">
@@ -56,7 +56,7 @@ export default function HubungiPPDBPage() {
                     </span>
                     <div>
                       <p className="text-xs font-bold uppercase tracking-wide text-foreground/50">Email</p>
-                      <a href={`mailto:${CONTACT.email}`} className="font-semibold text-foreground hover:text-accent">
+                      <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT.email}`} target="_blank" rel="noopener noreferrer" className="font-semibold text-foreground hover:text-accent">
                         {CONTACT.email}
                       </a>
                     </div>
@@ -80,7 +80,7 @@ export default function HubungiPPDBPage() {
                   <a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`} className="clay-btn clay-btn-accent text-sm">
                     Telepon Sekarang
                   </a>
-                  <a href={`mailto:${CONTACT.email}`} className="clay-btn text-sm">
+                  <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT.email}`} target="_blank" rel="noopener noreferrer" className="clay-btn text-sm">
                     Kirim Email
                   </a>
                 </div>

@@ -77,9 +77,9 @@ export default async function TataBogaPage() {
                   khusus disediakan untuk siswa bereksperimen membuat makanan.
                 </p>
                 <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                  {skills.map((skill) => (
+                  {skills.map((skill, i) => (
                     <div
-                      key={skill}
+                      key={`${skill}-${i}`}
                       className="clay-inset flex items-center gap-3 rounded-2xl px-5 py-4"
                     >
                       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-extrabold text-primary-darker">

@@ -31,8 +31,26 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [open]);
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const isLinkActive = (link: (typeof NAV_LINKS)[number]) => {
+    if (link.href === "/") {
+      return pathname === "/";
+    }
+    if (pathname === link.href || pathname.startsWith(link.href + "/")) {
+      return true;
+    }
+    if (
+      link.children &&
+      link.children.some(
+        (child) => pathname === child.href || pathname.startsWith(child.href + "/")
+      )
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const isChildActive = (href: string) =>
+    pathname === href || pathname.startsWith(href + "/");
 
   return (
     <header
@@ -67,7 +85,7 @@ export default function Header() {
               <Link
                 href={link.href}
                 className={`rounded-full px-3.5 py-2 text-sm font-bold transition-all duration-200 ${
-                  isActive(link.href)
+                  isLinkActive(link)
                     ? "clay-chip-primary !py-2 text-white"
                     : "text-foreground hover:-translate-y-0.5 hover:bg-primary-soft hover:text-primary-dark"
                 }`}
@@ -82,7 +100,7 @@ export default function Header() {
                         key={child.href}
                         href={child.href}
                         className={`block rounded-xl px-4 py-2.5 text-sm font-bold transition-colors ${
-                          isActive(child.href)
+                          isChildActive(child.href)
                             ? "bg-primary-soft text-primary-dark"
                             : "text-foreground hover:bg-primary-soft/60"
                         }`}
@@ -99,7 +117,7 @@ export default function Header() {
             href="/ppdb"
             className="clay-btn clay-btn-accent ml-2 !px-4 !py-2 text-sm"
           >
-            PPDB 2026
+            SPMB 2026
           </Link>
         </div>
 
@@ -135,7 +153,7 @@ export default function Header() {
                 <Link
                   href={link.href}
                   className={`block rounded-xl px-4 py-2.5 text-sm font-bold ${
-                    isActive(link.href)
+                    isLinkActive(link)
                       ? "bg-primary-soft text-primary-dark"
                       : "text-foreground"
                   }`}
@@ -149,8 +167,8 @@ export default function Header() {
                         key={child.href}
                         href={child.href}
                         className={`block rounded-xl px-4 py-2 text-sm font-bold ${
-                          isActive(child.href)
-                            ? "bg-primary-soft/70 text-primary-dark"
+                          isChildActive(child.href)
+                            ? "bg-primary-soft/70 text-primary-dark font-extrabold"
                             : "text-foreground/80"
                         }`}
                       >
@@ -162,10 +180,10 @@ export default function Header() {
               </div>
             ))}
             <Link
-              href="/ppdb"
+            href="/spmb"
               className="clay-btn clay-btn-accent mt-2 w-full text-sm"
             >
-              Daftar PPDB 2026
+              Daftar SPMB 2026
             </Link>
           </div>
         </div>

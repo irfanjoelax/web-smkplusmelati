@@ -30,6 +30,35 @@ export function getPersistedSnapshot(item: object): unknown {
   return (item as { [persistedSnapshot]?: unknown })[persistedSnapshot];
 }
 
+export async function removePersistedImage(
+  collection: ContentSaveKey,
+  section: string | null,
+  item: object,
+  currentImage: string,
+): Promise<boolean> {
+  const target = getPersistedSnapshot(item);
+  if (target === undefined) return true;
+  if ((target as { image?: unknown }).image !== currentImage) return true;
+
+  const response = await fetch(`/api/content/${collection}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ section, target }),
+  });
+  if (!response.ok) {
+    const json = await response.json().catch(() => null);
+    throw new Error(json?.error ?? `Gagal menghapus gambar (${response.status})`);
+  }
+
+  if (target && typeof target === "object") {
+    (item as { [persistedSnapshot]?: unknown })[persistedSnapshot] = {
+      ...target,
+      image: "",
+    };
+  }
+  return false;
+}
+
 export function getPersistedArrayItem(value: unknown[], index: number): unknown {
   return (value as { [persistedArray]?: unknown[] })[persistedArray]?.[index];
 }

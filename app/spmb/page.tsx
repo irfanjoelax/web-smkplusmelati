@@ -10,51 +10,51 @@ import { IMAGES } from "@/app/components/images";
 import { breadcrumbSchema, faqSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
-  title: "PPDB",
+  title: "SPMB",
   description:
-    "PPDB SMK Plus Melati Samarinda 2026/2027: daftar online, cetak bukti pendaftaran, verifikasi berkas, pengumuman, dan daftar ulang. Pendaftaran peserta didik baru dibuka.",
+    "SPMB SMK Plus Melati Samarinda 2026/2027: daftar online, cetak bukti pendaftaran, verifikasi berkas, pengumuman, dan daftar ulang. Pendaftaran peserta didik baru dibuka.",
   alternates: {
-    canonical: "/ppdb",
+    canonical: "/spmb",
   },
   openGraph: {
     type: "website",
     locale: "id_ID",
-    url: "/ppdb",
-    title: "PPDB 2026/2027 | SMK Plus Melati Samarinda",
+    url: "/spmb",
+    title: "SPMB 2026/2027 | SMK Plus Melati Samarinda",
     description:
-      "PPDB SMK Plus Melati Samarinda: daftar online, verifikasi berkas, pengumuman, dan daftar ulang.",
+      "SPMB SMK Plus Melati Samarinda: daftar online, verifikasi berkas, pengumuman, dan daftar ulang.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "PPDB 2026/2027 | SMK Plus Melati Samarinda",
+    title: "SPMB 2026/2027 | SMK Plus Melati Samarinda",
     description:
-      "PPDB SMK Plus Melati Samarinda: daftar online, verifikasi berkas, pengumuman, dan daftar ulang.",
+      "SPMB SMK Plus Melati Samarinda: daftar online, verifikasi berkas, pengumuman, dan daftar ulang.",
   },
 };
 
 const faqItems = [
   {
-    q: "Bagaimana cara mendaftar PPDB SMK Plus Melati?",
-    a: "Calon peserta didik mendaftar secara online melalui website PPDB SMK Plus Melati di ppdb.smkplusmelati.sch.id, kemudian mencetak bukti pendaftaran.",
+    q: "Bagaimana cara mendaftar SPMB SMK Plus Melati?",
+    a: "Calon peserta didik mendaftar secara online melalui website SPMB SMK Plus Melati di ppdb.smkplusmelati.sch.id, kemudian mencetak bukti pendaftaran.",
   },
   {
-    q: "Apa saja berkas persyaratan PPDB?",
-    a: "Bawa dan tunjukkan berkas persyaratan beserta bukti pendaftaran pada panitia PPDB untuk diverifikasi sesuai ketentuan yang berlaku.",
+    q: "Apa saja berkas persyaratan SPMB?",
+    a: "Bawa dan tunjukkan berkas persyaratan beserta bukti pendaftaran pada panitia SPMB untuk diverifikasi sesuai ketentuan yang berlaku.",
   },
   {
-    q: "Kapan pengumuman kelulusan PPDB diumumkan?",
+    q: "Kapan pengumuman kelulusan SPMB diumumkan?",
     a: "Setelah data terverifikasi sesuai syarat, hasil pengumuman kelulusan disampaikan di website SMK Plus Melati.",
   },
   {
     q: "Bagaimana cara menghubungi panitia jika kesulitan mendaftar?",
-    a: "Hubungi SMK Plus Melati melalui telepon 0851-9157-6889 atau email plus@smkplusmelati.sch.id untuk bantuan pendaftaran.",
+    a: "Hubungi SMK Plus Melati melalui telepon 0851-9157-6889 atau email smkmelatismd@gmail.com untuk bantuan pendaftaran.",
   },
 ];
 
 const steps = [
   {
     title: "Daftar Online",
-    desc: "Calon peserta didik mendaftar secara online melalui website PPDB SMK Plus Melati.",
+    desc: "Calon peserta didik mendaftar secara online melalui website SPMB SMK Plus Melati.",
   },
   {
     title: "Cetak Bukti Pendaftaran",
@@ -62,7 +62,7 @@ const steps = [
   },
   {
     title: "Verifikasi Berkas",
-    desc: "Bawa dan tunjukkan berkas persyaratan beserta bukti pendaftaran pada panitia PPDB untuk verifikasi.",
+    desc: "Bawa dan tunjukkan berkas persyaratan beserta bukti pendaftaran pada panitia SPMB untuk verifikasi.",
   },
   {
     title: "Menunggu Pengumuman",
@@ -74,17 +74,17 @@ const steps = [
   },
 ];
 
-export default function PPDBPage() {
+export default function SPMBPage() {
   return (
     <>
       <Header />
-      <JsonLd data={breadcrumbSchema([{ name: "PPDB", path: "/ppdb" }])} />
+      <JsonLd data={breadcrumbSchema([{ name: "SPMB", path: "/spmb" }])} />
       <JsonLd data={faqSchema(faqItems)} />
       <main className="flex-1">
         <PageHero
           eyebrow="Penerimaan Peserta Didik Baru"
-          title="PPDB Online SMK Plus Melati"
-          description="Proses PPDB dapat berjalan cepat dan dilakukan di mana pun serta kapan pun selama sesi PPDB Online dibuka — tanpa formulir konvensional."
+          title="SPMB Online SMK Plus Melati"
+          description="Proses SPMB dapat berjalan cepat dan dilakukan di mana pun serta kapan pun selama sesi SPMB Online dibuka — tanpa formulir konvensional."
         />
 
         <section className="px-4 py-14">
@@ -97,7 +97,7 @@ export default function PPDBPage() {
                     Jalur Prestasi
                   </span>
                   <h2 className="text-2xl font-extrabold text-primary-dark sm:text-3xl">
-                    Prosedur PPDB Online 2026/2027
+                    Prosedur SPMB Online 2026/2027
                   </h2>
                   <ol className="mt-8 space-y-4">
                     {steps.map((step, i) => (
@@ -120,7 +120,7 @@ export default function PPDBPage() {
                 <div className="clay-inset flex justify-center overflow-hidden rounded-[2rem] p-2 w-full">
                   <LocalImage
                     src={IMAGES.ppdb2}
-                    alt="PPDB SMK Plus Melati"
+                    alt="SPMB SMK Plus Melati"
                     width={800}
                     height={600}
                     className="w-full h-auto max-h-80 rounded-[1.6rem] object-fill"
@@ -145,10 +145,10 @@ export default function PPDBPage() {
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
                 <a
-                  href="/hubungi-ppdb"
+                  href="/hubungi-spmb"
                   className="clay-btn clay-btn-accent"
                 >
-                  Hubungi Panitia PPDB
+                  Hubungi Panitia SPMB
                 </a>
               </div>
             </ClayCard>

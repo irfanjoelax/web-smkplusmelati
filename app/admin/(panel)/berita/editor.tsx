@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import ImagePicker from "@/app/admin/components/ImagePicker";
 import { useManualSave } from "@/app/admin/components/useManualSave";
-import { TrashIcon } from "@/app/admin/components/icons";
+import { EditIcon, TrashIcon } from "@/app/admin/components/icons";
 import { AddButton, ConfirmDialog, Field, IconBtn, Input, PageHeader, Panel, Textarea, SaveButton } from "@/app/admin/components/ui";
 import type { BeritaItem } from "@/app/lib/types";
-import { deleteEditorItem, tagPersistedItems } from "@/app/admin/components/deleteContent";
+import { deleteEditorItem, getPersistedSnapshot, removePersistedImage, tagPersistedItems } from "@/app/admin/components/deleteContent";
 
 function slugify(text: string): string {
   return text
@@ -15,26 +15,15 @@ function slugify(text: string): string {
     .replace(/^-|-$/g, "");
 }
 
-const PER_PAGE_OPTIONS = [6, 10, 20, 50];
+const PAGE_SIZE_OPTIONS = [5, 10, 20, 50];
 
 export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
   const [items, setItems] = useState<BeritaItem[]>(() => tagPersistedItems(initial));
   const { save } = useManualSave("berita", items);
   const [confirmIdx, setConfirmIdx] = useState<number | null>(null);
   const [editingIdx, setEditingIdx] = useState<number | null>(null);
-  const [perPage, setPerPage] = useState(6);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setDropdownOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
+  const [pageSize, setPageSize] = useState(5);
+  const [page, setPage] = useState(1);
 
   function update(i: number, patch: Partial<BeritaItem>) {
     const next = [...items];
@@ -58,6 +47,7 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
       if (editingIdx === i) setEditingIdx(null);
       else if (editingIdx !== null && editingIdx > i) setEditingIdx(editingIdx - 1);
       setItems(next);
+      setPage((current) => Math.min(current, Math.max(1, Math.ceil(next.length / pageSize))));
       setConfirmIdx(null);
     });
   }
@@ -75,6 +65,15 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
   if (editingIdx !== null) {
     const e = items[editingIdx];
     const i = editingIdx;
+    const saveBerita = async () => {
+      const now = new Date().toISOString();
+      const next = [...items];
+      next[i] = getPersistedSnapshot(next[i]) === undefined
+        ? { ...next[i], createdAt: now }
+        : { ...next[i], updatedAt: now };
+      setItems(next);
+      await save(next);
+    };
     return (
       <div>
         <PageHeader title="Edit Berita" description={e.title || "Berita baru"} />
@@ -90,13 +89,18 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
               >
                 ← Kembali
               </button>
-              <SaveButton onSave={save} />
+              <SaveButton onSave={saveBerita} />
             </div>
           }
         >
-          <div className="flex flex-wrap items-start gap-4">
-            <ImagePicker value={e.image} onChange={(url) => update(i, { image: url })} />
-            <div className="min-w-0 flex-1 space-y-3">
+          <div className="space-y-6">
+            <ImagePicker
+              value={e.image}
+              large
+              onChange={(url) => update(i, { image: url })}
+              onRemove={() => removePersistedImage("berita", null, e, e.image)}
+            />
+            <div className="space-y-4">
               <Field label="Judul">
                 <Input value={e.title} onChange={(ev) => update(i, { title: ev.target.value })} />
               </Field>
@@ -117,12 +121,16 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
   }
 
   // Mode daftar card
-  const visibleItems = items.slice(0, perPage);
+  const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
+  const visibleItems = items
+    .map((item, index) => ({ item, index }))
+    .slice((page - 1) * pageSize, page * pageSize);
+
   const gridClass =
-    perPage === 6  ? "grid-cols-2 sm:grid-cols-3" :
-    perPage === 10 ? "grid-cols-2 sm:grid-cols-5" :
-    perPage === 20 ? "grid-cols-2 sm:grid-cols-4 lg:grid-cols-5" :
-                     "grid-cols-2 sm:grid-cols-5 lg:grid-cols-5";
+    pageSize === 5  ? "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5" :
+    pageSize === 10 ? "grid-cols-2 sm:grid-cols-5" :
+    pageSize === 20 ? "grid-cols-2 sm:grid-cols-4 lg:grid-cols-5" :
+                      "grid-cols-2 sm:grid-cols-5 lg:grid-cols-5";
 
   return (
     <div>
@@ -140,35 +148,20 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
         description=""
         action={
           <div className="flex items-center gap-2">
-            {/* Dropdown tampilkan */}
-            <div className="relative" ref={dropdownRef}>
-              <button
-                type="button"
-                onClick={() => setDropdownOpen((o) => !o)}
-                className="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50"
-              >
-                {perPage}
-                <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {dropdownOpen && (
-                <div className="absolute right-0 z-10 mt-1 w-28 rounded-lg border border-slate-200 bg-white shadow-lg">
-                  {PER_PAGE_OPTIONS.map((n) => (
-                    <button
-                      key={n}
-                      type="button"
-                      onClick={() => { setPerPage(n); setDropdownOpen(false); }}
-                      className={`w-full px-4 py-2 text-left text-sm transition hover:bg-slate-50 ${
-                        perPage === n ? "font-semibold text-blue-600" : "text-slate-700"
-                      }`}
-                    >
-                      {n}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <label htmlFor="berita-page-size" className="sr-only">Jumlah berita per halaman</label>
+            <select
+              id="berita-page-size"
+              value={pageSize}
+              onChange={(event) => {
+                setPageSize(Number(event.target.value));
+                setPage(1);
+              }}
+              className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-600 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+            >
+              {PAGE_SIZE_OPTIONS.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
             <AddButton onClick={addNew}>Tambah</AddButton>
           </div>
         }
@@ -177,14 +170,14 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
           <p className="py-8 text-center text-sm text-slate-400">Belum ada berita. Klik Tambah untuk mulai.</p>
         )}
         <div className={`grid gap-4 ${gridClass}`}>
-          {visibleItems.map((e, i) => (
+          {visibleItems.map(({ item: e, index: i }) => (
             <div
               key={i}
-              className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-blue-400 hover:shadow-md cursor-pointer"
-              onClick={() => setEditingIdx(i)}
+              className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:border-blue-300 hover:shadow-md"
             >
               {/* Gambar */}
               {e.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
                 <img src={e.image} alt={e.title} className="aspect-[4/3] w-full object-cover" />
               ) : (
                 <div className="flex aspect-[4/3] w-full items-center justify-center bg-slate-100 text-slate-300 text-xs">
@@ -204,11 +197,11 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
               </div>
 
               {/* Footer tombol aksi */}
-              <div
-                className="flex items-center justify-end gap-1 border-t border-slate-100 px-3 py-1.5"
-                onClick={(ev) => ev.stopPropagation()}
-              >
-                <IconBtn label="Hapus" danger onClick={() => setConfirmIdx(i)}>
+              <div className="flex items-center justify-end gap-1 border-t border-slate-100 px-3 py-1.5">
+                <IconBtn label={`Edit ${e.title || "berita"}`} onClick={() => setEditingIdx(i)}>
+                  <EditIcon className="h-4 w-4" />
+                </IconBtn>
+                <IconBtn label={`Hapus ${e.title || "berita"}`} danger onClick={() => setConfirmIdx(i)}>
                   <TrashIcon className="h-4 w-4" />
                 </IconBtn>
               </div>
@@ -216,12 +209,35 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
           ))}
         </div>
 
-        {items.length > perPage && (
-          <p className="mt-3 text-center text-xs text-slate-400">
-            Menampilkan {perPage} dari {items.length} artikel. Pilih angka lebih besar untuk lihat lebih banyak.
-          </p>
+        {totalPages > 1 && (
+          <div className="mt-5 flex items-center justify-center gap-3 border-t border-slate-100 pt-4">
+            <span className="text-xs font-semibold text-slate-500">
+              Halaman {page}{page < totalPages ? `-${page + 1}` : ""}
+            </span>
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                aria-label="Halaman sebelumnya"
+                onClick={() => setPage((current) => Math.max(1, current - 1))}
+                disabled={page === 1}
+                className="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 text-xs font-bold text-slate-600 transition hover:border-blue-300 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                &lt;
+              </button>
+              <button
+                type="button"
+                aria-label="Halaman berikutnya"
+                onClick={() => setPage((current) => Math.min(totalPages, current + 1))}
+                disabled={page === totalPages}
+                className="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 text-xs font-bold text-slate-600 transition hover:border-blue-300 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                &gt;
+              </button>
+            </div>
+          </div>
         )}
       </Panel>
     </div>
   );
 }
+

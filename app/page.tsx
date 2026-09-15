@@ -7,6 +7,7 @@ import Header from "@/app/components/Header";
 import LocalImage from "@/app/components/LocalImage";
 import Reveal from "@/app/components/Reveal";
 import SectionHeading from "@/app/components/SectionHeading";
+import LogoMarquee from "@/app/components/LogoMarquee";
 import { Icon } from "@/app/lib/icons";
 import { IMAGES } from "@/app/components/images";
 import { getContent } from "@/app/lib/content";
@@ -18,7 +19,7 @@ export const revalidate = 60;
 
 export const metadata: Metadata = {
   description:
-    "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan PPDB 2026.",
+    "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
   alternates: {
     canonical: "/",
   },
@@ -28,18 +29,18 @@ export const metadata: Metadata = {
     url: "/",
     title: "SMK Plus Melati Samarinda — Sekolah Kewirausahaan yang Bertakwa",
     description:
-      "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan PPDB 2026.",
+      "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
   },
   twitter: {
     card: "summary_large_image",
     title: "SMK Plus Melati Samarinda — Sekolah Kewirausahaan yang Bertakwa",
     description:
-      "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan PPDB 2026.",
+      "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
   },
 };
 
 export default async function Home() {
-  const { stats, majors, programs, ekskulPreview, facilities } = await getContent<Beranda>("beranda");
+  const { heroImage, ppdbImage, stats, majors, programs, ekskulPreview, facilities } = await getContent<Beranda>("beranda");
   return (
     <>
       <Header />
@@ -73,8 +74,8 @@ Sekolah Kewirausahaan yang Bertakwa
                   di dunia industri.
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
-                  <Link href="/ppdb" className="clay-btn clay-btn-accent">
-                    PPDB 2026
+                  <Link href="/spmb" className="clay-btn clay-btn-accent">
+                    SPMB 2026
                   </Link>
                   <Link href="/hubungi-kami" className="clay-btn clay-btn-light">
                     Jelajah Sekolah
@@ -85,7 +86,7 @@ Sekolah Kewirausahaan yang Bertakwa
               <Reveal delay={120} className="relative mx-auto w-full max-w-md">
                 <div className="clay-inset overflow-hidden rounded-[2rem] p-2">
                   <LocalImage
-                    src={IMAGES.hero}
+                    src={heroImage || IMAGES.hero}
                     alt="Suasana SMK Plus Melati Samarinda"
                     width={1280}
                     height={800}
@@ -156,6 +157,30 @@ Sekolah Kewirausahaan yang Bertakwa
                   </Link>
                 </Reveal>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ===== PARTNERSHIP ===== */}
+        <section className="px-4 pb-10">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeading
+              eyebrow="Kerjasama"
+              title="Mitra & Partnership"
+              description="Didukung oleh berbagai mitra industri untuk menyiapkan lulusan yang siap kerja."
+            />
+            <div className="mt-10">
+              <LogoMarquee
+                logos={[
+                  { src: "", alt: "Partner 1" },
+                  { src: "", alt: "Partner 2" },
+                  { src: "", alt: "Partner 3" },
+                  { src: "", alt: "Partner 4" },
+                  { src: "", alt: "Partner 5" },
+                  { src: "", alt: "Partner 6" },
+                  { src: "", alt: "Partner 7" },
+                ]}
+              />
             </div>
           </div>
         </section>
@@ -272,7 +297,7 @@ Sekolah Kewirausahaan yang Bertakwa
           </div>
         </section>
 
-        {/* ===== CTA PPDB — panel biru ===== */}
+        {/* ===== CTA SPMB — panel biru ===== */}
         <section className="px-4 pb-24">
           <Reveal>
             <ClayCard
@@ -295,25 +320,25 @@ Sekolah Kewirausahaan yang Bertakwa
                   </h2>
                   <p className="mt-4 max-w-xl leading-relaxed text-white/85">
                     Daftar secara online dengan mudah, cepat, dan bisa dilakukan
-                    di mana pun serta kapan pun melalui PPDB Online SMK Plus
+                    di mana pun serta kapan pun melalui SPMB Online SMK Plus
                     Melati.
                   </p>
                   <div className="mt-7 flex flex-wrap gap-3">
                     <a
-                      href="/hubungi-ppdb"
+                      href="/hubungi-spmb"
                       className="clay-btn clay-btn-accent"
                     >
-                      Hubungi Panitia PPDB
+                      Hubungi Panitia SPMB
                     </a>
-                    <Link href="/ppdb" className="clay-btn clay-btn-light">
+                    <Link href="/spmb" className="clay-btn clay-btn-light">
                       Lihat Prosedur
                     </Link>
                   </div>
                 </div>
                 <div className="clay-inset hidden overflow-hidden rounded-[2rem] p-2 lg:block">
                   <LocalImage
-                    src={IMAGES.ppdb1}
-                    alt="PPDB SMK Plus Melati"
+                    src={ppdbImage || IMAGES.ppdb1}
+                    alt="SPMB SMK Plus Melati"
                     width={1280}
                     height={800}
                     className="h-80 w-full rounded-[1.6rem] object-fill"

@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     "SMK TKJ Samarinda",
     "SMK Tata Boga Samarinda",
     "sekolah kewirausahaan",
-    "PPDB Samarinda",
+    "SPMB Samarinda",
     "Kalimantan Timur",
   ],
   robots: {

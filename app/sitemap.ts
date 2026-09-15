@@ -15,7 +15,7 @@ const routes = [
   "/fasilitas",
   "/ekskul",
   "/hubungi-kami",
-  "/ppdb",
+  "/spmb",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

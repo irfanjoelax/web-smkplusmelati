@@ -1,16 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import {
   BookIcon,
   BuildingIcon,
-  DashboardIcon,
-  EyeIcon,
-  HomeIcon,
-  NewspaperIcon,
-  StarIcon,
   TrophyIcon,
   UsersIcon,
 } from "@/app/admin/components/icons";
@@ -19,7 +15,7 @@ import {
   CountUp,
   type ChartDatum,
 } from "@/app/admin/components/ContentChart";
-import { Chip } from "@/app/admin/components/ui";
+import type { ActivityLogEntry, BeritaItem, IncompleteContentItem } from "@/app/lib/types";
 
 type Props = {
   guru: number;
@@ -30,18 +26,50 @@ type Props = {
   ekskul: number;
   stats: number;
   berita: number;
+  latestBerita: BeritaItem[];
+  incompleteContent: IncompleteContentItem[];
+  activityLog: ActivityLogEntry[];
 };
 
-const SECTIONS = [
-  { href: "/admin/guru", title: "Daftar Guru", desc: "Nama, jabatan, dan foto guru.", icon: UsersIcon },
-  { href: "/admin/visi-misi", title: "Visi & Misi", desc: "Teks visi dan daftar misi.", icon: EyeIcon },
-  { href: "/admin/jurusan", title: "Jurusan", desc: "Skill, keunggulan, dan prospek TKJ & Tata Boga.", icon: BookIcon },
-  { href: "/admin/prestasi", title: "Prestasi Siswa", desc: "Kartu prestasi dan kutipan.", icon: TrophyIcon },
-  { href: "/admin/fasilitas", title: "Fasilitas", desc: "Kartu sarana dan prasarana.", icon: BuildingIcon },
-  { href: "/admin/ekskul", title: "Ekskul", desc: "Kartu ekstrakurikuler.", icon: StarIcon },
-  { href: "/admin/berita", title: "Berita", desc: "Artikel berita sekolah.", icon: NewspaperIcon },
-  { href: "/admin/beranda", title: "Beranda", desc: "Statistik, jurusan, program, ekskul, dan fasilitas.", icon: HomeIcon },
-];
+const ITEMS_PER_PAGE = 5;
+
+const ACTIVITY_LINKS: Record<string, string> = {
+  guru: "/admin/guru",
+  visiMisi: "/admin/visi-misi",
+  jurusan: "/admin/jurusan",
+  prestasi: "/admin/prestasi",
+  fasilitas: "/admin/fasilitas",
+  beranda: "/admin/beranda",
+  ekskul: "/admin/ekskul",
+  berita: "/admin/berita",
+};
+
+function relativeTime(timestamp: string, now: number): string {
+  const seconds = Math.max(0, Math.floor((now - Date.parse(timestamp)) / 1000));
+  if (seconds < 60) return "Baru saja";
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} menit lalu`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} jam lalu`;
+  if (hours < 48) return "Kemarin";
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `${days} hari lalu`;
+  if (days < 30) return `${Math.floor(days / 7)} minggu lalu`;
+  if (days < 365) return `${Math.floor(days / 30)} bulan lalu`;
+  return `${Math.floor(days / 365)} tahun lalu`;
+}
+
+function activityLabel(item: BeritaItem): string {
+  const value = item.updatedAt ?? item.createdAt;
+  if (!value) return "Waktu aktivitas belum tercatat";
+
+  const formatted = new Date(value).toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+  return `${item.updatedAt ? "Diedit" : "Ditambahkan"} ${formatted}`;
+}
 
 const CHART_LINKS: Record<string, string> = {
   Guru: "/admin/guru",
@@ -85,22 +113,19 @@ function FadeUp({
 
 export default function DashboardView({
   guru,
-  misi,
   skills,
   prestasi,
   fasilitas,
   ekskul,
-  stats,
   berita,
+  latestBerita,
+  incompleteContent,
+  activityLog,
 }: Props) {
   const router = useRouter();
-  const handleTotalClick = () => {
-    router.push('/admin?refresh=true');
-    setTimeout(() => {
-      document.getElementById('chart')?.scrollIntoView({ behavior: 'smooth' });
-    }, 200);
-  };
   const [date, setDate] = useState("");
+  const [now, setNow] = useState(0);
+  const [incompletePage, setIncompletePage] = useState(1);
 
   useEffect(() => {
     const t = setTimeout(() => {
@@ -116,63 +141,60 @@ export default function DashboardView({
     return () => clearTimeout(t);
   }, []);
 
-  const counts: Record<string, number> = {
-    "Daftar Guru": guru,
-    "Visi & Misi": misi,
-    Jurusan: skills,
-    "Prestasi Siswa": prestasi,
-    Fasilitas: fasilitas,
-    Ekskul: ekskul,
-    Berita: berita,
-    Beranda: stats,
-  };
+  useEffect(() => {
+    const initial = setTimeout(() => setNow(Date.now()), 0);
+    const interval = setInterval(() => setNow(Date.now()), 60_000);
+    return () => {
+      clearTimeout(initial);
+      clearInterval(interval);
+    };
+  }, []);
 
+  const chartTheme = "#0e5f9c";
   const chartData: ChartDatum[] = [
-    { label: "Guru", count: guru, color: "#f59e0b" },
-    { label: "Jurusan", count: skills, color: "#06b6d4" },
-    { label: "Prestasi", count: prestasi, color: "#f43f5e" },
-    { label: "Fasilitas", count: fasilitas, color: "#10b981" },
-    { label: "Ekskul", count: ekskul, color: "#6366f1" },
-    { label: "Berita", count: berita, color: "#8b5cf6" },
+    { label: "Guru", count: guru, color: chartTheme },
+    { label: "Jurusan", count: skills, color: chartTheme },
+    { label: "Prestasi", count: prestasi, color: chartTheme },
+    { label: "Fasilitas", count: fasilitas, color: chartTheme },
+    { label: "Ekskul", count: ekskul, color: chartTheme },
+    { label: "Berita", count: berita, color: chartTheme },
   ];
-  const chartTotal = chartData.reduce((sum, item) => sum + item.count, 0);
-
   const quick = [
-    {
-      label: "Statistik Konten",
-      value: chartTotal,
-      onClick: handleTotalClick,
-      icon: DashboardIcon,
-      card: "bg-gradient-to-br from-blue-50 to-blue-100",
-      iconBox: "bg-white/70 text-blue-600 shadow-sm",
-      shadow: "hover:shadow-md hover:shadow-blue-200/60",
-    },
     {
       label: "Guru",
       value: guru,
       href: "/admin/guru",
       icon: UsersIcon,
-      card: "bg-gradient-to-br from-amber-50 to-amber-100",
-      iconBox: "bg-white/70 text-amber-600 shadow-sm",
-      shadow: "hover:shadow-md hover:shadow-amber-200/60",
+      card: "bg-gradient-to-br from-[#0e5f9c] via-[#0b5c97] to-[#083f68]",
+      iconBox: "border border-white/20 bg-white/10 text-white shadow-sm",
+      shadow: "shadow-lg shadow-blue-900/20 hover:shadow-xl hover:shadow-blue-900/30",
+    },
+    {
+      label: "Jurusan",
+      value: skills,
+      href: "/admin/jurusan",
+      icon: BookIcon,
+      card: "bg-gradient-to-br from-[#0e5f9c] via-[#0b5c97] to-[#083f68]",
+      iconBox: "border border-white/20 bg-white/10 text-white shadow-sm",
+      shadow: "shadow-lg shadow-blue-900/20 hover:shadow-xl hover:shadow-blue-900/30",
     },
     {
       label: "Prestasi",
       value: prestasi,
       href: "/admin/prestasi",
       icon: TrophyIcon,
-      card: "bg-gradient-to-br from-emerald-50 to-emerald-100",
-      iconBox: "bg-white/70 text-emerald-600 shadow-sm",
-      shadow: "hover:shadow-md hover:shadow-emerald-200/60",
+      card: "bg-gradient-to-br from-[#0e5f9c] via-[#0b5c97] to-[#083f68]",
+      iconBox: "border border-white/20 bg-white/10 text-white shadow-sm",
+      shadow: "shadow-lg shadow-blue-900/20 hover:shadow-xl hover:shadow-blue-900/30",
     },
     {
       label: "Fasilitas",
       value: fasilitas,
       href: "/admin/fasilitas",
       icon: BuildingIcon,
-      card: "bg-gradient-to-br from-violet-50 to-violet-100",
-      iconBox: "bg-white/70 text-violet-600 shadow-sm",
-      shadow: "hover:shadow-md hover:shadow-violet-200/60",
+      card: "bg-gradient-to-br from-[#0e5f9c] via-[#0b5c97] to-[#083f68]",
+      iconBox: "border border-white/20 bg-white/10 text-white shadow-sm",
+      shadow: "shadow-lg shadow-blue-900/20 hover:shadow-xl hover:shadow-blue-900/30",
     },
   ];
 
@@ -180,6 +202,12 @@ export default function DashboardView({
     const href = CHART_LINKS[label];
     if (href) router.push(href);
   };
+
+  const incompletePages = Math.ceil(incompleteContent.length / ITEMS_PER_PAGE);
+  const visibleIncomplete = incompleteContent.slice(
+    (incompletePage - 1) * ITEMS_PER_PAGE,
+    incompletePage * ITEMS_PER_PAGE,
+  );
 
   return (
     <div className="space-y-6">
@@ -209,57 +237,29 @@ export default function DashboardView({
 
       <FadeUp delay={80}>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {quick.map((q) => {
-            if (q.onClick) {
-              return (
-                <div
-                  key={q.label}
-                  onClick={q.onClick}
-                  className={`group rounded-xl border border-slate-200/70 p-5 text-slate-900 shadow-sm transition-all duration-200 hover:-translate-y-1 ${q.card} ${q.shadow} cursor-pointer`}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${q.iconBox}`}>
-                      <q.icon className="h-5 w-5" />
-                    </div>
-                    <span className="text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-slate-500">
-                      →
-                    </span>
-                  </div>
-                  <CountUp
-                    value={q.value}
-                    className="mt-4 block text-3xl font-extrabold tracking-tight text-slate-900"
-                  />
-                  <p className="mt-1 text-xs font-bold uppercase tracking-wide text-slate-500">
-                    {q.label}
-                  </p>
+          {quick.map((q) => (
+            <Link
+              key={q.label}
+              href={q.href}
+              className={`group rounded-xl border border-white/20 p-5 text-white transition-all duration-200 hover:-translate-y-1 ${q.card} ${q.shadow}`}
+            >
+              <div className="flex items-start justify-between">
+                <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${q.iconBox}`}>
+                  <q.icon className="h-5 w-5" />
                 </div>
-              );
-            } else {
-              return (
-                <Link
-                  key={q.label}
-                  href={q.href}
-                  className={`group rounded-xl border border-slate-200/70 p-5 text-slate-900 shadow-sm transition-all duration-200 hover:-translate-y-1 ${q.card} ${q.shadow}`}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg ${q.iconBox}`}>
-                      <q.icon className="h-5 w-5" />
-                    </div>
-                    <span className="text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-slate-500">
-                      →
-                    </span>
-                  </div>
-                  <CountUp
-                    value={q.value}
-                    className="mt-4 block text-3xl font-extrabold tracking-tight text-slate-900"
-                  />
-                  <p className="mt-1 text-xs font-bold uppercase tracking-wide text-slate-500">
-                    {q.label}
-                  </p>
-                </Link>
-              );
-            }
-          })}
+                <span className="text-white/40 transition group-hover:translate-x-0.5 group-hover:text-white">
+                  →
+                </span>
+              </div>
+              <CountUp
+                value={q.value}
+                className="mt-4 block text-3xl font-extrabold tracking-tight text-white"
+              />
+              <p className="mt-1 text-xs font-bold uppercase tracking-wide text-white/70">
+                {q.label}
+              </p>
+            </Link>
+          ))}
         </div>
       </FadeUp>
 
@@ -268,39 +268,176 @@ export default function DashboardView({
       </FadeUp>
 
       <FadeUp delay={240}>
-        <div>
-          <h2 className="mb-3 text-xs font-extrabold uppercase tracking-widest text-slate-500">
-            Kelola Konten
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {SECTIONS.map((s) => (
-              <Link
-                key={s.href}
-                href={s.href}
-                className="group rounded-xl border border-slate-200/70 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-600/10"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-start gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600 transition group-hover:bg-gradient-to-b group-hover:from-[#0e5f9c] group-hover:to-[#083f68] group-hover:text-white">
-                      <s.icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-extrabold text-slate-900">{s.title}</h3>
-                      <p className="mt-0.5 text-sm text-slate-500">{s.desc}</p>
-                    </div>
-                  </div>
-                  <div className="flex shrink-0 flex-col items-end gap-2">
-                    <Chip tone="blue" className="transition group-hover:bg-amber-50 group-hover:text-amber-700">
-                      {counts[s.title] ?? "—"}
-                    </Chip>
-                    <span className="text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-blue-600">
-                      →
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
+        <section className="rounded-xl border border-blue-200/70 bg-white p-6 shadow-sm sm:p-7">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <h2 className="text-sm font-extrabold uppercase tracking-widest text-slate-500">
+                Berita Terbaru
+              </h2>
+              <p className="mt-0.5 text-sm text-slate-500">
+                Tiga berita yang terakhir ditambahkan atau diedit.
+              </p>
+            </div>
+            <Link
+              href="/admin/berita"
+              className="shrink-0 rounded-lg bg-blue-50 px-3 py-2 text-xs font-bold text-blue-700 transition hover:bg-blue-100"
+            >
+              Lihat Semua
+            </Link>
           </div>
+
+          {latestBerita.length === 0 ? (
+            <p className="mt-6 rounded-lg bg-slate-50 px-4 py-8 text-center text-sm text-slate-500">
+              Belum ada berita.
+            </p>
+          ) : (
+            <div className="mt-6 grid gap-4 md:grid-cols-3">
+              {latestBerita.map((item) => (
+                <article
+                  key={item.slug}
+                  className="overflow-hidden rounded-xl border border-slate-200 bg-slate-50"
+                >
+                  <div className="relative aspect-[16/9] bg-slate-100">
+                    {item.image ? (
+                      <Image
+                        src={item.image}
+                        alt=""
+                        fill
+                        sizes="(min-width: 768px) 30vw, 100vw"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center text-xs font-medium text-slate-400">
+                        Tidak ada gambar
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4">
+                    <p className="text-xs font-semibold text-blue-700">
+                      {activityLabel(item)}
+                    </p>
+                    <h3 className="mt-1 line-clamp-2 font-bold leading-snug text-slate-900">
+                      {item.title || "Tanpa judul"}
+                    </h3>
+                    {item.desc && (
+                      <p className="mt-2 line-clamp-2 text-sm text-slate-500">{item.desc}</p>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
+      </FadeUp>
+
+      <FadeUp delay={320}>
+        <div className="grid items-stretch gap-6 lg:grid-cols-2">
+          <section className="flex flex-col justify-between rounded-xl border border-blue-200/70 bg-white p-6 shadow-sm sm:p-7">
+            <div>
+              <div className="flex items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-lg font-black text-[#0e5f9c]">!</span>
+                <div>
+                  <h2 className="text-sm font-extrabold uppercase tracking-widest text-slate-700">
+                    Konten Perlu Diperbarui
+                  </h2>
+                  <p className="mt-0.5 text-sm text-slate-500">Lengkapi bagian berikut agar situs tampil optimal.</p>
+                </div>
+              </div>
+
+              {incompleteContent.length === 0 ? (
+                <p className="mt-6 rounded-lg bg-blue-50 px-4 py-6 text-center text-sm font-semibold text-blue-700">
+                  Semua konten sudah lengkap.
+                </p>
+              ) : (
+                <div className="mt-5 divide-y divide-slate-100 min-h-[235px]">
+                  {visibleIncomplete.map((item, index) => (
+                    <Link
+                      key={`${item.href}-${item.title}-${index}`}
+                      href={item.href}
+                      className="group flex items-center justify-between gap-4 py-3 first:pt-0 last:pb-0"
+                    >
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-bold text-slate-800">{item.title}</p>
+                        <p className="mt-0.5 text-xs font-medium text-blue-700">{item.issue}</p>
+                      </div>
+                      <span className="shrink-0 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-blue-600">→</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {incompletePages > 1 && (
+              <div className="mt-5 flex items-center justify-center gap-3 border-t border-slate-100 pt-4">
+                <span className="text-xs font-semibold text-slate-500">
+                  Halaman {incompletePage}{incompletePage < incompletePages ? `-${incompletePage + 1}` : ""}
+                </span>
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    aria-label="Halaman sebelumnya"
+                    onClick={() => setIncompletePage((page) => Math.max(1, page - 1))}
+                    disabled={incompletePage === 1}
+                    className="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 text-xs font-bold text-slate-600 transition hover:border-blue-300 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    &lt;
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Halaman berikutnya"
+                    onClick={() => setIncompletePage((page) => Math.min(incompletePages, page + 1))}
+                    disabled={incompletePage === incompletePages}
+                    className="flex h-7 w-7 items-center justify-center rounded-lg border border-slate-200 text-xs font-bold text-slate-600 transition hover:border-blue-300 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    &gt;
+                  </button>
+                </div>
+              </div>
+            )}
+          </section>
+
+          <section className="flex flex-col justify-between rounded-xl border border-blue-200/70 bg-white p-6 shadow-sm sm:p-7">
+            <div>
+              <div className="flex items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-700" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 7v5l3 2" />
+                  </svg>
+                </span>
+                <div>
+                  <h2 className="text-sm font-extrabold uppercase tracking-widest text-slate-700">
+                    Aktivitas Terakhir
+                  </h2>
+                  <p className="mt-0.5 text-sm text-slate-500">Riwayat perubahan terbaru di panel admin.</p>
+                </div>
+              </div>
+
+              {activityLog.length === 0 ? (
+                <p className="mt-6 rounded-lg bg-slate-50 px-4 py-6 text-center text-sm text-slate-500">
+                  Belum ada aktivitas tercatat.
+                </p>
+              ) : (
+                <div className="mt-5 divide-y divide-slate-100 min-h-[235px]">
+                  {activityLog.slice(0, 5).map((item) => (
+                    <Link
+                      key={item.id}
+                      href={ACTIVITY_LINKS[item.collection] ?? "/admin"}
+                      className="group flex items-center justify-between gap-4 py-3 first:pt-0 last:pb-0"
+                    >
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-bold text-slate-800">{item.label}</p>
+                        <p className="mt-0.5 text-xs font-semibold text-blue-700">
+                          {now ? relativeTime(item.timestamp, now) : "Menghitung waktu..."}
+                        </p>
+                      </div>
+                      <span className="shrink-0 text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-blue-600">→</span>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
         </div>
       </FadeUp>
     </div>

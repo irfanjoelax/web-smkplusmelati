@@ -53,12 +53,12 @@ export default async function PrestasiSiswaPage() {
         />
 
         <section className="px-4 py-16">
-          <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
+          <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((item, i) => (
-              <Reveal key={item.title} delay={i * 120}>
+              <Reveal key={`${item.title}-${i}`} delay={i * 120}>
                 <ImageCard
                   src={item.image}
-                  alt={item.alt}
+                  alt={item.title}
                   title={item.title}
                   description={item.description}
                 />

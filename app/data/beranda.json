@@ -1,4 +1,6 @@
 {
+  "heroImage": "/images/hero.jpg",
+  "ppdbImage": "/uploads/1789335323939-a280c98bd274.png",
   "stats": [
     {
       "value": "2",
@@ -67,42 +69,42 @@
   ],
   "ekskulPreview": [
     {
-      "name": "PodSchool",
+      "name": "English Club",
       "href": "/ekskul",
-      "image": "/images/podschool.jpg"
-    },
-    {
-      "name": "Konten Kreator",
-      "href": "/ekskul",
-      "image": "/images/konten-kreator.jpg"
-    },
-    {
-      "name": "Desain Grafis",
-      "href": "/ekskul",
-      "image": "/images/desain-grafis.png"
+      "image": "/images/english-club.jpg"
     },
     {
       "name": "Pramuka",
       "href": "/ekskul",
       "image": "/images/pramuka.jpg"
+    },
+    {
+      "name": "E-Sporttttt",
+      "href": "/ekskul",
+      "image": "/images/e-sport.png"
+    },
+    {
+      "name": "PodSchool Zaman Now",
+      "href": "/ekskul",
+      "image": "/images/podschool.jpg"
     }
   ],
   "facilities": [
     {
-      "name": "Ruang Kelas Ber-AC",
+      "name": "Joging Track",
+      "image": "/images/joging-track.jpg"
+    },
+    {
+      "name": "Ruang Kelas",
       "image": "/images/ruang-kelas.jpg"
     },
     {
-      "name": "Masjid Qiwamul Ummah",
+      "name": "Mesjid Qiwamul Ummah",
       "image": "/images/masjid.jpg"
     },
     {
       "name": "Kolam Renang",
       "image": "/images/kolam-renang.jpg"
-    },
-    {
-      "name": "Gedung Auditorium",
-      "image": "/images/auditorium.jpg"
     }
   ]
 }

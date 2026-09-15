@@ -4,7 +4,7 @@ export const CONTACT = {
   address: "Jl. H.A.M. Rifaddin No 1 RT 25, Harapan Baru, Samarinda Seberang",
   phone: "0851-9157-6889",
   phonePerson: "Yuzi Deliana, S.H",
-  email: "plus@smkplusmelati.sch.id",
+  email: "smkmelatismd@gmail.com",
   ppdbUrl: "https://ppdb.smkplusmelati.sch.id",
   googleFormUrl:
     "https://docs.google.com/forms/d/e/1FAIpQLSfCNrHBi-8TYbc5GLMDHVVbWk8Weh5S0p6Knd4cW17X2TSXHw/viewform",
@@ -30,7 +30,6 @@ export const SOCIALS = [
 
 export const NAV_LINKS = [
   { label: "Beranda", href: "/" },
-  { label: "Berita", href: "/berita" },
   {
     label: "Profil",
     href: "/profil",
@@ -38,6 +37,14 @@ export const NAV_LINKS = [
       { label: "Profil", href: "/profil" },
       { label: "Visi Misi", href: "/visi-misi" },
       { label: "Daftar Guru", href: "/guru" },
+    ],
+  },
+  {
+    label: "Jurusan",
+    href: "/jurusan/tkj",
+    children: [
+      { label: "TKJ", href: "/jurusan/tkj" },
+      { label: "Tata Boga", href: "/jurusan/tata-boga" },
     ],
   },
   {
@@ -50,15 +57,8 @@ export const NAV_LINKS = [
       { label: "Prestasi Siswa", href: "/prestasi-siswa" },
     ],
   },
-  {
-    label: "Jurusan",
-    href: "/jurusan/tkj",
-    children: [
-      { label: "TKJ", href: "/jurusan/tkj" },
-      { label: "Tata Boga", href: "/jurusan/tata-boga" },
-    ],
-  },
   { label: "Fasilitas", href: "/fasilitas" },
   { label: "Ekskul", href: "/ekskul" },
+  { label: "Berita", href: "/berita" },
   { label: "Hubungi Kami", href: "/hubungi-kami" },
 ];

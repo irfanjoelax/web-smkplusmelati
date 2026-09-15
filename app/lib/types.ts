@@ -32,7 +32,6 @@ export type PrestasiItem = {
   title: string;
   description: string;
   image: string;
-  alt: string;
 };
 
 export type EkskulItem = {
@@ -48,6 +47,22 @@ export type BeritaItem = {
   content: string;
   image: string;
   date: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ActivityLogEntry = {
+  id: string;
+  action: "add" | "edit" | "delete";
+  collection: string;
+  label: string;
+  timestamp: string;
+};
+
+export type IncompleteContentItem = {
+  title: string;
+  issue: string;
+  href: string;
 };
 
 export type Prestasi = {
@@ -102,7 +117,45 @@ export type FacilityPreview = {
   image: string;
 };
 
+export type ProgramCard = {
+  title: string;
+  description: string;
+  image: string;
+};
+
+export type ProgramData = {
+  pelatihan: {
+    cards: ProgramCard[];
+    harapan: string[];
+  };
+  keagamaan: {
+    cards: ProgramCard[];
+    perayaanText: string;
+  };
+  asrama: {
+    cards: ProgramCard[];
+    jadwal: string[];
+  };
+};
+
+export type ProfilReason = {
+  title: string;
+  desc: string;
+};
+
+export type ProfilData = {
+  image1: string;
+  title1: string;
+  paragraphs: string[];
+  reasons: ProfilReason[];
+  image2: string;
+  title2: string;
+  desc2: string;
+};
+
 export type Beranda = {
+  heroImage?: string;
+  ppdbImage?: string;
   stats: Stat[];
   majors: Major[];
   programs: ProgramItem[];

@@ -1,0 +1,37 @@
+[
+  {
+    "action": "delete",
+    "collection": "berita",
+    "label": "Hapus berita \"hfjdhfd\"",
+    "id": "b486076f-e474-4399-b9a6-fa2267206f59",
+    "timestamp": "2026-09-14T02:48:06.610Z"
+  },
+  {
+    "action": "edit",
+    "collection": "beranda",
+    "label": "Edit beranda",
+    "id": "dced4c32-f9e0-4e5d-9332-209d51db34ce",
+    "timestamp": "2026-09-14T02:27:15.698Z"
+  },
+  {
+    "action": "delete",
+    "collection": "beranda",
+    "label": "Hapus beranda \"PodSchool Zaman Now\"",
+    "id": "8af38697-7a66-4e17-9c5d-595e6423cc3e",
+    "timestamp": "2026-09-14T02:27:03.160Z"
+  },
+  {
+    "action": "edit",
+    "collection": "beranda",
+    "label": "Edit beranda",
+    "id": "4418f81b-d380-45a0-bed9-0727263c7e9d",
+    "timestamp": "2026-09-14T02:26:54.253Z"
+  },
+  {
+    "action": "delete",
+    "collection": "fasilitas",
+    "label": "Hapus fasilitas \"Perpustakaan\"",
+    "id": "14326b10-44d7-410f-b98d-6d3af53548a1",
+    "timestamp": "2026-09-14T02:22:58.258Z"
+  }
+]

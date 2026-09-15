@@ -4,6 +4,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import { get, put } from "@vercel/blob";
 
 const dataDir = path.join(process.cwd(), "app", "data");
+const activityLogFile = "activity-log.json";
 
 export type ContentKey =
   | "guru"
@@ -13,7 +14,9 @@ export type ContentKey =
   | "fasilitas"
   | "beranda"
   | "ekskul"
-  | "berita";
+  | "berita"
+  | "program"
+  | "profil";
 
 export const COLLECTION_FILES: Record<ContentKey, string> = {
   guru: "guru.json",
@@ -24,6 +27,8 @@ export const COLLECTION_FILES: Record<ContentKey, string> = {
   beranda: "beranda.json",
   ekskul: "ekskul.json",
   berita: "berita.json",
+  program: "program.json",
+  profil: "profil.json",
 };
 
 /**
@@ -71,4 +76,36 @@ export async function saveContent(key: ContentKey, data: unknown): Promise<void>
     writeFileSync(tmp, JSON.stringify(data, null, 2), "utf-8");
     renameSync(tmp, target);
   }
+}
+
+export async function getActivityLog<T>(): Promise<T> {
+  noStore();
+
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const result = await get(`data/${activityLogFile}`, {
+      access: "public",
+      useCache: false,
+    });
+    if (result) return new Response(result.stream).json() as Promise<T>;
+  }
+
+  return JSON.parse(readFileSync(path.join(dataDir, activityLogFile), "utf-8")) as T;
+}
+
+export async function saveActivityLog(data: unknown): Promise<void> {
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    await put(`data/${activityLogFile}`, JSON.stringify(data, null, 2), {
+      access: "public",
+      contentType: "application/json",
+      addRandomSuffix: false,
+      allowOverwrite: true,
+      cacheControlMaxAge: 60,
+    });
+    return;
+  }
+
+  const target = path.join(dataDir, activityLogFile);
+  const tmp = `${target}.tmp`;
+  writeFileSync(tmp, JSON.stringify(data, null, 2), "utf-8");
+  renameSync(tmp, target);
 }
