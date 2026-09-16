@@ -21,7 +21,7 @@ export const organizationSchema = {
   logo: absoluteUrl("/icon.png"),
   image: absoluteUrl("/images/hero.jpg"),
   description:
-    "Sekolah menengah kejuruan swasta keunggulan di Samarinda Seberang, Kalimantan Timur. Jurusan TKJ dan Tata Boga, program asrama dan keagamaan.",
+    "Sekolah menengah kejuruan swasta keunggulan di Samarinda Seberang, Kalimantan Timur. Jurusan TJKT dan Kuliner, program asrama dan keagamaan.",
   email: CONTACT.email,
   telephone: CONTACT.phone,
   address: {

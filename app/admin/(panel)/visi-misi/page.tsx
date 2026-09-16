@@ -2,6 +2,8 @@ import { getContent } from "@/app/lib/content";
 import type { VisiMisi } from "@/app/lib/types";
 import VisiMisiEditor from "./editor";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Visi & Misi | Admin Panel",
 };

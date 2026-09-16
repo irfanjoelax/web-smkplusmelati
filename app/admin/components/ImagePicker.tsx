@@ -5,9 +5,13 @@ import { useState } from "react";
 export default function ImagePicker({
   value,
   onChange,
+  onRemove,
+  large = false,
 }: {
   value: string;
   onChange: (url: string) => void;
+  onRemove?: () => boolean | void | Promise<boolean | void>;
+  large?: boolean;
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -32,17 +36,40 @@ export default function ImagePicker({
     }
   }
 
+  async function handleRemove() {
+    if (busy) return;
+    setBusy(true);
+    setError("");
+    try {
+      const removeCurrentUpload = await onRemove?.();
+      if (removeCurrentUpload) {
+        const response = await fetch(`/api/admin/upload?cleanup=1&path=${encodeURIComponent(value)}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) {
+          const json = await response.json().catch(() => null);
+          throw new Error(json?.error ?? "Gagal menghapus file gambar");
+        }
+      }
+      onChange("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Gagal menghapus gambar");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
-    <div className="flex items-center gap-3">
+    <div className={`flex gap-3 ${large ? "flex-col items-start" : "items-center"}`}>
       {value ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={value}
           alt=""
-          className="h-16 w-16 rounded-xl border border-slate-200 object-cover"
+          className={`${large ? "h-40 w-40 rounded-2xl" : "h-16 w-16 rounded-xl"} border border-slate-200 object-cover`}
         />
       ) : (
-        <div className="flex h-16 w-16 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 text-center text-[0.65rem] text-slate-400">
+        <div className={`flex items-center justify-center border border-dashed border-slate-300 bg-slate-50 text-center text-slate-400 ${large ? "h-40 w-40 rounded-2xl text-xs" : "h-16 w-16 rounded-xl text-[0.65rem]"}`}>
           Tanpa foto
         </div>
       )}
@@ -64,10 +91,11 @@ export default function ImagePicker({
         {value && (
           <button
             type="button"
-            onClick={() => onChange("")}
+            onClick={handleRemove}
+            disabled={busy}
             className="text-xs text-red-500 hover:underline"
           >
-            Hapus gambar
+            {busy ? "Menghapus..." : "Hapus gambar"}
           </button>
         )}
         {error && <span className="text-xs text-red-500">{error}</span>}

@@ -4,6 +4,7 @@ import path from "path";
 
 export function imageExists(src: string): boolean {
   if (!src) return false;
+  if (/^https?:\/\//.test(src)) return true;
   try {
     const filePath = path.join(process.cwd(), "public", src.replace(/^\//, ""));
     return fs.existsSync(filePath);
@@ -13,6 +14,7 @@ export function imageExists(src: string): boolean {
 }
 
 export function imageSrc(src: string): string {
+  if (/^https?:\/\//.test(src)) return src;
   try {
     const filePath = path.join(process.cwd(), "public", src.replace(/^\//, ""));
     const stat = fs.statSync(filePath);

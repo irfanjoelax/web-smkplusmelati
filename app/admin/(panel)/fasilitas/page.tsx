@@ -2,6 +2,8 @@ import { getContent } from "@/app/lib/content";
 import type { FasilitasItem } from "@/app/lib/types";
 import FasilitasEditor from "./editor";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Fasilitas | Admin Panel",
 };

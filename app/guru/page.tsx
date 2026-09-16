@@ -55,7 +55,7 @@ export default async function GuruPage() {
         <section className="px-4 pb-24 pt-16">
           <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {teachers.map((t, i) => (
-              <Reveal key={t.image} delay={i * 80}>
+              <Reveal key={`${t.name}-${i}`} delay={i * 80}>
                 <ClayCard hover className="flex flex-col items-center p-6">
                   <div className="clay-inset overflow-hidden rounded-3xl p-2">
                     <LocalImage
@@ -70,9 +70,11 @@ export default async function GuruPage() {
                     <p className="w-full text-center text-sm font-extrabold leading-5 text-primary-dark">
                       {t.name}
                     </p>
-                    <p className="mt-0.5 w-full text-center text-xs font-semibold leading-4 text-accent">
-                      {t.role}
-                    </p>
+                    {t.role && (
+                      <span className="mt-1.5 inline-flex items-center rounded-full border border-primary bg-primary-dark px-3 py-0.5 text-center text-xs font-bold text-accent shadow-sm">
+                        {t.role}
+                      </span>
+                    )}
                   </div>
                 </ClayCard>
               </Reveal>

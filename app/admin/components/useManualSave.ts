@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { markPersistedContent } from "./deleteContent";
 
 export type ContentSaveKey =
   | "guru"
@@ -9,7 +10,10 @@ export type ContentSaveKey =
   | "prestasi"
   | "fasilitas"
   | "beranda"
-  | "ekskul";
+  | "ekskul"
+  | "berita"
+  | "program"
+  | "profil";
 
 export function useManualSave(key: ContentSaveKey, data: unknown) {
   const [isSaving, setIsSaving] = useState(false);
@@ -26,7 +30,7 @@ export function useManualSave(key: ContentSaveKey, data: unknown) {
     return () => clearTimeout(t);
   }, [isSaved]);
 
-  const save = useCallback(async () => {
+  const save = useCallback(async (dataOverride?: unknown) => {
     if (isSaving) return;
     setIsSaving(true);
     setIsSaved(false);
@@ -34,15 +38,18 @@ export function useManualSave(key: ContentSaveKey, data: unknown) {
       const res = await fetch(`/api/content/${key}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dataRef.current),
+        body: JSON.stringify(dataOverride ?? dataRef.current),
       });
       if (res.ok) {
+        markPersistedContent(dataOverride ?? dataRef.current);
         setIsSaved(true);
       } else {
-        console.error("Save failed:", res.status);
+        const json = await res.json().catch(() => null);
+        throw new Error(json?.error ?? `Gagal menyimpan (${res.status})`);
       }
     } catch (err) {
       console.error("Save error:", err);
+      throw err;
     } finally {
       setIsSaving(false);
     }

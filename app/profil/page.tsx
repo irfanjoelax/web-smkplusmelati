@@ -8,6 +8,8 @@ import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
 import SectionHeading from "@/app/components/SectionHeading";
 import { IMAGES } from "@/app/components/images";
+import { getContent } from "@/app/lib/content";
+import type { ProfilData } from "@/app/lib/types";
 import { breadcrumbSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -33,6 +35,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 60;
+
 const reasons = [
   {
     title: "Pemilihan Bidang Keahlian",
@@ -52,7 +56,9 @@ const reasons = [
   },
 ];
 
-export default function ProfilPage() {
+export default async function ProfilPage() {
+  const profil = await getContent<ProfilData>("profil");
+
   return (
     <>
       <Header />
@@ -64,13 +70,14 @@ export default function ProfilPage() {
           description="Menjadi garda terdepan demi tercapainya sumber daya manusia yang berilmu dan beradab di Kalimantan Timur."
         />
 
+        {/* Section 1: Profil Singkat */}
         <section className="px-4 py-14">
           <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
             <Reveal>
               <div className="relative">
                 <ClayCard className="overflow-hidden p-3">
                   <LocalImage
-                    src={IMAGES.profil1}
+                    src={profil.image1 || IMAGES.profil1}
                     alt="Kegiatan SMK Plus Melati"
                     width={800}
                     height={600}
@@ -109,6 +116,7 @@ export default function ProfilPage() {
           </div>
         </section>
 
+        {/* Section 2: Alasan Memilih */}
         <section className="px-4 py-16">
           <div className="mx-auto max-w-6xl">
             <SectionHeading
@@ -117,7 +125,7 @@ export default function ProfilPage() {
             />
             <div className="mt-12 grid gap-6 sm:grid-cols-2">
               {reasons.map((r, i) => (
-                <Reveal key={r.title} delay={i * 80}>
+                <Reveal key={`${r.title}-${i}`} delay={i * 80}>
                   <ClayCard hover className="p-8">
                     <span className="clay-chip clay-chip-primary mb-4">
                       0{i + 1}
@@ -135,13 +143,14 @@ export default function ProfilPage() {
           </div>
         </section>
 
+        {/* Section 3: Sorotan Penutup */}
         <section className="px-4 pb-24">
           <div className="mx-auto max-w-6xl">
             <Reveal>
               <ClayCard className="grid items-center gap-8 p-8 sm:p-12 lg:grid-cols-2">
                 <div className="clay-inset overflow-hidden rounded-[1.6rem] p-2">
                   <LocalImage
-                    src={IMAGES.profil2}
+                    src={profil.image2 || IMAGES.profil2}
                     alt="Suasana sekolah"
                     width={800}
                     height={600}

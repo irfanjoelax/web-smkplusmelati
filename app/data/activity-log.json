@@ -1,0 +1,37 @@
+[
+  {
+    "action": "delete",
+    "collection": "program",
+    "label": "Hapus program \"Program hdbfdbfjd\"",
+    "id": "006bf166-0ad6-4be3-8d5b-559b2a8bc8b4",
+    "timestamp": "2026-09-16T02:08:06.528Z"
+  },
+  {
+    "action": "add",
+    "collection": "program",
+    "label": "Tambah program \"Program hdbfdbfjd\"",
+    "id": "2e8632c4-78e5-4e94-af2a-95025983b1bc",
+    "timestamp": "2026-09-16T02:07:42.418Z"
+  },
+  {
+    "action": "delete",
+    "collection": "program",
+    "label": "Hapus program \"dfkjdfkd\"",
+    "id": "90f6cc1d-cc77-40ac-b169-23a615b14620",
+    "timestamp": "2026-09-16T01:34:35.022Z"
+  },
+  {
+    "action": "delete",
+    "collection": "jurusan",
+    "label": "Hapus jurusan \"dfjhc\"",
+    "id": "3c529a4e-4ddd-4895-88fa-b0fbd701e864",
+    "timestamp": "2026-09-16T01:23:50.153Z"
+  },
+  {
+    "action": "add",
+    "collection": "jurusan",
+    "label": "Tambah jurusan \"dfjhc\"",
+    "id": "269449b7-ddd6-48d7-986e-83cbe7d1fa7b",
+    "timestamp": "2026-09-16T01:23:28.676Z"
+  }
+]

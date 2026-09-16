@@ -60,7 +60,7 @@ export default async function VisiMisiPage() {
                   <span className="clay-chip clay-chip-primary">Visi</span>
                 </div>
                 <p className="text-center text-2xl font-extrabold leading-snug text-primary-dark sm:text-4xl sm:leading-snug">
-                  &ldquo;{visi}&rdquo;
+                  {visi}
                 </p>
               </ClayCard>
             </Reveal>

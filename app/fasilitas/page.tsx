@@ -50,7 +50,7 @@ export default async function FasilitasPage() {
         <section className="px-4 py-16">
           <div className="mx-auto grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {facilities.map((f, i) => (
-              <Reveal key={f.title} delay={i * 80}>
+              <Reveal key={`${f.title}-${i}`} delay={i * 80}>
                 <ImageCard
                   src={f.image}
                   alt={f.title}

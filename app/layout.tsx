@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Sekolah SMK swasta keunggulan di Samarinda Seberang, Kalimantan Timur dengan jurusan TKJ dan Tata Boga. Sekolah Kewirausahaan yang Bertakwa.",
+    "Sekolah SMK swasta keunggulan di Samarinda Seberang, Kalimantan Timur dengan jurusan TJKT dan Kuliner. Sekolah Kewirausahaan yang Bertakwa.",
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME }],
   keywords: [
@@ -32,10 +32,10 @@ export const metadata: Metadata = {
     "SMK Samarinda",
     "SMK Samarinda Seberang",
     "SMK swasta Samarinda",
-    "SMK TKJ Samarinda",
-    "SMK Tata Boga Samarinda",
+    "SMK TJKT Samarinda",
+    "SMK Kuliner Samarinda",
     "sekolah kewirausahaan",
-    "PPDB Samarinda",
+    "SPMB Samarinda",
     "Kalimantan Timur",
   ],
   robots: {
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: `${SITE_NAME} — ${SITE_TAGLINE}`,
     description:
-      "Sekolah SMK swasta keunggulan di Samarinda Seberang, Kalimantan Timur dengan jurusan TKJ dan Tata Boga.",
+      "Sekolah SMK swasta keunggulan di Samarinda Seberang, Kalimantan Timur dengan jurusan TJKT dan Kuliner.",
     url: SITE_URL,
     images: [
       {
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${SITE_NAME} — ${SITE_TAGLINE}`,
     description:
-      "Sekolah SMK swasta keunggulan di Samarinda Seberang, Kalimantan Timur dengan jurusan TKJ dan Tata Boga.",
+      "Sekolah SMK swasta keunggulan di Samarinda Seberang, Kalimantan Timur dengan jurusan TJKT dan Kuliner.",
     images: [absoluteUrl("/images/hero.jpg")],
   },
   icons: {

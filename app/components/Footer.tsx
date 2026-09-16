@@ -83,15 +83,17 @@ export default function Footer() {
               </p>
               <p>
                 <a
-                  href={`mailto:${CONTACT.email}`}
+                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT.email}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="font-semibold text-white"
                 >
                   {CONTACT.email}
                 </a>
               </p>
             </address>
-            <Link href="/hubungi-ppdb" className="clay-btn clay-btn-accent mt-5 text-sm">
-              Daftar PPDB Sekarang
+            <Link href="/hubungi-spmb" className="clay-btn clay-btn-accent mt-5 text-sm">
+              Daftar SPMB Sekarang
             </Link>
           </div>
         </div>

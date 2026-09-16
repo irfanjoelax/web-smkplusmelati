@@ -10,12 +10,12 @@ function getSecret(): Uint8Array {
   return new TextEncoder().encode(secret);
 }
 
-export async function signSession(username: string): Promise<string> {
+export async function signSession(username: string, expiresIn: string = "1h"): Promise<string> {
   return new SignJWT({ role: "admin" })
     .setProtectedHeader({ alg: "HS256" })
     .setSubject(username)
     .setIssuedAt()
-    .setExpirationTime("7d")
+    .setExpirationTime(expiresIn)
     .sign(getSecret());
 }
 

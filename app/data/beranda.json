@@ -1,4 +1,6 @@
 {
+  "heroImage": "/images/hero.jpg",
+  "ppdbImage": "/uploads/1789335323939-a280c98bd274.png",
   "stats": [
     {
       "value": "2",
@@ -20,18 +22,18 @@
   "majors": [
     {
       "id": "tkj",
-      "title": "TKJ",
-      "full": "Teknik Komputer & Jaringan",
+      "title": "TJKT",
+      "full": "Teknik Jaringan Komputer & Telekomunikasi",
       "desc": "Menguasai jaringan komputer, administrasi server, dan teknologi informasi berbasis Mikrotik.",
-      "href": "/jurusan/tkj",
+      "href": "/jurusan/tjkt",
       "icon": "network"
     },
     {
       "id": "tata-boga",
-      "title": "Tata Boga",
+      "title": "Kuliner",
       "full": "Seni & Industri Kuliner",
       "desc": "Mengasah seni memasak, penyajian menarik, dan nilai jual produk kuliner profesional.",
-      "href": "/jurusan/tata-boga",
+      "href": "/jurusan/kuliner",
       "icon": "chef"
     }
   ],
@@ -67,42 +69,42 @@
   ],
   "ekskulPreview": [
     {
-      "name": "PodSchool",
+      "name": "English Club",
       "href": "/ekskul",
-      "image": "/images/podschool.jpg"
-    },
-    {
-      "name": "Konten Kreator",
-      "href": "/ekskul",
-      "image": "/images/konten-kreator.jpg"
-    },
-    {
-      "name": "Desain Grafis",
-      "href": "/ekskul",
-      "image": "/images/desain-grafis.png"
+      "image": "/images/english-club.jpg"
     },
     {
       "name": "Pramuka",
       "href": "/ekskul",
       "image": "/images/pramuka.jpg"
+    },
+    {
+      "name": "E-Sporttttt",
+      "href": "/ekskul",
+      "image": "/images/e-sport.png"
+    },
+    {
+      "name": "PodSchool Zaman Now",
+      "href": "/ekskul",
+      "image": "/images/podschool.jpg"
     }
   ],
   "facilities": [
     {
-      "name": "Ruang Kelas Ber-AC",
+      "name": "Joging Track",
+      "image": "/images/joging-track.jpg"
+    },
+    {
+      "name": "Ruang Kelas",
       "image": "/images/ruang-kelas.jpg"
     },
     {
-      "name": "Masjid Qiwamul Ummah",
+      "name": "Mesjid Qiwamul Ummah",
       "image": "/images/masjid.jpg"
     },
     {
       "name": "Kolam Renang",
       "image": "/images/kolam-renang.jpg"
-    },
-    {
-      "name": "Gedung Auditorium",
-      "image": "/images/auditorium.jpg"
     }
   ]
 }

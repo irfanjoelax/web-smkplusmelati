@@ -11,7 +11,7 @@ import { breadcrumbSchema } from "@/app/lib/seo";
 export const metadata: Metadata = {
   title: "Hubungi Kami",
   description:
-    "Hubungi SMK Plus Melati Samarinda: alamat, telepon, email, media sosial, dan formulir kontak untuk informasi PPDB dan kegiatan sekolah.",
+    "Hubungi SMK Plus Melati Samarinda: alamat, telepon, email, media sosial, dan formulir kontak untuk informasi SPMB dan kegiatan sekolah.",
   alternates: {
     canonical: "/hubungi-kami",
   },
@@ -56,7 +56,7 @@ const contactItems = [
   {
     label: "Email",
     value: CONTACT.email,
-    href: `mailto:${CONTACT.email}`,
+    href: `https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT.email}`,
     icon: (
       <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
@@ -102,6 +102,8 @@ export default function HubungiKamiPage() {
                   <a
                     key={item.label}
                     href={item.href}
+                    target={item.href.startsWith("http") ? "_blank" : undefined}
+                    rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
                     className="block"
                   >
                     {inner}

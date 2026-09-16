@@ -4,7 +4,7 @@ export const CONTACT = {
   address: "Jl. H.A.M. Rifaddin No 1 RT 25, Harapan Baru, Samarinda Seberang",
   phone: "0851-9157-6889",
   phonePerson: "Yuzi Deliana, S.H",
-  email: "plus@smkplusmelati.sch.id",
+  email: "smkmelatismd@gmail.com",
   ppdbUrl: "https://ppdb.smkplusmelati.sch.id",
   googleFormUrl:
     "https://docs.google.com/forms/d/e/1FAIpQLSfCNrHBi-8TYbc5GLMDHVVbWk8Weh5S0p6Knd4cW17X2TSXHw/viewform",
@@ -28,7 +28,13 @@ export const SOCIALS = [
   },
 ];
 
-export const NAV_LINKS = [
+export type NavLink = {
+  label: string;
+  href: string;
+  children?: { label: string; href: string }[];
+};
+
+export const NAV_LINKS: NavLink[] = [
   { label: "Beranda", href: "/" },
   {
     label: "Profil",
@@ -37,6 +43,15 @@ export const NAV_LINKS = [
       { label: "Profil", href: "/profil" },
       { label: "Visi Misi", href: "/visi-misi" },
       { label: "Daftar Guru", href: "/guru" },
+      { label: "Fasilitas", href: "/fasilitas" },
+    ],
+  },
+  {
+    label: "Jurusan",
+    href: "/jurusan/tjkt",
+    children: [
+      { label: "TJKT", href: "/jurusan/tjkt" },
+      { label: "Kuliner", href: "/jurusan/kuliner" },
     ],
   },
   {
@@ -46,18 +61,11 @@ export const NAV_LINKS = [
       { label: "Program Pelatihan", href: "/program-pelatihan" },
       { label: "Program Asrama", href: "/program-asrama" },
       { label: "Program Keagamaan", href: "/program-keagamaan" },
-      { label: "Prestasi Siswa", href: "/prestasi-siswa" },
     ],
   },
-  {
-    label: "Jurusan",
-    href: "/jurusan/tkj",
-    children: [
-      { label: "TKJ", href: "/jurusan/tkj" },
-      { label: "Tata Boga", href: "/jurusan/tata-boga" },
-    ],
-  },
-  { label: "Fasilitas", href: "/fasilitas" },
+  { label: "Prestasi", href: "/prestasi-siswa" },
   { label: "Ekskul", href: "/ekskul" },
+  { label: "Alumni", href: "/alumni" },
+  { label: "Berita", href: "/berita" },
   { label: "Hubungi Kami", href: "/hubungi-kami" },
 ];
