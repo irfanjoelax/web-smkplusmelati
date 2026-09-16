@@ -15,18 +15,19 @@ export type JurusanCard = {
   description: string;
 };
 
-export type JurusanData = {
-  tkj: {
-    skills: string[];
-    sertifikasi: JurusanCard;
-    prospek: JurusanCard;
-  };
-  tataBoga: {
-    skills: string[];
-    keunggulan: JurusanCard;
-    prospek: JurusanCard;
-  };
+export type JurusanItem = {
+  id: string;
+  name: string;
+  fullName: string;
+  description: string;
+  whyTitle: string;
+  whyText: string;
+  skills: string[];
+  card1: JurusanCard;
+  card2: JurusanCard;
 };
+
+export type JurusanData = JurusanItem[];
 
 export type PrestasiItem = {
   title: string;
@@ -38,6 +39,7 @@ export type EkskulItem = {
   title: string;
   desc: string;
   image: string;
+  required?: boolean;
 };
 
 export type BeritaItem = {
@@ -123,20 +125,24 @@ export type ProgramCard = {
   image: string;
 };
 
-export type ProgramData = {
-  pelatihan: {
-    cards: ProgramCard[];
-    harapan: string[];
-  };
-  keagamaan: {
-    cards: ProgramCard[];
-    perayaanText: string;
-  };
-  asrama: {
-    cards: ProgramCard[];
-    jadwal: string[];
-  };
+export type ProgramSection = {
+  type: "list" | "text";
+  title: string;
+  items?: string[];
+  text?: string;
 };
+
+export type ProgramEntity = {
+  id: string;
+  title: string;
+  summary: string;
+  description: string;
+  icon: IconKey;
+  cards: ProgramCard[];
+  section?: ProgramSection;
+};
+
+export type ProgramData = ProgramEntity[];
 
 export type ProfilReason = {
   title: string;

@@ -2,7 +2,8 @@ import {
   getActivityLog,
   getContent,
 } from "@/app/lib/content";
-import type { ActivityLogEntry, Beranda, BeritaItem, EkskulItem, FasilitasItem, IncompleteContentItem, JurusanData, Prestasi, Teacher, VisiMisi } from "@/app/lib/types";
+import { getJurusanData } from "@/app/lib/jurusan";
+import type { ActivityLogEntry, Beranda, BeritaItem, EkskulItem, FasilitasItem, IncompleteContentItem, Prestasi, Teacher, VisiMisi } from "@/app/lib/types";
 import DashboardView from "./dashboard-view";
 
 export const dynamic = "force-dynamic";
@@ -16,7 +17,7 @@ export default async function DashboardPage() {
       getContent<Beranda>("beranda"),
       getContent<Prestasi>("prestasi"),
       getContent<EkskulItem[]>("ekskul"),
-      getContent<JurusanData>("jurusan"),
+      getJurusanData(),
       getContent<BeritaItem[]>("berita"),
       getActivityLog<ActivityLogEntry[]>(),
     ]);
@@ -27,7 +28,7 @@ export default async function DashboardPage() {
   const stats = berandaData.stats.length;
   const prestasi = prestasiData.items.length;
   const ekskul = ekskulData.length;
-  const skills = Object.keys(jurusanData).length;
+  const skills = jurusanData.length;
   const berita = beritaData.length;
   const latestBerita = [...beritaData]
     .sort((a, b) => {

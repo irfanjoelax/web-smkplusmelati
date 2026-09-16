@@ -22,18 +22,18 @@
   "majors": [
     {
       "id": "tkj",
-      "title": "TKJ",
-      "full": "Teknik Komputer & Jaringan",
+      "title": "TJKT",
+      "full": "Teknik Jaringan Komputer & Telekomunikasi",
       "desc": "Menguasai jaringan komputer, administrasi server, dan teknologi informasi berbasis Mikrotik.",
-      "href": "/jurusan/tkj",
+      "href": "/jurusan/tjkt",
       "icon": "network"
     },
     {
       "id": "tata-boga",
-      "title": "Tata Boga",
+      "title": "Kuliner",
       "full": "Seni & Industri Kuliner",
       "desc": "Mengasah seni memasak, penyajian menarik, dan nilai jual produk kuliner profesional.",
-      "href": "/jurusan/tata-boga",
+      "href": "/jurusan/kuliner",
       "icon": "chef"
     }
   ],

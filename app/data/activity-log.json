@@ -1,37 +1,37 @@
 [
   {
     "action": "delete",
-    "collection": "berita",
-    "label": "Hapus berita \"hfjdhfd\"",
-    "id": "b486076f-e474-4399-b9a6-fa2267206f59",
-    "timestamp": "2026-09-14T02:48:06.610Z"
-  },
-  {
-    "action": "edit",
-    "collection": "beranda",
-    "label": "Edit beranda",
-    "id": "dced4c32-f9e0-4e5d-9332-209d51db34ce",
-    "timestamp": "2026-09-14T02:27:15.698Z"
+    "collection": "program",
+    "label": "Hapus program \"dfkjdfkd\"",
+    "id": "90f6cc1d-cc77-40ac-b169-23a615b14620",
+    "timestamp": "2026-09-16T01:34:35.022Z"
   },
   {
     "action": "delete",
-    "collection": "beranda",
-    "label": "Hapus beranda \"PodSchool Zaman Now\"",
-    "id": "8af38697-7a66-4e17-9c5d-595e6423cc3e",
-    "timestamp": "2026-09-14T02:27:03.160Z"
+    "collection": "jurusan",
+    "label": "Hapus jurusan \"dfjhc\"",
+    "id": "3c529a4e-4ddd-4895-88fa-b0fbd701e864",
+    "timestamp": "2026-09-16T01:23:50.153Z"
   },
   {
-    "action": "edit",
-    "collection": "beranda",
-    "label": "Edit beranda",
-    "id": "4418f81b-d380-45a0-bed9-0727263c7e9d",
-    "timestamp": "2026-09-14T02:26:54.253Z"
+    "action": "add",
+    "collection": "jurusan",
+    "label": "Tambah jurusan \"dfjhc\"",
+    "id": "269449b7-ddd6-48d7-986e-83cbe7d1fa7b",
+    "timestamp": "2026-09-16T01:23:28.676Z"
   },
   {
     "action": "delete",
-    "collection": "fasilitas",
-    "label": "Hapus fasilitas \"Perpustakaan\"",
-    "id": "14326b10-44d7-410f-b98d-6d3af53548a1",
-    "timestamp": "2026-09-14T02:22:58.258Z"
+    "collection": "jurusan",
+    "label": "Hapus jurusan \"Teknik Elektro\"",
+    "id": "34c221c1-2814-4f4a-bae4-d628b90f7a2a",
+    "timestamp": "2026-09-16T01:22:59.006Z"
+  },
+  {
+    "action": "add",
+    "collection": "jurusan",
+    "label": "Tambah jurusan \"Teknik Elektro\"",
+    "id": "df553470-078f-4f18-9e5b-49c5eb749f6d",
+    "timestamp": "2026-09-16T01:22:30.373Z"
   }
 ]

@@ -12,7 +12,8 @@
   {
     "title": "English Club",
     "desc": "Melatih keberanian siswa berbahasa Inggris di luar jam pembelajaran.",
-    "image": "/images/english-club.jpg"
+    "image": "/images/english-club.jpg",
+    "required": true
   },
   {
     "title": "Desain Grafis",
@@ -22,7 +23,8 @@
   {
     "title": "Pramuka",
     "desc": "Melatih kemandirian, kedisiplinan, mental, serta fisik melalui metode belajar interaktif progresif.",
-    "image": "/images/pramuka.jpg"
+    "image": "/images/pramuka.jpg",
+    "required": true
   },
   {
     "title": "Seni Vocal",

@@ -28,7 +28,13 @@ export const SOCIALS = [
   },
 ];
 
-export const NAV_LINKS = [
+export type NavLink = {
+  label: string;
+  href: string;
+  children?: { label: string; href: string }[];
+};
+
+export const NAV_LINKS: NavLink[] = [
   { label: "Beranda", href: "/" },
   {
     label: "Profil",
@@ -37,14 +43,15 @@ export const NAV_LINKS = [
       { label: "Profil", href: "/profil" },
       { label: "Visi Misi", href: "/visi-misi" },
       { label: "Daftar Guru", href: "/guru" },
+      { label: "Fasilitas", href: "/fasilitas" },
     ],
   },
   {
     label: "Jurusan",
-    href: "/jurusan/tkj",
+    href: "/jurusan/tjkt",
     children: [
-      { label: "TKJ", href: "/jurusan/tkj" },
-      { label: "Tata Boga", href: "/jurusan/tata-boga" },
+      { label: "TJKT", href: "/jurusan/tjkt" },
+      { label: "Kuliner", href: "/jurusan/kuliner" },
     ],
   },
   {
@@ -54,11 +61,11 @@ export const NAV_LINKS = [
       { label: "Program Pelatihan", href: "/program-pelatihan" },
       { label: "Program Asrama", href: "/program-asrama" },
       { label: "Program Keagamaan", href: "/program-keagamaan" },
-      { label: "Prestasi Siswa", href: "/prestasi-siswa" },
     ],
   },
-  { label: "Fasilitas", href: "/fasilitas" },
+  { label: "Prestasi", href: "/prestasi-siswa" },
   { label: "Ekskul", href: "/ekskul" },
+  { label: "Alumni", href: "/alumni" },
   { label: "Berita", href: "/berita" },
   { label: "Hubungi Kami", href: "/hubungi-kami" },
 ];

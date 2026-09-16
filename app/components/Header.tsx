@@ -4,7 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { NAV_LINKS } from "./site";
+import { NAV_LINKS, type NavLink } from "./site";
+import type { JurusanData } from "@/app/lib/types";
+import type { ProgramData } from "@/app/lib/types";
 
 export default function Header() {
   const pathname = usePathname();
@@ -13,6 +15,7 @@ export default function Header() {
   const [hidden, setHidden] = useState(false);
   const lastScrollY = useRef(0);
   const [prevPathname, setPrevPathname] = useState(pathname);
+  const [navLinks, setNavLinks] = useState<NavLink[]>(NAV_LINKS);
 
   if (prevPathname !== pathname) {
     setPrevPathname(pathname);
@@ -31,7 +34,41 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [open]);
 
-  const isLinkActive = (link: (typeof NAV_LINKS)[number]) => {
+  useEffect(() => {
+    let active = true;
+    Promise.all([
+      fetch("/api/content/jurusan").then((response) => (response.ok ? response.json() : Promise.reject())),
+      fetch("/api/content/program").then((response) => (response.ok ? response.json() : Promise.reject())),
+    ])
+      .then(([jurusan, programs]: [JurusanData, ProgramData]) => {
+        if (!active) return;
+        setNavLinks(
+          NAV_LINKS.map((link) => {
+            if (link.label === "Jurusan" && jurusan.length > 0) {
+              return {
+                ...link,
+                href: `/jurusan/${jurusan[0].id}`,
+                children: jurusan.map((item) => ({ label: item.name, href: `/jurusan/${item.id}` })),
+              };
+            }
+            if (link.label === "Program" && programs.length > 0) {
+              return {
+                ...link,
+                href: `/program-${programs[0].id}`,
+                children: programs.map((item) => ({ label: item.title, href: `/program-${item.id}` })),
+              };
+            }
+            return link;
+          }),
+        );
+      })
+      .catch(() => {});
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const isLinkActive = (link: NavLink) => {
     if (link.href === "/") {
       return pathname === "/";
     }
@@ -79,12 +116,12 @@ export default function Header() {
           </span>
         </Link>
 
-        <div className="hidden items-center gap-1 lg:flex">
-          {NAV_LINKS.map((link) => (
+        <div className="hidden items-center gap-0.5 lg:flex">
+          {navLinks.map((link) => (
             <div key={link.href} className="group relative">
               <Link
                 href={link.href}
-                className={`rounded-full px-3.5 py-2 text-sm font-bold transition-all duration-200 ${
+                className={`rounded-full px-2.5 py-2 text-sm font-bold whitespace-nowrap transition-all duration-200 ${
                   isLinkActive(link)
                     ? "clay-chip-primary !py-2 text-white"
                     : "text-foreground hover:-translate-y-0.5 hover:bg-primary-soft hover:text-primary-dark"
@@ -115,7 +152,7 @@ export default function Header() {
           ))}
           <Link
             href="/ppdb"
-            className="clay-btn clay-btn-accent ml-2 !px-4 !py-2 text-sm"
+            className="clay-btn clay-btn-accent ml-1 !px-3 !py-2 text-sm whitespace-nowrap"
           >
             SPMB 2026
           </Link>
@@ -148,7 +185,7 @@ export default function Header() {
       {open && (
         <div className="clay-card mx-auto mt-3 max-w-6xl rounded-[1.5rem] p-4 lg:hidden">
           <div className="flex flex-col gap-1">
-            {NAV_LINKS.map((link) => (
+            {navLinks.map((link) => (
               <div key={link.href}>
                 <Link
                   href={link.href}

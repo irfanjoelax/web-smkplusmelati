@@ -17,38 +17,34 @@ import { clearContentImage } from "@/app/lib/updateContentImage";
 import { deleteUploadIfUnused } from "@/app/lib/unusedUpload";
 import { removeBerandaPreview } from "@/app/lib/removeBerandaPreview";
 import type { Beranda } from "@/app/lib/types";
+import { isJurusanData, normalizeJurusanData } from "@/app/lib/jurusan";
+import { isProgramData, normalizeProgramData } from "@/app/lib/program";
 
 const KEYS = Object.keys(COLLECTION_FILES) as ContentKey[];
 
 const REVALIDATE_ROUTES: Record<ContentKey, string[]> = {
   guru: ["/guru"],
   visiMisi: ["/visi-misi"],
-  jurusan: ["/jurusan/tkj", "/jurusan/tata-boga"],
+  jurusan: [],
   prestasi: ["/prestasi-siswa"],
   fasilitas: ["/fasilitas"],
   beranda: ["/"],
   ekskul: ["/ekskul"],
   berita: ["/berita"],
-  program: ["/program-pelatihan", "/program-keagamaan", "/program-asrama"],
+  program: [],
   profil: ["/profil"],
 };
 
 const DELETE_SECTIONS: Record<ContentKey, (string | null)[]> = {
   guru: [null],
   visiMisi: ["misi"],
-  jurusan: ["tkj.skills", "tataBoga.skills"],
+  jurusan: [null],
   prestasi: ["items"],
   fasilitas: [null],
   beranda: ["stats", "majors", "programs", "ekskulPreview", "facilities"],
   ekskul: [null],
   berita: [null],
-  program: [
-    "pelatihan.cards",
-    "pelatihan.harapan",
-    "keagamaan.cards",
-    "asrama.cards",
-    "asrama.jadwal",
-  ],
+  program: [null],
   profil: ["paragraphs", "reasons"],
 };
 
@@ -59,11 +55,13 @@ const IMAGE_SECTIONS: Partial<Record<ContentKey, (string | null)[]>> = {
   beranda: ["ekskulPreview", "facilities"],
   ekskul: [null],
   berita: [null],
-  program: ["pelatihan.cards", "keagamaan.cards", "asrama.cards"],
+  program: [],
   profil: [null],
 };
 
 function revalidateCollection(key: ContentKey) {
+  if (key === "jurusan") revalidatePath("/jurusan/[slug]", "page");
+  if (key === "program") revalidatePath("/program/[slug]", "page");
   for (const route of REVALIDATE_ROUTES[key]) {
     revalidatePath(route);
   }
@@ -79,6 +77,12 @@ export async function GET(
     return NextResponse.json({ error: "Koleksi tidak dikenal" }, { status: 404 });
   }
   const data = await getContent(collection as ContentKey);
+  if (collection === "jurusan") {
+    return NextResponse.json(normalizeJurusanData(data));
+  }
+  if (collection === "program") {
+    return NextResponse.json(normalizeProgramData(data));
+  }
   return NextResponse.json(data);
 }
 
@@ -102,6 +106,19 @@ export async function PUT(
   }
   if (body === null || typeof body !== "object") {
     return NextResponse.json({ error: "Data tidak valid" }, { status: 400 });
+  }
+
+  if (collection === "jurusan" && !isJurusanData(body)) {
+    return NextResponse.json(
+      { error: "Data jurusan tidak valid. Pastikan semua kolom terisi dan slug unik." },
+      { status: 400 },
+    );
+  }
+  if (collection === "program" && !isProgramData(body)) {
+    return NextResponse.json(
+      { error: "Data program tidak valid. Pastikan semua kolom terisi dan nama program unik." },
+      { status: 400 },
+    );
   }
 
   const key = collection as ContentKey;

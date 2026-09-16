@@ -1,5 +1,4 @@
-import { getContent } from "@/app/lib/content";
-import type { ProgramData } from "@/app/lib/types";
+import { getProgramData } from "@/app/lib/program";
 import ProgramEditor from "./editor";
 
 export const dynamic = "force-dynamic";
@@ -9,5 +8,5 @@ export const metadata = {
 };
 
 export default async function ProgramAdminPage() {
-  return <ProgramEditor initial={await getContent<ProgramData>("program")} />;
+  return <ProgramEditor initial={await getProgramData()} />;
 }

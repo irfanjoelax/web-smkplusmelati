@@ -27,7 +27,7 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
 
   function addNew() {
     setEditingIdx(null);
-    setDraft({ title: "", desc: "", image: "" });
+    setDraft({ title: "", desc: "", image: "", required: false });
   }
 
   function edit(i: number) {
@@ -122,6 +122,16 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
                   onChange={(event) => setDraft({ ...draft, desc: event.target.value })}
                 />
               </Field>
+              <Field label="Kategori">
+                <select
+                  value={draft.required ? "wajib" : "lainnya"}
+                  onChange={(event) => setDraft({ ...draft, required: event.target.value === "wajib" })}
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                >
+                  <option value="wajib">Ekskul Wajib</option>
+                  <option value="lainnya">Ekskul Lainnya</option>
+                </select>
+              </Field>
             </div>
           </div>
         </Panel>
@@ -134,10 +144,15 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
     .map((item, index) => ({ item, index }))
     .filter(({ item }) =>
       !query || `${item.title} ${item.desc}`.toLocaleLowerCase("id-ID").includes(query),
-    );
+    )
+    .sort((a, b) => Number(Boolean(b.item.required)) - Number(Boolean(a.item.required)));
 
   const totalPages = Math.max(1, Math.ceil(filteredItems.length / pageSize));
   const visibleItems = filteredItems.slice((page - 1) * pageSize, page * pageSize);
+  const visibleGroups = [
+    { title: "Ekskul Wajib", items: visibleItems.filter(({ item }) => item.required) },
+    { title: "Ekskul Lainnya", items: visibleItems.filter(({ item }) => !item.required) },
+  ].filter((group) => group.items.length > 0);
 
   return (
     <div>
@@ -207,37 +222,51 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
             {items.length === 0 ? "Belum ada ekskul. Klik Tambah untuk mulai." : "Ekskul tidak ditemukan."}
           </p>
         ) : (
-          <div className="space-y-3">
-            {visibleItems.map(({ item, index }) => (
-              <div
-                key={index}
-                className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 transition hover:border-blue-200 hover:shadow-sm"
-              >
-                {item.image ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={item.image}
-                    alt=""
-                    className="h-18 w-18 shrink-0 rounded-xl border border-slate-200 object-cover"
-                  />
-                ) : (
-                  <div className="flex h-18 w-18 shrink-0 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 text-[0.65rem] text-slate-400">
-                    Tanpa foto
-                  </div>
-                )}
-                <div className="min-w-0 flex-1">
-                  <p className="truncate font-bold text-slate-900">{item.title || "Tanpa judul"}</p>
-                  <p className="mt-0.5 line-clamp-2 text-sm text-slate-500">{item.desc || "Deskripsi belum diisi"}</p>
+          <div className="space-y-6">
+            {visibleGroups.map((group) => (
+              <section key={group.title}>
+                <h3 className="mb-3 text-sm font-extrabold text-slate-800">
+                  {group.title}
+                </h3>
+                <div className="space-y-3">
+                  {group.items.map(({ item, index }) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4 transition hover:border-blue-200 hover:shadow-sm"
+                    >
+                      {item.image ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={item.image}
+                          alt=""
+                          className="h-18 w-18 shrink-0 rounded-xl border border-slate-200 object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-18 w-18 shrink-0 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 text-[0.65rem] text-slate-400">
+                          Tanpa foto
+                        </div>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="truncate font-bold text-slate-900">{item.title || "Tanpa judul"}</p>
+                          <span className={`shrink-0 rounded-full px-2 py-0.5 text-[0.65rem] font-bold ${item.required ? "bg-blue-100 text-blue-700" : "bg-slate-100 text-slate-600"}`}>
+                            {item.required ? "Wajib" : "Lainnya"}
+                          </span>
+                        </div>
+                        <p className="mt-0.5 line-clamp-2 text-sm text-slate-500">{item.desc || "Deskripsi belum diisi"}</p>
+                      </div>
+                      <div className="flex shrink-0 gap-1">
+                        <IconBtn label={`Edit ${item.title || "ekskul"}`} onClick={() => edit(index)}>
+                          <EditIcon className="h-4 w-4" />
+                        </IconBtn>
+                        <IconBtn label={`Hapus ${item.title || "ekskul"}`} danger onClick={() => setConfirmIdx(index)}>
+                          <TrashIcon className="h-4 w-4" />
+                        </IconBtn>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="flex shrink-0 gap-1">
-                  <IconBtn label={`Edit ${item.title || "ekskul"}`} onClick={() => edit(index)}>
-                    <EditIcon className="h-4 w-4" />
-                  </IconBtn>
-                  <IconBtn label={`Hapus ${item.title || "ekskul"}`} danger onClick={() => setConfirmIdx(index)}>
-                    <TrashIcon className="h-4 w-4" />
-                  </IconBtn>
-                </div>
-              </div>
+              </section>
             ))}
           </div>
         )}
@@ -273,4 +302,3 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
     </div>
   );
 }
-

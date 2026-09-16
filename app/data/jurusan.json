@@ -1,5 +1,11 @@
-{
-  "tkj": {
+[
+  {
+    "id": "tjkt",
+    "name": "TJKT",
+    "fullName": "Teknik Jaringan Komputer & Telekomunikasi (TJKT)",
+    "description": "Jurusan yang membekali siswa keterampilan jaringan komputer, administrasi sistem, dan teknologi informasi yang dibutuhkan industri.",
+    "whyTitle": "Mengapa Memilih TJKT?",
+    "whyText": "Jurusan Teknik Jaringan Komputer & Telekomunikasi (TJKT) mempersiapkan siswa untuk memahami dan menguasai infrastruktur serta sistem jaringan komputer. Di SMK Plus Melati, siswa TJKT dilatih dengan 60% praktik sehingga lulusannya siap bekerja di dunia industri maupun berwirausaha di bidang teknologi informasi.",
     "skills": [
       "Administrasi Infrastruktur Jaringan",
       "Administrasi Sistem Jaringan",
@@ -8,36 +14,41 @@
       "Administrasi Server",
       "Keamanan Jaringan Dasar"
     ],
-    "sertifikasi": {
+    "card1": {
       "chip": "Keungulan",
       "title": "Kompeten & Tersertifikasi Global",
-      "description": "Lulusan TKJ dibekali keahlian praktis dan sertifikasi Mikrotik berskala internasional untuk siap bersaing di dunia kerja maupun industri teknologi global."
+      "description": "Lulusan TJKT dibekali keahlian praktis dan sertifikasi Mikrotik berskala internasional untuk siap bersaing di dunia kerja maupun industri teknologi global."
     },
-    "prospek": {
+    "card2": {
       "chip": "Prospek",
-      "title": "Karier Lulusan TKJ",
+      "title": "Karier Lulusan TJKT",
       "description": "Teknisi jaringan, administrator server, network engineer, teknisi komputer, hingga technopreneur di bidang IT."
     }
   },
-  "tataBoga": {
+  {
+    "id": "kuliner",
+    "name": "Kuliner",
+    "fullName": "Kuliner",
+    "description": "Jurusan yang mengasah seni memasak, teknik penyajian, dan jiwa wirausaha di bidang kuliner.",
+    "whyTitle": "Mengapa Memilih Kuliner?",
+    "whyText": "Semua orang bisa memasak, namun tidak semua orang tahu seni memasak. Di SMK Plus Melati, siswa Kuliner belajar bagaimana proses pembuatan makanan yang bisa dinilai harga jualnya, hingga teknik akhir penyediaan makanan yang menarik. Ruang khusus disediakan untuk siswa bereksperimen membuat makanan.",
     "skills": [
-      "Dasar-Dasar Tata Boga",
+      "Dasar-Dasar Kuliner",
       "Seni Memasak & Teknik Penyajian",
       "Pengolahan Makanan & Minuman",
       "Higiene Sanitasi Makanan",
       "Kewirausahaan Kuliner",
-      "Manajemen Dapur & Pelayanan",
-      "halo"
+      "Manajemen Dapur & Pelayanan"
     ],
-    "keunggulan": {
+    "card1": {
       "chip": "Keunggulan",
       "title": "Pencetak Wirausaha",
-      "description": "Pelatihan dan fasilitas ruangan memasak dirancang untuk mencetak profesional di bidang tata boga yang mampu menciptakan lapangan kerja sendiri."
+      "description": "Pelatihan dan fasilitas ruangan memasak dirancang untuk mencetak profesional di bidang kuliner yang mampu menciptakan lapangan kerja sendiri."
     },
-    "prospek": {
+    "card2": {
       "chip": "Prospek",
-      "title": "Karier Lulusan Tata Boga",
+      "title": "Karier Lulusan Kuliner",
       "description": "Chef, pastry, food stylist, manajer restoran, wirausahawan kuliner, hingga pelaku usaha catering dan UMKM makanan."
     }
   }
-}
+]

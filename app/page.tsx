@@ -11,7 +11,9 @@ import LogoMarquee from "@/app/components/LogoMarquee";
 import { Icon } from "@/app/lib/icons";
 import { IMAGES } from "@/app/components/images";
 import { getContent } from "@/app/lib/content";
-import type { Beranda } from "@/app/lib/types";
+import { getJurusanData } from "@/app/lib/jurusan";
+import { getProgramData } from "@/app/lib/program";
+import type { Beranda, IconKey } from "@/app/lib/types";
 import JsonLd from "@/app/components/JsonLd";
 import { websiteSchema } from "@/app/lib/seo";
 
@@ -19,7 +21,7 @@ export const revalidate = 60;
 
 export const metadata: Metadata = {
   description:
-    "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
+    "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TJKT dan Kuliner, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
   alternates: {
     canonical: "/",
   },
@@ -29,18 +31,48 @@ export const metadata: Metadata = {
     url: "/",
     title: "SMK Plus Melati Samarinda — Sekolah Kewirausahaan yang Bertakwa",
     description:
-      "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
+      "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TJKT dan Kuliner, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
   },
   twitter: {
     card: "summary_large_image",
     title: "SMK Plus Melati Samarinda — Sekolah Kewirausahaan yang Bertakwa",
     description:
-      "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TKJ dan Tata Boga, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
+      "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TJKT dan Kuliner, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
   },
 };
 
 export default async function Home() {
-  const { heroImage, ppdbImage, stats, majors, programs, ekskulPreview, facilities } = await getContent<Beranda>("beranda");
+  const [beranda, jurusan, programData] = await Promise.all([
+    getContent<Beranda>("beranda"),
+    getJurusanData(),
+    getProgramData(),
+  ]);
+  const { heroImage, ppdbImage, stats, ekskulPreview, facilities } = beranda;
+  const majorIcons: IconKey[] = ["network", "chef"];
+  const majors = jurusan.map((item, index) => ({
+    id: item.id,
+    title: item.name,
+    full: item.fullName,
+    desc: item.description,
+    href: `/jurusan/${item.id}`,
+    icon: majorIcons[index] ?? "network",
+  }));
+  const homeStats = stats.map((stat) =>
+    stat.label === "Jurusan Keunggulan"
+      ? { ...stat, value: String(jurusan.length) }
+      : stat,
+  );
+  const achievement = beranda.programs.find((item) => item.id === "prestasi");
+  const programs = [
+    ...programData.map((item) => ({
+      id: item.id,
+      title: item.title,
+      desc: item.summary,
+      href: `/program-${item.id}`,
+      icon: item.icon,
+    })),
+    ...(achievement ? [achievement] : []),
+  ];
   return (
     <>
       <Header />
@@ -104,7 +136,7 @@ Sekolah Kewirausahaan yang Bertakwa
             <ClayCard className="relative mx-auto max-w-6xl overflow-hidden p-6 sm:p-8">
               <span className="clay-orb-ghost h-32 w-32 -right-10 -top-10 opacity-70" />
               <div className="relative grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {stats.map((s) => (
+                {homeStats.map((s) => (
                   <div
                     key={s.label}
                     className="clay-inset relative overflow-hidden rounded-3xl p-6 text-center"
@@ -172,13 +204,17 @@ Sekolah Kewirausahaan yang Bertakwa
             <div className="mt-10">
               <LogoMarquee
                 logos={[
-                  { src: "", alt: "Partner 1" },
-                  { src: "", alt: "Partner 2" },
-                  { src: "", alt: "Partner 3" },
-                  { src: "", alt: "Partner 4" },
-                  { src: "", alt: "Partner 5" },
-                  { src: "", alt: "Partner 6" },
-                  { src: "", alt: "Partner 7" },
+                  { src: "/images/partners/asiakomputer.jpg", alt: "Asia Computer" },
+                  { src: "/images/partners/decafe.jpg", alt: "Decafe" },
+                  { src: "/images/partners/hotelmesra.jpg", alt: "Hotel Mesra" },
+                  {
+                    src: "/images/partners/kaltim multi boga utama bontang.jpg",
+                    alt: "Kaltim Multi Boga Utama Bontang",
+                  },
+                  { src: "/images/partners/lintasmaya.jpg", alt: "Lintasmaya Multimedia" },
+                  { src: "/images/partners/pln.png", alt: "PLN Nusantara Renewables" },
+                  { src: "/images/partners/polda kaltim.png", alt: "Polda Kaltim" },
+                  { src: "/images/partners/smartcomputer.jpg", alt: "Smart Computer" },
                 ]}
               />
             </div>

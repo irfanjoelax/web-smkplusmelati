@@ -1,65 +1,80 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import ClayCard from "@/app/components/ClayCard";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
-import { getContent } from "@/app/lib/content";
-import type { JurusanData } from "@/app/lib/types";
+import { getJurusanData } from "@/app/lib/jurusan";
 import { breadcrumbSchema, programSchema } from "@/app/lib/seo";
-
-export const metadata: Metadata = {
-  title: "Jurusan Tata Boga",
-  description:
-    "Jurusan Tata Boga SMK Plus Melati Samarinda: seni memasak, teknik penyajian, higiene sanitasi makanan, kewirausahaan kuliner, hingga prospek karier chef dan wirausaha kuliner.",
-  alternates: {
-    canonical: "/jurusan/tata-boga",
-  },
-  openGraph: {
-    type: "website",
-    locale: "id_ID",
-    url: "/jurusan/tata-boga",
-    title: "Jurusan Tata Boga | SMK Plus Melati Samarinda",
-    description:
-      "Jurusan Tata Boga SMK Plus Melati Samarinda: seni memasak, penyajian, dan kewirausahaan kuliner.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Jurusan Tata Boga | SMK Plus Melati Samarinda",
-    description:
-      "Jurusan Tata Boga SMK Plus Melati Samarinda: seni memasak, penyajian, dan kewirausahaan kuliner.",
-  },
-};
 
 export const revalidate = 60;
 
-export default async function TataBogaPage() {
-  const jurusan = await getContent<JurusanData>("jurusan");
-  const { keunggulan, prospek } = jurusan.tataBoga;
-  const skills = jurusan.tataBoga.skills;
+export async function generateStaticParams() {
+  const jurusan = await getJurusanData();
+  return jurusan.map((j) => ({ slug: j.id }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const jurusan = await getJurusanData();
+  const item = jurusan.find((j) => j.id === slug);
+  if (!item) return {};
+  return {
+    title: `Jurusan ${item.name}`,
+    description: `Jurusan ${item.fullName} SMK Plus Melati Samarinda: ${item.description}`,
+    alternates: { canonical: `/jurusan/${item.id}` },
+    openGraph: {
+      type: "website",
+      locale: "id_ID",
+      url: `/jurusan/${item.id}`,
+      title: `Jurusan ${item.name} | SMK Plus Melati Samarinda`,
+      description: `Jurusan ${item.fullName} SMK Plus Melati Samarinda.`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Jurusan ${item.name} | SMK Plus Melati Samarinda`,
+      description: `Jurusan ${item.fullName} SMK Plus Melati Samarinda.`,
+    },
+  };
+}
+
+export default async function JurusanPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const jurusan = await getJurusanData();
+  const item = jurusan.find((j) => j.id === slug);
+  if (!item) notFound();
+
   return (
     <>
       <Header />
       <JsonLd
         data={breadcrumbSchema([
-          { name: "Jurusan", path: "/jurusan/tata-boga" },
-          { name: "Tata Boga", path: "/jurusan/tata-boga" },
+          { name: "Jurusan", path: `/jurusan/${item.id}` },
+          { name: item.name, path: `/jurusan/${item.id}` },
         ])}
       />
       <JsonLd
         data={programSchema({
-          title: "Jurusan Tata Boga",
-          path: "/jurusan/tata-boga",
-          description:
-            "Program keahlian Tata Boga mengasah seni memasak, teknik penyajian, higiene sanitasi, dan kewirausahaan kuliner.",
+          title: `Jurusan ${item.fullName}`,
+          path: `/jurusan/${item.id}`,
+          description: item.description,
         })}
       />
       <main className="flex-1">
         <PageHero
           eyebrow="Bidang Keahlian"
-          title="Tata Boga"
-          description="Jurusan yang mengasah seni memasak, teknik penyajian, dan jiwa wirausaha di bidang kuliner."
+          title={item.fullName}
+          description={item.description}
         />
 
         <section className="px-4 py-16">
@@ -67,17 +82,13 @@ export default async function TataBogaPage() {
             <Reveal>
               <ClayCard className="p-8 sm:p-12">
                 <h2 className="text-2xl font-extrabold text-primary-dark">
-                  Mengapa Memilih Tata Boga?
+                  {item.whyTitle}
                 </h2>
                 <p className="mt-4 leading-relaxed text-foreground/75">
-                  Semua orang bisa memasak, namun tidak semua orang tahu seni
-                  memasak. Di SMK Plus Melati, siswa Tata Boga belajar bagaimana
-                  proses pembuatan makanan yang bisa dinilai harga jualnya,
-                  hingga teknik akhir penyediaan makanan yang menarik. Ruang
-                  khusus disediakan untuk siswa bereksperimen membuat makanan.
+                  {item.whyText}
                 </p>
                 <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                  {skills.map((skill, i) => (
+                  {item.skills.map((skill, i) => (
                     <div
                       key={`${skill}-${i}`}
                       className="clay-inset flex items-center gap-3 rounded-2xl px-5 py-4"
@@ -100,23 +111,23 @@ export default async function TataBogaPage() {
           <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
             <Reveal className="h-full">
               <ClayCard hover className="h-full p-7">
-                <span className="clay-chip clay-chip-primary">{keunggulan.chip}</span>
+                <span className="clay-chip clay-chip-primary">{item.card1.chip}</span>
                 <h3 className="mt-4 text-lg font-extrabold text-primary-dark">
-                  {keunggulan.title}
+                  {item.card1.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-foreground/70">
-                  {keunggulan.description}
+                  {item.card1.description}
                 </p>
               </ClayCard>
             </Reveal>
             <Reveal className="h-full" delay={120}>
               <ClayCard hover className="h-full p-7">
-                <span className="clay-chip clay-chip-primary">{prospek.chip}</span>
+                <span className="clay-chip clay-chip-primary">{item.card2.chip}</span>
                 <h3 className="mt-4 text-lg font-extrabold text-primary-dark">
-                  {prospek.title}
+                  {item.card2.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-foreground/70">
-                  {prospek.description}
+                  {item.card2.description}
                 </p>
               </ClayCard>
             </Reveal>

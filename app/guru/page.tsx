@@ -70,9 +70,11 @@ export default async function GuruPage() {
                     <p className="w-full text-center text-sm font-extrabold leading-5 text-primary-dark">
                       {t.name}
                     </p>
-                    <p className="mt-0.5 w-full text-center text-xs font-semibold leading-4 text-accent">
-                      {t.role}
-                    </p>
+                    {t.role && (
+                      <span className="mt-1.5 inline-flex items-center rounded-full border border-primary bg-primary-dark px-3 py-0.5 text-center text-xs font-bold text-accent shadow-sm">
+                        {t.role}
+                      </span>
+                    )}
                   </div>
                 </ClayCard>
               </Reveal>
