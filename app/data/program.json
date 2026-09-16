@@ -6,10 +6,25 @@
     "description": "Membekali siswa keterampilan praktis yang bisa menjadi keahlian khusus dan bernilai jual tinggi.",
     "icon": "training",
     "cards": [
-      { "title": "Pembuatan Aplikasi Android", "description": "Siswa dibekali materi terlebih dahulu sebelum praktik, sehingga kegiatan berjalan sesuai aturan. Kemampuan ini menjadi keahlian khusus yang bisa dimanfaatkan banyak orang.", "image": "/images/pelatihan-android.jpg" },
-      { "title": "Pencetak Wirausaha", "description": "Ruang khusus untuk bereksperimen membuat makanan. Siswa belajar seni memasak yang bernilai jual, dari proses pembuatan hingga penyajian yang menarik.", "image": "/images/pelatihan-wirausaha.jpg" }
+      {
+        "title": "Pembuatan Aplikasi Android",
+        "description": "Siswa dibekali materi terlebih dahulu sebelum praktik, sehingga kegiatan berjalan sesuai aturan. Kemampuan ini menjadi keahlian khusus yang bisa dimanfaatkan banyak orang.",
+        "image": "/images/pelatihan-android.jpg"
+      },
+      {
+        "title": "Pencetak Wirausaha",
+        "description": "Ruang khusus untuk bereksperimen membuat makanan. Siswa belajar seni memasak yang bernilai jual, dari proses pembuatan hingga penyajian yang menarik.",
+        "image": "/images/pelatihan-wirausaha.jpg"
+      }
     ],
-    "section": { "type": "list", "title": "Diharapkan dari Program Ini", "items": ["Diharapkan dengan adanya program pelatihan ini, siswa/i SMK Plus Melati Samarinda bisa membuat aplikasi yang nantinya bisa dimanfaatkan oleh orang banyak, yang memberi manfaat bagi siswa dan lingkungan sekitarnya.", "Semua orang bisa memasak, namun tidak semua orang tahu seni memasak. Diharapkan dengan fasilitas ruangan memasak dan program pelatihan ini, bisa mencetak seorang yang profesional di bidang kuliner."] }
+    "section": {
+      "type": "list",
+      "title": "Diharapkan dari Program Ini",
+      "items": [
+        "Diharapkan dengan adanya program pelatihan ini, siswa/i SMK Plus Melati Samarinda bisa membuat aplikasi yang nantinya bisa dimanfaatkan oleh orang banyak, yang memberi manfaat bagi siswa dan lingkungan sekitarnya.",
+        "Semua orang bisa memasak, namun tidak semua orang tahu seni memasak. Diharapkan dengan fasilitas ruangan memasak dan program pelatihan ini, bisa mencetak seorang yang profesional di bidang kuliner."
+      ]
+    }
   },
   {
     "id": "asrama",
@@ -18,10 +33,29 @@
     "description": "Membentuk kedisiplinan dan kemandirian siswa melalui kegiatan yang terjadwal setiap hari.",
     "icon": "dormitory",
     "cards": [
-      { "title": "Mengaji Berjamaah", "description": "Kegiatan rutin mengaji bersama yang memperkuat keimanan dan kebersamaan antar siswa.", "image": "/images/asrama-mengaji.jpg" },
-      { "title": "Sholat Berjamaah", "description": "Setiap malam diadakan kegiatan sholat berjamaah dan ngaji di Mesjid Qiwamul Ummah.", "image": "/images/asrama-sholat.jpg" }
+      {
+        "title": "Mengaji Berjamaah",
+        "description": "Kegiatan rutin mengaji bersama yang memperkuat keimanan dan kebersamaan antar siswa.",
+        "image": "/images/asrama-mengaji.jpg"
+      },
+      {
+        "title": "Sholat Berjamaah",
+        "description": "Setiap malam diadakan kegiatan sholat berjamaah dan ngaji di Mesjid Qiwamul Ummah.",
+        "image": "/images/asrama-sholat.jpg"
+      }
     ],
-    "section": { "type": "list", "title": "Rutinitas Harian Asrama", "items": ["Bangun Pukul 04.00 WITA", "Apel Pagi, Sore dan Malam", "Mengaji Berjamaah", "Sholat Berjamaah", "Kurve Asrama (Piket)", "Rabu Bersih dan Jum'at Bersih"] }
+    "section": {
+      "type": "list",
+      "title": "Rutinitas Harian Asrama",
+      "items": [
+        "Bangun Pukul 04.00 WITA",
+        "Apel Pagi, Sore dan Malam",
+        "Mengaji Berjamaah",
+        "Sholat Berjamaah",
+        "Kurve Asrama (Piket)",
+        "Rabu Bersih dan Jum'at Bersih"
+      ]
+    }
   },
   {
     "id": "keagamaan",
@@ -30,11 +64,31 @@
     "description": "Menanamkan keimanan dan ketaqwaan melalui pengalaman ajaran agama dalam keseharian siswa.",
     "icon": "religion",
     "cards": [
-      { "title": "Sholat Dhuha", "description": "Siswa diarahkan ke masjid untuk melaksanakan sholat dhuha sebagai pembuka kegiatan belajar.", "image": "/images/keagamaan-dhuha.jpg" },
-      { "title": "Mengaji Pagi", "description": "Aktifitas mengaji pagi sebelum memulai pembelajaran untuk menanamkan nilai keagamaan.", "image": "/images/keagamaan-mengaji.jpg" },
-      { "title": "Sholat Berjamaah", "description": "Sholat fardu berjamaah dilaksanakan pada jam istirahat di masjid.", "image": "/images/keagamaan-sholat.jpg" },
-      { "title": "Khataman Al-Qur'an", "description": "Kegiatan khataman Al-Qur'an rutin dilaksanakan beberapa bulan sekali.", "image": "/images/keagamaan-khataman.jpg" }
+      {
+        "title": "Sholat Dhuha",
+        "description": "Siswa diarahkan ke masjid untuk melaksanakan sholat dhuha sebagai pembuka kegiatan belajar.",
+        "image": "/images/keagamaan-dhuha.jpg"
+      },
+      {
+        "title": "Mengaji Pagi",
+        "description": "Aktifitas mengaji pagi sebelum memulai pembelajaran untuk menanamkan nilai keagamaan.",
+        "image": "/images/keagamaan-mengaji.jpg"
+      },
+      {
+        "title": "Sholat Berjamaah",
+        "description": "Sholat fardu berjamaah dilaksanakan pada jam istirahat di masjid.",
+        "image": "/images/keagamaan-sholat.jpg"
+      },
+      {
+        "title": "Khataman Al-Qur'an",
+        "description": "Kegiatan khataman Al-Qur'an rutin dilaksanakan beberapa bulan sekali.",
+        "image": "/images/keagamaan-khataman.jpg"
+      }
     ],
-    "section": { "type": "text", "title": "Perayaan Hari Besar", "text": "Perayaan hari besar merupakan program rutinan keagamaan. Pada hari perayaan ini, siswa difokuskan untuk mengikuti kegiatan hingga selesai, dan tidak ada kegiatan belajar mengajar pada hari tersebut." }
+    "section": {
+      "type": "text",
+      "title": "Perayaan Hari Besar",
+      "text": "Perayaan hari besar merupakan program rutinan keagamaan. Pada hari perayaan ini, siswa difokuskan untuk mengikuti kegiatan hingga selesai, dan tidak ada kegiatan belajar mengajar pada hari tersebut."
+    }
   }
 ]

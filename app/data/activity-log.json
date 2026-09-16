@@ -2,6 +2,20 @@
   {
     "action": "delete",
     "collection": "program",
+    "label": "Hapus program \"Program hdbfdbfjd\"",
+    "id": "006bf166-0ad6-4be3-8d5b-559b2a8bc8b4",
+    "timestamp": "2026-09-16T02:08:06.528Z"
+  },
+  {
+    "action": "add",
+    "collection": "program",
+    "label": "Tambah program \"Program hdbfdbfjd\"",
+    "id": "2e8632c4-78e5-4e94-af2a-95025983b1bc",
+    "timestamp": "2026-09-16T02:07:42.418Z"
+  },
+  {
+    "action": "delete",
+    "collection": "program",
     "label": "Hapus program \"dfkjdfkd\"",
     "id": "90f6cc1d-cc77-40ac-b169-23a615b14620",
     "timestamp": "2026-09-16T01:34:35.022Z"
@@ -19,19 +33,5 @@
     "label": "Tambah jurusan \"dfjhc\"",
     "id": "269449b7-ddd6-48d7-986e-83cbe7d1fa7b",
     "timestamp": "2026-09-16T01:23:28.676Z"
-  },
-  {
-    "action": "delete",
-    "collection": "jurusan",
-    "label": "Hapus jurusan \"Teknik Elektro\"",
-    "id": "34c221c1-2814-4f4a-bae4-d628b90f7a2a",
-    "timestamp": "2026-09-16T01:22:59.006Z"
-  },
-  {
-    "action": "add",
-    "collection": "jurusan",
-    "label": "Tambah jurusan \"Teknik Elektro\"",
-    "id": "df553470-078f-4f18-9e5b-49c5eb749f6d",
-    "timestamp": "2026-09-16T01:22:30.373Z"
   }
 ]
