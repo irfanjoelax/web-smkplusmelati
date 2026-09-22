@@ -53,7 +53,7 @@ export default async function VisiMisiPage() {
         />
 
         <section className="px-4 py-14">
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-6xl">
             <Reveal>
               <ClayCard className="relative overflow-hidden p-8 sm:p-14">
                 <div className="mb-6 flex justify-center">
@@ -68,7 +68,7 @@ export default async function VisiMisiPage() {
         </section>
 
         <section className="px-4 pb-24">
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-6xl">
             <div className="mb-10 flex justify-center">
               <span className="clay-chip clay-chip-primary">Misi</span>
             </div>

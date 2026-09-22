@@ -24,7 +24,7 @@ export default function Footer() {
               <div className="leading-tight">
                 <p className="text-lg font-extrabold text-white">SMK Plus Melati</p>
                 <p className="text-sm font-semibold text-white/80">
-                  Sekolah Kewirausahaan Yang Bertakwa
+                  SMK Wirausaha Muda
                 </p>
               </div>
             </div>
@@ -74,7 +74,9 @@ export default function Footer() {
               <p>{CONTACT.address}</p>
               <p>
                 <a
-                  href={`tel:${CONTACT.phone.replace(/-/g, "")}`}
+                  href={CONTACT.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="font-semibold text-white"
                 >
                   {CONTACT.phone}
@@ -92,9 +94,11 @@ export default function Footer() {
                 </a>
               </p>
             </address>
-            <Link href="/hubungi-spmb" className="clay-btn clay-btn-accent mt-5 text-sm">
-              Daftar SPMB Sekarang
-            </Link>
+            <div className="mt-5">
+              <Link href="/hubungi-spmb" className="clay-btn clay-btn-accent text-sm">
+                Daftar SPMB Sekarang
+              </Link>
+            </div>
           </div>
         </div>
         <div className="relative border-t border-white/15 bg-white/10 px-8 py-4 text-center text-xs font-medium text-white/70">

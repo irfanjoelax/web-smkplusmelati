@@ -4,6 +4,21 @@ export type Teacher = {
   image: string;
 };
 
+export type AlumniStatus = "Bekerja" | "Kuliah" | "Wirausaha";
+
+export type AlumniItem = {
+  name: string;
+  graduationYear: number;
+  major: string;
+  status: AlumniStatus;
+  testimonial: string;
+  image: string;
+};
+
+export type TestimoniOrtuItem = {
+  text: string;
+};
+
 export type VisiMisi = {
   visi: string;
   misi: string[];
@@ -19,6 +34,7 @@ export type JurusanItem = {
   id: string;
   name: string;
   fullName: string;
+  image: string;
   description: string;
   whyTitle: string;
   whyText: string;
@@ -49,6 +65,7 @@ export type BeritaItem = {
   content: string;
   image: string;
   date: string;
+  category?: "utama" | "lainnya";
   createdAt?: string;
   updatedAt?: string;
 };
@@ -126,10 +143,9 @@ export type ProgramCard = {
 };
 
 export type ProgramSection = {
-  type: "list" | "text";
+  type: "list";
   title: string;
   items?: string[];
-  text?: string;
 };
 
 export type ProgramEntity = {
@@ -160,7 +176,7 @@ export type ProfilData = {
 };
 
 export type Beranda = {
-  heroImage?: string;
+  heroVideoUrl?: string;
   ppdbImage?: string;
   stats: Stat[];
   majors: Major[];

@@ -9,7 +9,7 @@ type PageHeroProps = {
 export default function PageHero({ eyebrow, title, description }: PageHeroProps) {
   return (
     <section className="relative px-4 pt-10 sm:pt-14">
-      <div className="clay-card-blue relative mx-auto max-w-4xl overflow-hidden rounded-[2rem] px-6 py-14 text-center sm:px-12 sm:py-16">
+      <div className="clay-card-blue relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] px-6 py-14 text-center sm:px-12 sm:py-16">
         <span className="clay-orb h-40 w-40 -right-10 -top-10 animate-float-orb opacity-90" />
         <span className="clay-orb-ghost h-28 w-28 -bottom-12 -left-8" />
         <Reveal className="relative">

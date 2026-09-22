@@ -3,7 +3,7 @@ import { CONTACT, SOCIALS } from "@/app/components/site";
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://smkplusmelati.sch.id";
 
 export const SITE_NAME = "SMK Plus Melati Samarinda";
-export const SITE_TAGLINE = "Sekolah Kewirausahaan yang Bertakwa";
+export const SITE_TAGLINE = "SMK Wirausaha Muda";
 
 export const GOOGLE_SITE_VERIFICATION = process.env.GOOGLE_SITE_VERIFICATION ?? "";
 

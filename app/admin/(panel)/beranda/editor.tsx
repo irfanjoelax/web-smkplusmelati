@@ -12,6 +12,7 @@ import {
 } from "@/app/admin/components/icons";
 import {
   ConfirmDialog,
+  Input,
   IconBtn,
   PageHeader,
   SaveButton,
@@ -24,6 +25,7 @@ import type {
   FasilitasItem,
 } from "@/app/lib/types";
 import { deleteEditorItem } from "@/app/admin/components/deleteContent";
+import { getYouTubeVideoId } from "@/app/lib/youtube";
 
 type DeleteTarget = {
   section: "ekskulPreview" | "facilities";
@@ -39,7 +41,7 @@ export default function BerandaEditor({
   allEkskul?: EkskulItem[];
   allFasilitas?: FasilitasItem[];
 }) {
-  const [heroImage, setHeroImage] = useState<string>(initial.heroImage || "/images/hero.jpg");
+  const [heroVideoUrl, setHeroVideoUrl] = useState<string>(initial.heroVideoUrl || "");
   const [ppdbImage, setPpdbImage] = useState<string>(initial.ppdbImage || "/images/hero.jpg");
   const [ekskulPreview, setEkskulPreview] = useState<EkskulPreview[]>(() => initial.ekskulPreview || []);
   const [facilities, setFacilities] = useState<FacilityPreview[]>(() => initial.facilities || []);
@@ -75,12 +77,12 @@ export default function BerandaEditor({
   const currentData: Beranda = useMemo(
     () => ({
       ...initial,
-      heroImage,
+      heroVideoUrl,
       ppdbImage,
       ekskulPreview,
       facilities,
     }),
-    [initial, heroImage, ppdbImage, ekskulPreview, facilities],
+    [initial, heroVideoUrl, ppdbImage, ekskulPreview, facilities],
   );
 
   const { save } = useManualSave("beranda", currentData);
@@ -214,7 +216,7 @@ export default function BerandaEditor({
   }
 
   const navButtons = [
-    { label: "Foto Banner", id: "section-banners", key: "banners", icon: ImageIcon },
+    { label: "Banner Hero", id: "section-banners", key: "banners", icon: ImageIcon },
     { label: "Ekstrakurikuler", id: "section-ekskul", key: "ekskul", icon: StarIcon },
     { label: "Fasilitas", id: "section-facilities", key: "facilities", icon: BuildingIcon },
   ];
@@ -230,7 +232,7 @@ export default function BerandaEditor({
       {/* 1. Header */}
       <PageHeader
         title="Pengaturan Beranda"  
-        description="Atur foto banner, ekstrakurikuler, dan fasilitas yang ditampilkan pada halaman utama."
+        description="Atur video hero, foto banner SPMB, ekstrakurikuler, dan fasilitas pada halaman utama."
       />
 
       {/* 2. Navigasi Bagian & Tombol Simpan */}
@@ -258,7 +260,7 @@ export default function BerandaEditor({
 
       {/* 3. Tiga Section Accordion Utama */}
       <div className="space-y-4">
-        {/* Section 1: Foto Banner Beranda */}
+        {/* Section 1: Banner Beranda */}
         <div
           id="section-banners"
           className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm transition"
@@ -274,16 +276,16 @@ export default function BerandaEditor({
               </div>
               <div>
                 <h2 className="text-base font-extrabold text-slate-900">
-                  Foto Banner Beranda
+                  Banner Beranda
                 </h2>
                 <p className="mt-0.5 text-xs text-slate-500 sm:text-sm">
-                  Kelola foto banner utama di bagian atas dan foto ajakan SPMB di bagian bawah beranda.
+                  Kelola video hero di bagian atas dan foto ajakan SPMB di bagian bawah beranda.
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <span className="hidden rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-600 sm:inline-block">
-                2 Foto
+                Video & Foto
               </span>
               <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-xs font-bold text-slate-500">
                 {openSections.banners ? "▲" : "▼"}
@@ -294,20 +296,26 @@ export default function BerandaEditor({
           {openSections.banners && (
             <div className="border-t border-slate-100 p-5 sm:p-6">
               <div className="grid gap-6 md:grid-cols-2">
-                {/* Kotak 1: Foto Banner Hero */}
+                {/* Kotak 1: Video Hero */}
                 <div className="rounded-xl border border-slate-200 p-4">
                   <h3 className="text-sm font-extrabold text-slate-800">
-                    Foto Banner Utama (Hero / Atas)
+                    Video YouTube Hero (Atas)
                   </h3>
                   <p className="mt-0.5 mb-4 text-xs text-slate-500">
-                    Tampil di sebelah sambutan pada bagian paling atas beranda.
+                    Menjadi background penuh di belakang sambutan. Video otomatis diputar, diulang, dan tanpa suara.
                   </p>
-                  <ImagePicker
-                    value={heroImage}
-                    large
-                    onChange={(url) => setHeroImage(url)}
-                    onRemove={() => setHeroImage("")}
+                  <Input
+                    type="url"
+                    value={heroVideoUrl}
+                    onChange={(event) => setHeroVideoUrl(event.target.value)}
+                    placeholder="https://www.youtube.com/watch?v=..."
+                    aria-invalid={Boolean(heroVideoUrl.trim() && !getYouTubeVideoId(heroVideoUrl))}
                   />
+                  {heroVideoUrl.trim() && !getYouTubeVideoId(heroVideoUrl) && (
+                    <p className="mt-2 text-xs font-semibold text-red-600">
+                      Link YouTube tidak valid. Gunakan link video YouTube, Shorts, Live, atau youtu.be.
+                    </p>
+                  )}
                 </div>
 
                 {/* Kotak 2: Foto Banner SPMB */}

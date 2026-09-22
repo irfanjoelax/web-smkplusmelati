@@ -41,8 +41,8 @@ export default function HubungiSPMBPage() {
                       </svg>
                     </span>
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wide text-foreground/50">Telepon</p>
-                      <a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`} className="font-semibold text-foreground hover:text-accent">
+                      <p className="text-xs font-bold uppercase tracking-wide text-foreground/50">WhatsApp</p>
+                      <a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-foreground hover:text-accent">
                         {CONTACT.phone} — {CONTACT.phonePerson}
                       </a>
                     </div>
@@ -77,8 +77,8 @@ export default function HubungiSPMBPage() {
                 </div>
 
                 <div className="mt-6 flex flex-wrap gap-3">
-                  <a href={`tel:${CONTACT.phone.replace(/\s/g, "")}`} className="clay-btn clay-btn-accent text-sm">
-                    Telepon Sekarang
+                  <a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="clay-btn clay-btn-accent text-sm">
+                    Chat WhatsApp
                   </a>
                   <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${CONTACT.email}`} target="_blank" rel="noopener noreferrer" className="clay-btn text-sm">
                     Kirim Email

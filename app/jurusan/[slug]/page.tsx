@@ -4,7 +4,7 @@ import ClayCard from "@/app/components/ClayCard";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
-import PageHero from "@/app/components/PageHero";
+import LocalImage from "@/app/components/LocalImage";
 import Reveal from "@/app/components/Reveal";
 import { getJurusanData } from "@/app/lib/jurusan";
 import { breadcrumbSchema, programSchema } from "@/app/lib/seo";
@@ -53,6 +53,12 @@ export default async function JurusanPage({
   const jurusan = await getJurusanData();
   const item = jurusan.find((j) => j.id === slug);
   if (!item) notFound();
+  const heroImage = item.image ||
+    (item.id === "tjkt"
+      ? "/images/pelatihan-android.jpg"
+      : item.id === "kuliner"
+        ? "/images/pelatihan-wirausaha.jpg"
+        : "/images/hero.jpg");
 
   return (
     <>
@@ -71,14 +77,43 @@ export default async function JurusanPage({
         })}
       />
       <main className="flex-1">
-        <PageHero
-          eyebrow="Bidang Keahlian"
-          title={item.fullName}
-          description={item.description}
-        />
+        <section className="relative px-4 pt-10 sm:pt-14">
+          <div className="clay-card-blue relative mx-auto max-w-6xl overflow-hidden rounded-[2rem]">
+            <span className="clay-orb h-44 w-44 -left-16 -top-16 animate-float-orb opacity-70" />
+            <span className="clay-orb-ghost h-36 w-36 -bottom-16 left-1/3 opacity-70" />
+            <div className="relative grid items-center gap-8 px-6 py-8 sm:px-10 sm:py-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:px-14 lg:py-14">
+              <Reveal>
+                <div className="text-left">
+                  <span className="clay-chip-blue mb-5">Bidang Keahlian</span>
+                  <h1 className="text-3xl font-extrabold leading-tight text-white sm:text-4xl lg:text-5xl">
+                    {item.fullName}
+                  </h1>
+                  <p className="mt-5 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
+                    {item.description}
+                  </p>
+                  <span className="mt-7 block h-1 w-20 rounded-full bg-accent" />
+                </div>
+              </Reveal>
+
+              <Reveal delay={120}>
+                <div className="overflow-hidden rounded-[1.5rem] border-4 border-white/15 bg-white/10 p-1.5 shadow-2xl shadow-primary-darker/30">
+                  <div className="aspect-[4/3] overflow-hidden rounded-[1.15rem] bg-primary-soft">
+                    <LocalImage
+                      src={heroImage}
+                      alt={`Kegiatan jurusan ${item.fullName}`}
+                      width={900}
+                      height={675}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </section>
 
         <section className="px-4 py-16">
-          <div className="mx-auto max-w-5xl">
+          <div className="mx-auto max-w-6xl">
             <Reveal>
               <ClayCard className="p-8 sm:p-12">
                 <h2 className="text-2xl font-extrabold text-primary-dark">
@@ -108,7 +143,7 @@ export default async function JurusanPage({
         </section>
 
         <section className="px-4 pb-24">
-          <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
+          <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
             <Reveal className="h-full">
               <ClayCard hover className="h-full p-7">
                 <span className="clay-chip clay-chip-primary">{item.card1.chip}</span>

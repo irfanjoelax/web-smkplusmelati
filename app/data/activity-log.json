@@ -1,37 +1,37 @@
 [
   {
     "action": "delete",
-    "collection": "program",
-    "label": "Hapus program \"Program hdbfdbfjd\"",
-    "id": "006bf166-0ad6-4be3-8d5b-559b2a8bc8b4",
-    "timestamp": "2026-09-16T02:08:06.528Z"
+    "collection": "testimoniOrtu",
+    "label": "Hapus testimoni orang tua",
+    "id": "e3f49613-46f6-438b-aaad-96ce920de988",
+    "timestamp": "2026-09-21T02:17:37.436Z"
   },
   {
-    "action": "add",
-    "collection": "program",
-    "label": "Tambah program \"Program hdbfdbfjd\"",
-    "id": "2e8632c4-78e5-4e94-af2a-95025983b1bc",
-    "timestamp": "2026-09-16T02:07:42.418Z"
+    "action": "edit",
+    "collection": "alumni",
+    "label": "Edit alumni \"yuno\"",
+    "id": "e58333fc-d452-4be5-8450-f31e9f2537b6",
+    "timestamp": "2026-09-21T02:00:48.677Z"
+  },
+  {
+    "action": "edit",
+    "collection": "beranda",
+    "label": "Edit beranda",
+    "id": "ede5b640-e453-4cc2-bc46-c20297e47a27",
+    "timestamp": "2026-09-21T01:27:48.885Z"
+  },
+  {
+    "action": "edit",
+    "collection": "beranda",
+    "label": "Edit beranda",
+    "id": "773ca364-ec02-4032-98ed-31fb4838d909",
+    "timestamp": "2026-09-21T01:17:13.698Z"
   },
   {
     "action": "delete",
-    "collection": "program",
-    "label": "Hapus program \"dfkjdfkd\"",
-    "id": "90f6cc1d-cc77-40ac-b169-23a615b14620",
-    "timestamp": "2026-09-16T01:34:35.022Z"
-  },
-  {
-    "action": "delete",
-    "collection": "jurusan",
-    "label": "Hapus jurusan \"dfjhc\"",
-    "id": "3c529a4e-4ddd-4895-88fa-b0fbd701e864",
-    "timestamp": "2026-09-16T01:23:50.153Z"
-  },
-  {
-    "action": "add",
-    "collection": "jurusan",
-    "label": "Tambah jurusan \"dfjhc\"",
-    "id": "269449b7-ddd6-48d7-986e-83cbe7d1fa7b",
-    "timestamp": "2026-09-16T01:23:28.676Z"
+    "collection": "fasilitas",
+    "label": "Hapus fasilitas \"Lapangan Bulu Tangkiss\"",
+    "id": "d26058e1-a3d5-4663-95dd-ba082a7b343d",
+    "timestamp": "2026-09-20T15:52:42.254Z"
   }
 ]

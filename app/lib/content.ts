@@ -7,6 +7,7 @@ const dataDir = path.join(process.cwd(), "app", "data");
 const activityLogFile = "activity-log.json";
 
 export type ContentKey =
+  | "alumni"
   | "guru"
   | "visiMisi"
   | "jurusan"
@@ -16,9 +17,11 @@ export type ContentKey =
   | "ekskul"
   | "berita"
   | "program"
-  | "profil";
+  | "profil"
+  | "testimoniOrtu";
 
 export const COLLECTION_FILES: Record<ContentKey, string> = {
+  alumni: "alumni.json",
   guru: "guru.json",
   visiMisi: "visi-misi.json",
   jurusan: "jurusan.json",
@@ -29,6 +32,7 @@ export const COLLECTION_FILES: Record<ContentKey, string> = {
   berita: "berita.json",
   program: "program.json",
   profil: "profil.json",
+  testimoniOrtu: "testimoni-ortu.json",
 };
 
 /**

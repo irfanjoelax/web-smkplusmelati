@@ -27,6 +27,7 @@ const NAV = [
   { href: "/admin/profil", label: "Profil Sekolah", icon: BookIcon },
   { href: "/admin/visi-misi", label: "Visi & Misi", icon: EyeIcon },
   { href: "/admin/guru", label: "Daftar Guru", icon: UsersIcon },
+  { href: "/admin/alumni", label: "Alumni", icon: UsersIcon },
   { href: "/admin/jurusan", label: "Jurusan", icon: AcademicCapIcon },
   { href: "/admin/program", label: "Program", icon: LayersIcon },
   { href: "/admin/prestasi", label: "Prestasi Siswa", icon: TrophyIcon },

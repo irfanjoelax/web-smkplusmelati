@@ -1,13 +1,16 @@
 export const CONTACT = {
   name: "SMK Plus Melati Samarinda",
-  tagline: "Sekolah Kewirausahaan Yang Bertakwa",
-  address: "Jl. H.A.M. Rifaddin No 1 RT 25, Harapan Baru, Samarinda Seberang",
+  tagline: "SMK Wirausaha Muda",
+  address:
+    "Jl. H. A. M. M. Rifaddin No.1, RT.25, Harapan Baru, Kec. Loa Janan Ilir, Kota Samarinda, Kalimantan Timur 75132",
   phone: "0851-9157-6889",
   phonePerson: "Yuzi Deliana, S.H",
+  whatsappUrl: `https://wa.me/6285191576889?text=${encodeURIComponent(
+    "Halo Admin SMK Plus Melati Samarinda, saya ingin bertanya.",
+  )}`,
   email: "smkmelatismd@gmail.com",
   ppdbUrl: "https://ppdb.smkplusmelati.sch.id",
-  googleFormUrl:
-    "https://docs.google.com/forms/d/e/1FAIpQLSfCNrHBi-8TYbc5GLMDHVVbWk8Weh5S0p6Knd4cW17X2TSXHw/viewform",
+  googleFormUrl: "https://forms.gle/5TurwL5h66Lp19Tc6",
 };
 
 export const SOCIALS = [

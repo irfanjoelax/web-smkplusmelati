@@ -19,10 +19,13 @@
     ],
     "section": {
       "type": "list",
-      "title": "Diharapkan dari Program Ini",
+      "title": "Kegiatan",
       "items": [
         "Diharapkan dengan adanya program pelatihan ini, siswa/i SMK Plus Melati Samarinda bisa membuat aplikasi yang nantinya bisa dimanfaatkan oleh orang banyak, yang memberi manfaat bagi siswa dan lingkungan sekitarnya.",
-        "Semua orang bisa memasak, namun tidak semua orang tahu seni memasak. Diharapkan dengan fasilitas ruangan memasak dan program pelatihan ini, bisa mencetak seorang yang profesional di bidang kuliner."
+        "Semua orang bisa memasak, namun tidak semua orang tahu seni memasak. Diharapkan dengan fasilitas ruangan memasak dan program pelatihan ini, bisa mencetak seorang yang profesional di bidang kuliner.",
+        "dbchbxcbsj",
+        "jhdjshdks",
+        "jsdjshdj"
       ]
     }
   },
@@ -46,7 +49,7 @@
     ],
     "section": {
       "type": "list",
-      "title": "Rutinitas Harian Asrama",
+      "title": "Kegiatan",
       "items": [
         "Bangun Pukul 04.00 WITA",
         "Apel Pagi, Sore dan Malam",
@@ -86,9 +89,11 @@
       }
     ],
     "section": {
-      "type": "text",
-      "title": "Perayaan Hari Besar",
-      "text": "Perayaan hari besar merupakan program rutinan keagamaan. Pada hari perayaan ini, siswa difokuskan untuk mengikuti kegiatan hingga selesai, dan tidak ada kegiatan belajar mengajar pada hari tersebut."
+      "type": "list",
+      "title": "Kegiatan",
+      "items": [
+        "Perayaan hari besar merupakan program rutinan keagamaan. Pada hari perayaan ini, siswa difokuskan untuk mengikuti kegiatan hingga selesai, dan tidak ada kegiatan belajar mengajar pada hari tersebut."
+      ]
     }
   }
 ]

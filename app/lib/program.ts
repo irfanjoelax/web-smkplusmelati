@@ -24,7 +24,7 @@ export function normalizeProgramData(data: unknown): ProgramData {
       cards: legacy.pelatihan.cards ?? [],
       section: {
         type: "list",
-        title: "Diharapkan dari Program Ini",
+        title: "Kegiatan",
         items: legacy.pelatihan.harapan ?? [],
       },
     },
@@ -37,7 +37,7 @@ export function normalizeProgramData(data: unknown): ProgramData {
       cards: legacy.asrama.cards ?? [],
       section: {
         type: "list",
-        title: "Rutinitas Harian Asrama",
+        title: "Kegiatan",
         items: legacy.asrama.jadwal ?? [],
       },
     },
@@ -49,9 +49,9 @@ export function normalizeProgramData(data: unknown): ProgramData {
       icon: "religion",
       cards: legacy.keagamaan.cards ?? [],
       section: {
-        type: "text",
-        title: "Perayaan Hari Besar",
-        text: legacy.keagamaan.perayaanText ?? "",
+        type: "list",
+        title: "Kegiatan",
+        items: legacy.keagamaan.perayaanText ? [legacy.keagamaan.perayaanText] : [],
       },
     },
   ];
@@ -71,8 +71,7 @@ export function isProgramData(value: unknown): value is ProgramData {
     const sectionValid = section === undefined || (
       typeof section === "object" &&
       typeof section.title === "string" &&
-      ((section.type === "list" && Array.isArray(section.items) && section.items.every((value) => typeof value === "string")) ||
-        (section.type === "text" && typeof section.text === "string"))
+      section.type === "list" && Array.isArray(section.items) && section.items.every((value) => typeof value === "string")
     );
     if (
       typeof item.id !== "string" ||

@@ -64,6 +64,7 @@ export default function ProgramEditor({ initial }: { initial: ProgramData }) {
       description: summary,
       icon: "training",
       cards: [],
+      section: { type: "list", title: "Kegiatan", items: [] },
     };
     const nextItems = [...items, next];
     try {
@@ -184,26 +185,14 @@ export default function ProgramEditor({ initial }: { initial: ProgramData }) {
             )}
           </Panel>
 
-          {current.section?.type === "list" && (
-            <Panel title={current.section.title} description="Bagian tambahan pada halaman program" action={<SaveButton onSave={save} />}>
+          {current.section && (
+            <Panel title={current.section.title || "Kegiatan"} description="Bagian tambahan pada halaman program" action={<SaveButton onSave={save} />}>
               <StringListEditor
                 value={current.section.items ?? []}
                 sortable={false}
                 onChange={(values) => updateCurrent({
                   ...current,
                   section: { ...current.section!, type: "list", items: values },
-                })}
-              />
-            </Panel>
-          )}
-
-          {current.section?.type === "text" && (
-            <Panel title={current.section.title} description="Bagian tambahan pada halaman program" action={<SaveButton onSave={save} />}>
-              <Textarea
-                value={current.section.text ?? ""}
-                onChange={(event) => updateCurrent({
-                  ...current,
-                  section: { ...current.section!, type: "text", text: event.target.value },
                 })}
               />
             </Panel>

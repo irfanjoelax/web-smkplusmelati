@@ -4,6 +4,7 @@ import path from "path";
 import { getContent, type ContentKey } from "./content";
 
 const CONTENT_KEYS: ContentKey[] = [
+  "alumni",
   "guru",
   "visiMisi",
   "jurusan",
@@ -12,6 +13,9 @@ const CONTENT_KEYS: ContentKey[] = [
   "beranda",
   "ekskul",
   "berita",
+  "program",
+  "profil",
+  "testimoniOrtu",
 ];
 
 function containsValue(value: unknown, target: string): boolean {

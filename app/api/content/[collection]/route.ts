@@ -19,10 +19,12 @@ import { removeBerandaPreview } from "@/app/lib/removeBerandaPreview";
 import type { Beranda } from "@/app/lib/types";
 import { isJurusanData, normalizeJurusanData } from "@/app/lib/jurusan";
 import { isProgramData, normalizeProgramData } from "@/app/lib/program";
+import { isAlumniData } from "@/app/lib/alumni";
 
 const KEYS = Object.keys(COLLECTION_FILES) as ContentKey[];
 
 const REVALIDATE_ROUTES: Record<ContentKey, string[]> = {
+  alumni: ["/alumni"],
   guru: ["/guru"],
   visiMisi: ["/visi-misi"],
   jurusan: [],
@@ -33,9 +35,11 @@ const REVALIDATE_ROUTES: Record<ContentKey, string[]> = {
   berita: ["/berita"],
   program: [],
   profil: ["/profil"],
+  testimoniOrtu: ["/alumni"],
 };
 
 const DELETE_SECTIONS: Record<ContentKey, (string | null)[]> = {
+  alumni: [null],
   guru: [null],
   visiMisi: ["misi"],
   jurusan: [null],
@@ -46,10 +50,13 @@ const DELETE_SECTIONS: Record<ContentKey, (string | null)[]> = {
   berita: [null],
   program: [null],
   profil: ["paragraphs", "reasons"],
+  testimoniOrtu: [null],
 };
 
 const IMAGE_SECTIONS: Partial<Record<ContentKey, (string | null)[]>> = {
+  alumni: [null],
   guru: [null],
+  jurusan: [null],
   prestasi: ["items"],
   fasilitas: [null],
   beranda: ["ekskulPreview", "facilities"],
@@ -114,9 +121,48 @@ export async function PUT(
       { status: 400 },
     );
   }
+  if (collection === "alumni" && !isAlumniData(body)) {
+    return NextResponse.json(
+      { error: "Data alumni tidak valid. Pastikan semua kolom dan foto sudah diisi." },
+      { status: 400 },
+    );
+  }
+  if (
+    collection === "testimoniOrtu" &&
+    (!Array.isArray(body) ||
+      body.some(
+        (item) =>
+          !item ||
+          typeof item !== "object" ||
+          typeof item.text !== "string" ||
+          !item.text.trim() ||
+          item.text.length > 500,
+      ))
+  ) {
+    return NextResponse.json(
+      { error: "Data testimoni tidak valid. Pastikan semua isi testimoni terisi." },
+      { status: 400 },
+    );
+  }
   if (collection === "program" && !isProgramData(body)) {
     return NextResponse.json(
       { error: "Data program tidak valid. Pastikan semua kolom terisi dan nama program unik." },
+      { status: 400 },
+    );
+  }
+  if (
+    collection === "berita" &&
+    (!Array.isArray(body) ||
+      body.some(
+        (item) =>
+          !item ||
+          typeof item !== "object" ||
+          ("category" in item && item.category !== "utama" && item.category !== "lainnya"),
+      ) ||
+      body.filter((item) => item?.category === "utama").length > 4)
+  ) {
+    return NextResponse.json(
+      { error: "Data berita tidak valid. Maksimal empat berita utama." },
       { status: 400 },
     );
   }

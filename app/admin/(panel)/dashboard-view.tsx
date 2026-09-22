@@ -34,6 +34,7 @@ type Props = {
 const ITEMS_PER_PAGE = 5;
 
 const ACTIVITY_LINKS: Record<string, string> = {
+  alumni: "/admin/alumni",
   guru: "/admin/guru",
   visiMisi: "/admin/visi-misi",
   jurusan: "/admin/jurusan",

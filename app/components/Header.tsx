@@ -88,10 +88,11 @@ export default function Header() {
 
   const isChildActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
+  const overlaysHero = pathname === "/";
 
   return (
     <header
-      className={`sticky top-0 z-50 px-4 pt-4 transition-all duration-300 ${
+      className={`${overlaysHero ? "fixed inset-x-0" : "sticky"} top-0 z-50 px-4 pt-4 transition-all duration-300 ${
         scrolled ? "pb-2" : "pb-4"
       } ${hidden ? "-translate-y-full" : "translate-y-0"}`}
     >
@@ -111,7 +112,7 @@ export default function Header() {
               SMK Plus Melati
             </span>
             <span className="block text-[0.7rem] font-semibold text-primary/70">
-             Sekolah Kewirausahaan Yang Bertakwa
+              SMK Wirausaha Muda
             </span>
           </span>
         </Link>
@@ -151,7 +152,7 @@ export default function Header() {
             </div>
           ))}
           <Link
-            href="/ppdb"
+            href="/spmb"
             className="clay-btn clay-btn-accent ml-1 !px-3 !py-2 text-sm whitespace-nowrap"
           >
             SPMB 2026

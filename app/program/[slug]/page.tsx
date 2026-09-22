@@ -53,9 +53,9 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
           </div>
         </section>
 
-        {item.section?.type === "list" && item.section.items && item.section.items.length > 0 && (
+        {item.section?.items && item.section.items.length > 0 && (
           <section className="px-4 pb-24">
-            <div className="clay-card mx-auto max-w-5xl p-8 sm:p-12">
+            <div className="clay-card mx-auto max-w-6xl p-8 sm:p-12">
               <h2 className="text-center text-2xl font-extrabold text-primary-dark">{item.section.title}</h2>
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {item.section.items.map((text, index) => (
@@ -65,15 +65,6 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
                   </div>
                 ))}
               </div>
-            </div>
-          </section>
-        )}
-
-        {item.section?.type === "text" && item.section.text && (
-          <section className="px-4 pb-24">
-            <div className="clay-card mx-auto max-w-4xl p-8 text-center sm:p-12">
-              <span className="clay-chip clay-chip-primary">{item.section.title}</span>
-              <p className="mt-6 leading-relaxed text-foreground/75">{item.section.text}</p>
             </div>
           </section>
         )}

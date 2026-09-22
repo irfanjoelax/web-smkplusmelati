@@ -55,7 +55,7 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
   function addNew() {
     const next = [
       ...items,
-      { title: "", slug: "", desc: "", content: "", image: "", date: new Date().toISOString().split("T")[0] },
+      { title: "", slug: "", desc: "", content: "", image: "", date: new Date().toISOString().split("T")[0], category: "lainnya" as const },
     ];
     setItems(next);
     setEditingIdx(next.length - 1);
@@ -65,6 +65,8 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
   if (editingIdx !== null) {
     const e = items[editingIdx];
     const i = editingIdx;
+    const mainNewsCount = items.filter((item) => item.category === "utama").length;
+    const mainOptionDisabled = e.category !== "utama" && mainNewsCount >= 4;
     const saveBerita = async () => {
       const now = new Date().toISOString();
       const next = [...items];
@@ -106,6 +108,21 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
               </Field>
               <Field label="Tanggal">
                 <Input type="date" value={e.date} onChange={(ev) => update(i, { date: ev.target.value })} />
+              </Field>
+              <Field label="Jenis Berita">
+                <select
+                  value={e.category ?? "lainnya"}
+                  onChange={(ev) => update(i, { category: ev.target.value as BeritaItem["category"] })}
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-800 shadow-sm outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                >
+                  <option value="utama" disabled={mainOptionDisabled}>Berita Utama</option>
+                  <option value="lainnya">Berita Lainnya</option>
+                </select>
+                {mainOptionDisabled && (
+                  <span className="mt-1.5 block text-xs text-slate-500">
+                    Maksimal empat berita utama. Ubah salah satu berita utama menjadi berita lainnya terlebih dahulu.
+                  </span>
+                )}
               </Field>
               <Field label="Ringkasan (tampil di card)">
                 <Textarea value={e.desc} onChange={(ev) => update(i, { desc: ev.target.value })} />
@@ -187,7 +204,16 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
 
               {/* Info */}
               <div className="flex flex-1 flex-col px-3 py-2">
-                <p className="text-xs text-slate-400">{e.date || "—"}</p>
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-xs text-slate-400">{e.date || "—"}</p>
+                  <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${
+                    e.category === "utama"
+                      ? "bg-amber-100 text-amber-700"
+                      : "bg-slate-100 text-slate-500"
+                  }`}>
+                    {e.category === "utama" ? "Utama" : "Lainnya"}
+                  </span>
+                </div>
                 <p className="mt-0.5 text-sm font-semibold text-slate-800 line-clamp-2 leading-snug">
                   {e.title || <span className="italic text-slate-400">Tanpa judul</span>}
                 </p>
@@ -240,4 +266,3 @@ export default function BeritaEditor({ initial }: { initial: BeritaItem[] }) {
     </div>
   );
 }
-

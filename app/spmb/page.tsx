@@ -133,7 +133,7 @@ export default function SPMBPage() {
         </section>
 
         <section className="px-4 pb-24">
-          <div className="mx-auto max-w-4xl text-center">
+          <div className="mx-auto max-w-6xl text-center">
             <Reveal>
               <ClayCard className="p-10 sm:p-14">
               <h2 className="text-2xl font-extrabold text-primary-dark sm:text-3xl">

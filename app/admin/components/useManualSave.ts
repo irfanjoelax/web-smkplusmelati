@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { markPersistedContent } from "./deleteContent";
 
 export type ContentSaveKey =
+  | "alumni"
   | "guru"
   | "visiMisi"
   | "jurusan"
@@ -13,7 +14,8 @@ export type ContentSaveKey =
   | "ekskul"
   | "berita"
   | "program"
-  | "profil";
+  | "profil"
+  | "testimoniOrtu";
 
 export function useManualSave(key: ContentSaveKey, data: unknown) {
   const [isSaving, setIsSaving] = useState(false);

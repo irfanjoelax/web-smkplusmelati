@@ -13,8 +13,10 @@ const routes = [
   "/ekskul",
   "/alumni",
   "/berita",
+  "/berita/semua-berita",
   "/hubungi-kami",
   "/spmb",
+  "/website",
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

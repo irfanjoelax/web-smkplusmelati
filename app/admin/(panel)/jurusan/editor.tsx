@@ -1,8 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import ImagePicker from "@/app/admin/components/ImagePicker";
 import StringListEditor from "@/app/admin/components/StringListEditor";
 import { useManualSave } from "@/app/admin/components/useManualSave";
+import {
+  removePersistedImage,
+  tagPersistedItems,
+} from "@/app/admin/components/deleteContent";
 import {
   AddButton,
   Button,
@@ -60,7 +65,7 @@ function makeId(value: string) {
 }
 
 export default function JurusanEditor({ initial }: { initial: JurusanData }) {
-  const [items, setItems] = useState(initial);
+  const [items, setItems] = useState(() => tagPersistedItems(initial));
   const [activeId, setActiveId] = useState(initial[0]?.id ?? "");
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
@@ -96,6 +101,7 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
       id,
       name,
       fullName,
+      image: "",
       description: "Deskripsi singkat jurusan.",
       whyTitle: `Mengapa Memilih ${name}?`,
       whyText: "Jelaskan alasan memilih jurusan ini.",
@@ -125,6 +131,11 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
     setItems(next);
     setActiveId(next[0].id);
     setConfirmDelete(false);
+  }
+
+  async function removeCurrentImage() {
+    if (!current) return;
+    return removePersistedImage("jurusan", null, current, current.image);
   }
 
   return (
@@ -228,6 +239,14 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
           }
         >
           <div className="grid gap-4">
+            <Field label="Foto Hero Jurusan">
+              <ImagePicker
+                value={current.image}
+                large
+                onChange={(image) => updateCurrent({ ...current, image })}
+                onRemove={removeCurrentImage}
+              />
+            </Field>
             <Field label="Nama Singkat">
               <Input
                 value={current.name}

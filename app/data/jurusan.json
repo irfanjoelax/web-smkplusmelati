@@ -23,7 +23,8 @@
       "chip": "Prospek",
       "title": "Karier Lulusan TJKT",
       "description": "Teknisi jaringan, administrator server, network engineer, teknisi komputer, hingga technopreneur di bidang IT."
-    }
+    },
+    "image": "/uploads/1789610131465-3d30648526d6.png"
   },
   {
     "id": "kuliner",
@@ -49,6 +50,7 @@
       "chip": "Prospek",
       "title": "Karier Lulusan Kuliner",
       "description": "Chef, pastry, food stylist, manajer restoran, wirausahawan kuliner, hingga pelaku usaha catering dan UMKM makanan."
-    }
+    },
+    "image": ""
   }
 ]

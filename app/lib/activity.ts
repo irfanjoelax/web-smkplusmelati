@@ -4,6 +4,7 @@ import { getActivityLog, saveActivityLog } from "./content";
 import type { ActivityLogEntry } from "./types";
 
 const COLLECTION_LABELS: Record<ContentKey, string> = {
+  alumni: "alumni",
   guru: "guru",
   visiMisi: "visi dan misi",
   jurusan: "jurusan",
@@ -14,6 +15,7 @@ const COLLECTION_LABELS: Record<ContentKey, string> = {
   berita: "berita",
   program: "program",
   profil: "profil",
+  testimoniOrtu: "testimoni orang tua",
 };
 
 function itemLabel(value: unknown): string | undefined {

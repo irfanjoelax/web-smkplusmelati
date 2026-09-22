@@ -12,7 +12,15 @@ type LegacyJurusan = {
 };
 
 export function normalizeJurusanData(data: unknown): JurusanData {
-  if (Array.isArray(data)) return data as JurusanData;
+  if (Array.isArray(data)) {
+    return data.map((item) => {
+      const entry = item && typeof item === "object" ? item : {};
+      return {
+        ...entry,
+        image: "image" in entry && typeof entry.image === "string" ? entry.image : "",
+      } as JurusanData[number];
+    });
+  }
 
   const legacy = (data ?? {}) as LegacyJurusan;
   if (!legacy.tkj || !legacy.tataBoga) return [];
@@ -22,6 +30,7 @@ export function normalizeJurusanData(data: unknown): JurusanData {
       id: "tjkt",
       name: "TJKT",
       fullName: "Teknik Jaringan Komputer & Telekomunikasi (TJKT)",
+      image: "",
       description:
         "Jurusan yang membekali siswa keterampilan jaringan komputer, administrasi sistem, dan teknologi informasi yang dibutuhkan industri.",
       whyTitle: "Mengapa Memilih TJKT?",
@@ -34,6 +43,7 @@ export function normalizeJurusanData(data: unknown): JurusanData {
       id: "kuliner",
       name: "Kuliner",
       fullName: "Kuliner",
+      image: "",
       description:
         "Jurusan yang mengasah seni memasak, teknik penyajian, dan jiwa wirausaha di bidang kuliner.",
       whyTitle: "Mengapa Memilih Kuliner?",
@@ -66,6 +76,7 @@ export function isJurusanData(value: unknown): value is JurusanData {
       typeof item.id !== "string" ||
       !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(item.id) ||
       ids.has(item.id) ||
+      typeof item.image !== "string" ||
       ![item.name, item.fullName, item.description, item.whyTitle, item.whyText].every(
         (field) => typeof field === "string" && field.trim().length > 0,
       ) ||

@@ -16,6 +16,7 @@ import { getProgramData } from "@/app/lib/program";
 import type { Beranda, IconKey } from "@/app/lib/types";
 import JsonLd from "@/app/components/JsonLd";
 import { websiteSchema } from "@/app/lib/seo";
+import { getYouTubeVideoId } from "@/app/lib/youtube";
 
 export const revalidate = 60;
 
@@ -29,13 +30,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "id_ID",
     url: "/",
-    title: "SMK Plus Melati Samarinda — Sekolah Kewirausahaan yang Bertakwa",
+    title: "SMK Plus Melati Samarinda — SMK Wirausaha Muda",
     description:
       "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TJKT dan Kuliner, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SMK Plus Melati Samarinda — Sekolah Kewirausahaan yang Bertakwa",
+    title: "SMK Plus Melati Samarinda — SMK Wirausaha Muda",
     description:
       "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TJKT dan Kuliner, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
   },
@@ -47,7 +48,8 @@ export default async function Home() {
     getJurusanData(),
     getProgramData(),
   ]);
-  const { heroImage, ppdbImage, stats, ekskulPreview, facilities } = beranda;
+  const { heroVideoUrl = "", ppdbImage, stats, ekskulPreview, facilities } = beranda;
+  const heroVideoId = getYouTubeVideoId(heroVideoUrl);
   const majorIcons: IconKey[] = ["network", "chef"];
   const majors = jurusan.map((item, index) => ({
     id: item.id,
@@ -79,16 +81,25 @@ export default async function Home() {
       <JsonLd data={websiteSchema()} />
 
       <main className="flex-1">
-        {/* ===== HERO — dominan biru ===== */}
-        <section className="px-4 pt-10 sm:pt-14">
-          <div className="clay-card-blue relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem]">
-            <span className="clay-orb h-40 w-40 -right-12 -top-12 animate-float-orb opacity-90" />
-            <span className="clay-orb-ghost h-48 w-48 -left-16 -top-20" />
-            <span className="clay-blob h-64 w-64 -bottom-20 -right-16 animate-blob-morph" />
+        {/* ===== HERO ===== */}
+        <section className="relative isolate flex min-h-svh w-full items-center justify-center overflow-hidden bg-primary-darker px-4 pb-16 pt-32 sm:pb-20 sm:pt-36">
+          {heroVideoId && (
+            <div className="absolute inset-0 overflow-hidden">
+              <iframe
+                className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.77777778vh] min-w-full -translate-x-1/2 -translate-y-1/2 scale-[1.15] border-0"
+                src={`https://www.youtube-nocookie.com/embed/${heroVideoId}?autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&cc_load_policy=0&cc=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&playsinline=1&rel=0`}
+                title="Video latar SMK Plus Melati Samarinda"
+                allow="autoplay; encrypted-media"
+                referrerPolicy="strict-origin-when-cross-origin"
+                tabIndex={-1}
+              />
+            </div>
+          )}
+          <div className="absolute inset-0 bg-primary-dark/20" />
 
-            <div className="relative grid items-center gap-8 p-8 sm:p-12 lg:grid-cols-2 lg:p-14">
-              <Reveal className="text-center lg:text-left">
-                <span className="clay-chip-blue mx-auto mb-5 lg:mx-0">
+          <div className="relative z-10 mx-auto w-full max-w-4xl text-center">
+            <Reveal className="text-center">
+                <span className="clay-chip-blue mx-auto mb-5">
                   👋 Selamat Datang di
                 </span>
                 <h1 className="text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
@@ -98,14 +109,14 @@ export default async function Home() {
                   </span>
                 </h1>
                 <p className="mt-4 text-lg font-extrabold tracking-wider text-accent">
-Sekolah Kewirausahaan yang Bertakwa
+                  SMK Wirausaha Muda
                 </p>
-                <p className="mx-auto mt-5 max-w-xl leading-relaxed text-white/85 lg:mx-0">
+                <p className="mx-auto mt-5 max-w-xl leading-relaxed text-white/85">
                   Sekolah SMK Swasta Keunggulan di Samarinda Seberang. Mencetak
                   SDM bermutu dengan sikap dan akhlak yang mulia, siap bersaing
                   di dunia industri.
                 </p>
-                <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
+                <div className="mt-8 flex flex-wrap justify-center gap-3">
                   <Link href="/spmb" className="clay-btn clay-btn-accent">
                     SPMB 2026
                   </Link>
@@ -113,20 +124,7 @@ Sekolah Kewirausahaan yang Bertakwa
                     Jelajah Sekolah
                   </Link>
                 </div>
-              </Reveal>
-
-              <Reveal delay={120} className="relative mx-auto w-full max-w-md">
-                <div className="clay-inset overflow-hidden rounded-[2rem] p-2">
-                  <LocalImage
-                    src={heroImage || IMAGES.hero}
-                    alt="Suasana SMK Plus Melati Samarinda"
-                    width={1280}
-                    height={800}
-                    className="h-72 w-full rounded-[1.6rem] object-fill sm:h-96"
-                  />
-                </div>
-              </Reveal>
-            </div>
+            </Reveal>
           </div>
         </section>
 

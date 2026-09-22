@@ -68,7 +68,7 @@ export default async function PrestasiSiswaPage() {
         </section>
 
         <section className="px-4 pb-24">
-          <div className="mx-auto max-w-4xl">
+          <div className="mx-auto max-w-6xl">
             <Reveal>
               <div className="clay-card p-8 sm:p-12">
                 <p className="text-center text-lg font-extrabold text-primary-dark">
