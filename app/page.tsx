@@ -33,12 +33,14 @@ export const metadata: Metadata = {
     title: "SMK Plus Melati Samarinda — SMK Wirausaha Muda",
     description:
       "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TJKT dan Kuliner, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
+    images: ["/images/hero.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "SMK Plus Melati Samarinda — SMK Wirausaha Muda",
     description:
       "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TJKT dan Kuliner, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
+    images: ["/images/hero.jpg"],
   },
 };
 
@@ -176,9 +178,9 @@ export default async function Home() {
                         <p className="text-xs font-bold uppercase tracking-wide text-accent-dark">
                           {m.full}
                         </p>
-                        <p className="mt-0.5 text-2xl font-extrabold text-primary-dark group-hover:text-primary">
+                        <h3 className="mt-0.5 text-2xl font-extrabold text-primary-dark group-hover:text-primary">
                           {m.title}
-                        </p>
+                        </h3>
                         <p className="mt-2 text-sm leading-relaxed text-foreground/70">
                           {m.desc}
                         </p>

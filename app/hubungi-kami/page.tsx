@@ -81,7 +81,7 @@ export default function HubungiKamiPage() {
 
         <section className="px-4 py-14">
           <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
-            <div className="space-y-5">
+            <div className="space-y-5 lg:sticky lg:top-28 lg:self-start">
               {contactItems.map((item) => {
                 const inner = (
                   <ClayCard hover className="flex items-center gap-5 p-6">
@@ -136,27 +136,35 @@ export default function HubungiKamiPage() {
             </div>
 
             <Reveal delay={120}>
-              <ClayCard className="flex flex-col p-8 sm:p-10">
-                <span className="clay-chip clay-chip-primary mb-5">
-                  Pesan Cepat
-                </span>
-                <h2 className="text-2xl font-extrabold text-primary-dark">
-                  Kirim Pertanyaanmu
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed text-foreground/70">
-                  Gunakan Google Form resmi SMK Plus Melati untuk menyampaikan
-                  pertanyaan atau permohonan informasi.
-                </p>
-                <a
-                  href={CONTACT.googleFormUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="clay-btn clay-btn-accent mt-8"
-                >
-                  Buka Form Kontak
-                </a>
-                <div className="mt-auto pt-8">
-                  <div className="clay-inset rounded-3xl p-6 text-sm leading-relaxed text-foreground/75">
+              <ClayCard className="flex flex-col overflow-hidden p-0">
+                <div className="border-b border-primary/10 bg-white/45 px-6 py-7 sm:px-8 sm:py-8">
+                  <span className="clay-chip clay-chip-primary mb-4">
+                    Pesan Cepat
+                  </span>
+                  <h2 className="text-2xl font-extrabold text-primary-dark sm:text-3xl">
+                    Kirim Pertanyaanmu
+                  </h2>
+                  <p className="mt-3 max-w-xl text-sm leading-7 text-foreground/70">
+                    Lengkapi formulir resmi SMK Plus Melati untuk menyampaikan
+                    pertanyaan atau permohonan informasi.
+                  </p>
+                </div>
+
+                <div className="p-4 sm:p-6">
+                  <div className="overflow-hidden rounded-2xl border border-primary/10 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_10px_30px_rgba(16,112,176,0.08)]">
+                    <iframe
+                      src={CONTACT.googleFormEmbedUrl}
+                      title="Formulir kontak SMK Plus Melati Samarinda"
+                      className="block h-[480px] w-full border-0 sm:h-[560px]"
+                      loading="lazy"
+                    >
+                      Memuat formulir kontak…
+                    </iframe>
+                  </div>
+                </div>
+
+                <div className="px-4 pb-4 sm:px-6 sm:pb-6">
+                  <div className="clay-inset rounded-2xl p-5 text-sm leading-7 text-foreground/75 sm:p-6">
                     <p className="font-extrabold text-primary-dark">
                       {CONTACT.name}
                     </p>

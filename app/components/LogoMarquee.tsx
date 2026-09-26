@@ -16,12 +16,13 @@ export default function LogoMarquee({ logos }: { logos: Logo[] }) {
           <div
             key={i}
             className="flex h-24 w-44 shrink-0 items-center justify-center"
+            aria-hidden={i >= logos.length ? "true" : undefined}
           >
             {l.src ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={l.src}
-                alt={l.alt}
+                alt={i >= logos.length ? "" : l.alt}
                 className="max-h-20 max-w-40 object-contain"
                 loading="lazy"
               />

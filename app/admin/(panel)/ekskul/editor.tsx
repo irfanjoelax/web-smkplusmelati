@@ -129,7 +129,7 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
                   className="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
                 >
                   <option value="wajib">Ekskul Wajib</option>
-                  <option value="lainnya">Ekskul Lainnya</option>
+                  <option value="lainnya">Ekskul Pilihan</option>
                 </select>
               </Field>
             </div>
@@ -151,7 +151,7 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
   const visibleItems = filteredItems.slice((page - 1) * pageSize, page * pageSize);
   const visibleGroups = [
     { title: "Ekskul Wajib", items: visibleItems.filter(({ item }) => item.required) },
-    { title: "Ekskul Lainnya", items: visibleItems.filter(({ item }) => !item.required) },
+    { title: "Ekskul Pilihan", items: visibleItems.filter(({ item }) => !item.required) },
   ].filter((group) => group.items.length > 0);
 
   return (
@@ -250,7 +250,7 @@ export default function EkskulEditor({ initial }: { initial: EkskulItem[] }) {
                         <div className="flex items-center gap-2">
                           <p className="truncate font-bold text-slate-900">{item.title || "Tanpa judul"}</p>
                           <span className={`shrink-0 rounded-full px-2 py-0.5 text-[0.65rem] font-bold ${item.required ? "bg-blue-100 text-blue-700" : "bg-slate-100 text-slate-600"}`}>
-                            {item.required ? "Wajib" : "Lainnya"}
+                            {item.required ? "Wajib" : "Pilihan"}
                           </span>
                         </div>
                         <p className="mt-0.5 line-clamp-2 text-sm text-slate-500">{item.desc || "Deskripsi belum diisi"}</p>

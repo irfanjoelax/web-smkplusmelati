@@ -23,12 +23,14 @@ export const metadata: Metadata = {
     title: "SPMB 2026/2027 | SMK Plus Melati Samarinda",
     description:
       "SPMB SMK Plus Melati Samarinda: daftar online, verifikasi berkas, pengumuman, dan daftar ulang.",
+    images: ["/images/hero.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "SPMB 2026/2027 | SMK Plus Melati Samarinda",
     description:
       "SPMB SMK Plus Melati Samarinda: daftar online, verifikasi berkas, pengumuman, dan daftar ulang.",
+    images: ["/images/hero.jpg"],
   },
 };
 

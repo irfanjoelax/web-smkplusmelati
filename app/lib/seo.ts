@@ -26,10 +26,10 @@ export const organizationSchema = {
   telephone: CONTACT.phone,
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Jl. H.A.M. Rifaddin No 1 RT 25, Harapan Baru",
+    streetAddress: "Jl. H. A. M. M. Rifaddin No.1, RT.25, Harapan Baru, Loa Janan Ilir",
     addressLocality: "Samarinda",
     addressRegion: "Kalimantan Timur",
-    postalCode: "75251",
+    postalCode: "75132",
     addressCountry: "ID",
   },
   sameAs: SOCIALS.map((s) => s.url),
@@ -42,13 +42,47 @@ export function websiteSchema() {
     name: SITE_NAME,
     url: SITE_URL,
     description: `${SITE_NAME} — ${SITE_TAGLINE}.`,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${SITE_URL}/?search={search_term_string}`,
+  };
+}
+
+export function newsArticleSchema({
+  title,
+  description,
+  path,
+  image,
+  publishedAt,
+  modifiedAt,
+}: {
+  title: string;
+  description: string;
+  path: string;
+  image: string;
+  publishedAt: string;
+  modifiedAt?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: title,
+    description,
+    url: absoluteUrl(path),
+    mainEntityOfPage: absoluteUrl(path),
+    image: [absoluteUrl(image)],
+    datePublished: publishedAt,
+    dateModified: modifiedAt ?? publishedAt,
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "EducationalOrganization",
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/icon.png"),
       },
-      "query-input": "required name=search_term_string",
     },
   };
 }

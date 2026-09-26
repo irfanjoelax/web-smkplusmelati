@@ -64,7 +64,7 @@ export default async function SemuaBeritaPage() {
                 href="/berita"
                 className="inline-flex items-center gap-2 text-sm font-bold text-primary transition hover:text-primary-dark"
               >
-                ← Kembali ke Berita Utama
+                Kembali ke Berita Utama
               </Link>
             </div>
 
@@ -85,7 +85,7 @@ export default async function SemuaBeritaPage() {
                 {otherNews.map((item) => (
                   <article key={item.slug} className="group flex flex-col">
                     <Link href={`/berita/${item.slug}`} className="block h-full">
-                      <div className="aspect-[4/3] overflow-hidden bg-primary-soft/40">
+                      <div className="aspect-[4/3] overflow-hidden rounded-[1.25rem] border border-primary/10 bg-primary-soft/40">
                         <LocalImage
                           src={item.image}
                           alt={item.title}
@@ -112,7 +112,6 @@ export default async function SemuaBeritaPage() {
                         )}
                         <span className="mt-4 inline-flex items-center gap-2 border-b border-primary/25 pb-1 text-sm font-bold text-primary">
                           Baca Selengkapnya
-                          <span aria-hidden="true">→</span>
                         </span>
                       </div>
                     </Link>

@@ -1,37 +1,37 @@
 [
   {
-    "action": "delete",
-    "collection": "testimoniOrtu",
-    "label": "Hapus testimoni orang tua",
-    "id": "e3f49613-46f6-438b-aaad-96ce920de988",
-    "timestamp": "2026-09-21T02:17:37.436Z"
+    "action": "edit",
+    "collection": "berita",
+    "label": "Edit berita \"Juara Lomba Pidato Bahasa Inggris\"",
+    "id": "4a55f030-b170-4cf1-8436-f6879c7bfb27",
+    "timestamp": "2026-09-26T09:23:30.927Z"
   },
   {
     "action": "edit",
-    "collection": "alumni",
-    "label": "Edit alumni \"yuno\"",
-    "id": "e58333fc-d452-4be5-8450-f31e9f2537b6",
-    "timestamp": "2026-09-21T02:00:48.677Z"
+    "collection": "jurusan",
+    "label": "Edit jurusan \"TJKT\"",
+    "id": "14fcf609-a0d7-464f-aee4-08c75e2f53c4",
+    "timestamp": "2026-09-26T07:45:11.355Z"
   },
   {
     "action": "edit",
-    "collection": "beranda",
-    "label": "Edit beranda",
-    "id": "ede5b640-e453-4cc2-bc46-c20297e47a27",
-    "timestamp": "2026-09-21T01:27:48.885Z"
+    "collection": "jurusan",
+    "label": "Edit jurusan \"TJKT\"",
+    "id": "8fe96c0a-2b6c-4ebb-94be-6c25c201c298",
+    "timestamp": "2026-09-26T07:32:56.285Z"
   },
   {
     "action": "edit",
-    "collection": "beranda",
-    "label": "Edit beranda",
-    "id": "773ca364-ec02-4032-98ed-31fb4838d909",
-    "timestamp": "2026-09-21T01:17:13.698Z"
+    "collection": "jurusan",
+    "label": "Edit jurusan \"TJKT\"",
+    "id": "91ae3931-07c6-4da7-8f42-0175af650322",
+    "timestamp": "2026-09-26T07:32:19.255Z"
   },
   {
-    "action": "delete",
-    "collection": "fasilitas",
-    "label": "Hapus fasilitas \"Lapangan Bulu Tangkiss\"",
-    "id": "d26058e1-a3d5-4663-95dd-ba082a7b343d",
-    "timestamp": "2026-09-20T15:52:42.254Z"
+    "action": "edit",
+    "collection": "jurusan",
+    "label": "Edit jurusan \"TJKT\"",
+    "id": "7a781f60-9abf-4994-a0fd-c0ca554ef455",
+    "timestamp": "2026-09-26T07:32:03.823Z"
   }
 ]

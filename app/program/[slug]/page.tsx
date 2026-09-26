@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: item.title,
     description: item.description,
     alternates: { canonical: path },
-    openGraph: { type: "website", locale: "id_ID", url: path, title: `${item.title} | SMK Plus Melati Samarinda`, description: item.description },
-    twitter: { card: "summary_large_image", title: `${item.title} | SMK Plus Melati Samarinda`, description: item.description },
+    openGraph: { type: "website", locale: "id_ID", url: path, title: `${item.title} | SMK Plus Melati Samarinda`, description: item.description, images: [item.cards[0]?.image || "/images/hero.jpg"] },
+    twitter: { card: "summary_large_image", title: `${item.title} | SMK Plus Melati Samarinda`, description: item.description, images: [item.cards[0]?.image || "/images/hero.jpg"] },
   };
 }
 
@@ -39,7 +39,7 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
   return (
     <>
       <Header />
-      <JsonLd data={breadcrumbSchema([{ name: "Program", path }, { name: item.title, path }])} />
+      <JsonLd data={breadcrumbSchema([{ name: item.title, path }])} />
       <JsonLd data={programSchema({ title: item.title, path, description: item.description })} />
       <main className="flex-1">
         <PageHero eyebrow="Program Unggulan" title={item.title} description={item.description} />

@@ -40,10 +40,7 @@ export default async function PrestasiSiswaPage() {
     <>
       <Header />
       <JsonLd
-        data={breadcrumbSchema([
-          { name: "Program", path: "/prestasi-siswa" },
-          { name: "Prestasi Siswa", path: "/prestasi-siswa" },
-        ])}
+        data={breadcrumbSchema([{ name: "Prestasi Siswa", path: "/prestasi-siswa" }])}
       />
       <main className="flex-1">
         <PageHero

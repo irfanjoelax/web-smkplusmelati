@@ -30,6 +30,11 @@ export type JurusanCard = {
   description: string;
 };
 
+export type PracticeActivity = {
+  image: string;
+  title: string;
+};
+
 export type JurusanItem = {
   id: string;
   name: string;
@@ -39,6 +44,7 @@ export type JurusanItem = {
   whyTitle: string;
   whyText: string;
   skills: string[];
+  practiceImages: PracticeActivity[];
   card1: JurusanCard;
   card2: JurusanCard;
 };

@@ -4,7 +4,9 @@ import { useState } from "react";
 import ImagePicker from "@/app/admin/components/ImagePicker";
 import StringListEditor from "@/app/admin/components/StringListEditor";
 import { useManualSave } from "@/app/admin/components/useManualSave";
+import { EditIcon, TrashIcon } from "@/app/admin/components/icons";
 import {
+  getPersistedSnapshot,
   removePersistedImage,
   tagPersistedItems,
 } from "@/app/admin/components/deleteContent";
@@ -13,6 +15,7 @@ import {
   Button,
   ConfirmDialog,
   Field,
+  IconBtn,
   Input,
   PageHeader,
   Panel,
@@ -72,12 +75,82 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
   const [newName, setNewName] = useState("");
   const [newFullName, setNewFullName] = useState("");
   const [addError, setAddError] = useState("");
+  const [imageEditor, setImageEditor] = useState<"hero" | number | null>(null);
   const { save } = useManualSave("jurusan", items);
   const activeIndex = items.findIndex((item) => item.id === activeId);
   const current = items[activeIndex];
 
   function updateCurrent(next: JurusanItem) {
     setItems(items.map((item, index) => (index === activeIndex ? next : item)));
+  }
+
+  function updatePracticeImage(index: number, image: string) {
+    if (!current) return;
+    const practiceImages = [...(current.practiceImages ?? [])];
+    if (image) practiceImages[index] = { ...practiceImages[index], image };
+    else practiceImages.splice(index, 1);
+    updateCurrent({ ...current, practiceImages });
+    if (!image) setImageEditor(null);
+  }
+
+  async function removePracticeImage(index: number) {
+    if (!current) return;
+    const image = current.practiceImages?.[index]?.image ?? "";
+    const snapshot = getPersistedSnapshot(current) as { practiceImages?: unknown } | undefined;
+    const persistedImages = Array.isArray(snapshot?.practiceImages)
+      ? snapshot.practiceImages
+      : [];
+    const persistedImage = persistedImages.some(
+      (activity) =>
+        activity && typeof activity === "object" &&
+        (activity as { image?: unknown }).image === image,
+    );
+    if (image && !persistedImage) {
+      await fetch(`/api/admin/upload?cleanup=1&path=${encodeURIComponent(image)}`, {
+        method: "DELETE",
+      });
+    }
+    updatePracticeImage(index, "");
+  }
+
+  function updatePracticeTitle(index: number, title: string) {
+    if (!current) return;
+    const practiceImages = [...(current.practiceImages ?? [])];
+    practiceImages[index] = { ...practiceImages[index], title };
+    updateCurrent({ ...current, practiceImages });
+  }
+
+  async function saveItems() {
+    const normalizedItems = items.map((item) => ({
+      ...item,
+      practiceImages: item.practiceImages ?? [],
+    }));
+    const previousImages = items.flatMap((item) => {
+      const snapshot = getPersistedSnapshot(item) as { practiceImages?: unknown } | undefined;
+      return Array.isArray(snapshot?.practiceImages)
+        ? snapshot.practiceImages.flatMap((activity) => {
+            if (typeof activity === "string") return [activity];
+            if (!activity || typeof activity !== "object") return [];
+            const image = (activity as { image?: unknown }).image;
+            return typeof image === "string" ? [image] : [];
+          })
+        : [];
+    });
+    const currentImages = new Set(
+      normalizedItems.flatMap((item) => item.practiceImages.map((activity) => activity.image)),
+    );
+
+    await save(normalizedItems);
+    setItems(normalizedItems);
+    await Promise.all(
+      previousImages
+        .filter((image) => !currentImages.has(image))
+        .map((image) =>
+          fetch(`/api/admin/upload?cleanup=1&path=${encodeURIComponent(image)}`, {
+            method: "DELETE",
+          }),
+        ),
+    );
   }
 
   function addJurusan() {
@@ -106,6 +179,7 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
       whyTitle: `Mengapa Memilih ${name}?`,
       whyText: "Jelaskan alasan memilih jurusan ini.",
       skills: [],
+      practiceImages: [],
       card1: { chip: "Keunggulan", title: "Keunggulan Jurusan", description: "Jelaskan keunggulan jurusan." },
       card2: { chip: "Prospek", title: "Prospek Lulusan", description: "Jelaskan prospek lulusan." },
     };
@@ -115,6 +189,7 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
     setNewName("");
     setNewFullName("");
     setAddError("");
+    setImageEditor(null);
   }
 
   function closeAddDialog() {
@@ -136,6 +211,17 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
   async function removeCurrentImage() {
     if (!current) return;
     return removePersistedImage("jurusan", null, current, current.image);
+  }
+
+  async function removeHeroImage() {
+    if (!current?.image) return;
+    const cleanupUpload = await removeCurrentImage();
+    if (cleanupUpload) {
+      await fetch(`/api/admin/upload?cleanup=1&path=${encodeURIComponent(current.image)}`, {
+        method: "DELETE",
+      });
+    }
+    updateCurrent({ ...current, image: "" });
   }
 
   return (
@@ -234,19 +320,149 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
                   Hapus
                 </Button>
               )}
-              <SaveButton onSave={save} />
+              <SaveButton onSave={saveItems} />
             </div>
           }
         >
           <div className="grid gap-4">
-            <Field label="Foto Hero Jurusan">
-              <ImagePicker
-                value={current.image}
-                large
-                onChange={(image) => updateCurrent({ ...current, image })}
-                onRemove={removeCurrentImage}
-              />
-            </Field>
+            <div>
+              <p className="mb-2 text-[11px] font-bold uppercase tracking-wider text-slate-500">Foto Hero Jurusan</p>
+              {imageEditor === "hero" ? (
+                <div className="rounded-xl border border-slate-200 p-4">
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <p className="text-sm font-extrabold text-slate-700">Edit Foto Hero</p>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setImageEditor(null)}
+                        className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                      >
+                        Kembali
+                      </button>
+                      <SaveButton
+                        onSave={async () => {
+                          await saveItems();
+                          setImageEditor(null);
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <ImagePicker
+                    value={current.image}
+                    large
+                    onChange={(image) => updateCurrent({ ...current, image })}
+                    onRemove={removeCurrentImage}
+                  />
+                </div>
+              ) : (
+                <div className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4">
+                  {current.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={current.image} alt="" className="h-20 w-20 rounded-xl border border-slate-200 object-cover" />
+                  ) : (
+                    <div className="flex h-20 w-20 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 text-center text-[0.65rem] text-slate-400">Tanpa foto</div>
+                  )}
+                  <div className="min-w-0 flex-1">
+                    <p className="font-bold text-slate-900">Foto Hero</p>
+                    <p className="mt-0.5 text-sm text-slate-500">Gambar utama halaman jurusan.</p>
+                  </div>
+                  <div className="flex gap-1">
+                    <IconBtn label="Edit foto hero" onClick={() => setImageEditor("hero")}><EditIcon className="h-4 w-4" /></IconBtn>
+                    {current.image && <IconBtn label="Hapus foto hero" danger onClick={removeHeroImage}><TrashIcon className="h-4 w-4" /></IconBtn>}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div>
+              <div className="mb-4 flex items-start justify-between gap-4">
+                <div>
+                  <h3 className="text-sm font-extrabold text-slate-700">Galeri Kegiatan Praktik</h3>
+                  <p className="mt-0.5 text-sm text-slate-500">{(current.practiceImages ?? []).length} foto terdaftar</p>
+                </div>
+                <AddButton
+                  onClick={() => {
+                    const index = (current.practiceImages ?? []).length;
+                    updateCurrent({
+                      ...current,
+                      practiceImages: [
+                        ...(current.practiceImages ?? []),
+                        { image: "", title: "" },
+                      ],
+                    });
+                    setImageEditor(index);
+                  }}
+                >
+                  Tambah Foto
+                </AddButton>
+              </div>
+
+              {typeof imageEditor === "number" ? (
+                <div className="rounded-xl border border-slate-200 p-4">
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <p className="text-sm font-extrabold text-slate-700">Foto Praktik {imageEditor + 1}</p>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (
+                            !current.practiceImages?.[imageEditor]?.image &&
+                            !current.practiceImages?.[imageEditor]?.title.trim()
+                          ) updatePracticeImage(imageEditor, "");
+                          setImageEditor(null);
+                        }}
+                        className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                      >
+                        Kembali
+                      </button>
+                      <SaveButton
+                        onSave={async () => {
+                          await saveItems();
+                          setImageEditor(null);
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <ImagePicker
+                    value={current.practiceImages?.[imageEditor]?.image ?? ""}
+                    large
+                    onChange={(image) => updatePracticeImage(imageEditor, image)}
+                    onRemove={() => removePracticeImage(imageEditor)}
+                  />
+                  <Field label="Nama Kegiatan" className="mt-4">
+                    <Input
+                      value={current.practiceImages?.[imageEditor]?.title ?? ""}
+                      placeholder="Contoh: Praktik Instalasi Jaringan"
+                      onChange={(event) => updatePracticeTitle(imageEditor, event.target.value)}
+                    />
+                  </Field>
+                </div>
+              ) : (current.practiceImages ?? []).length > 0 ? (
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {(current.practiceImages ?? []).map((activity, index) => (
+                    <div key={`${activity.image}-${index}`} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3">
+                      {activity.image ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={activity.image} alt="" className="h-16 w-16 shrink-0 rounded-xl border border-slate-200 object-cover" />
+                      ) : (
+                        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 text-[0.6rem] text-slate-400">Tanpa foto</div>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-bold text-slate-900">{activity.title || `Foto ${index + 1}`}</p>
+                        <p className="truncate text-xs text-slate-500">Kegiatan praktik</p>
+                      </div>
+                      <div className="flex shrink-0 gap-1">
+                        <IconBtn label={`Edit foto praktik ${index + 1}`} onClick={() => setImageEditor(index)}><EditIcon className="h-4 w-4" /></IconBtn>
+                        <IconBtn label={`Hapus foto praktik ${index + 1}`} danger onClick={() => removePracticeImage(index)}><TrashIcon className="h-4 w-4" /></IconBtn>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-5 py-8 text-center text-sm text-slate-500">Belum ada foto kegiatan praktik.</div>
+              )}
+            </div>
+
             <Field label="Nama Singkat">
               <Input
                 value={current.name}

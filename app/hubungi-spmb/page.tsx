@@ -9,6 +9,21 @@ import { CONTACT } from "@/app/components/site";
 export const metadata: Metadata = {
   title: "Hubungi Panitia SPMB",
   description: "Hubungi panitia SPMB SMK Plus Melati Samarinda untuk informasi pendaftaran dan bantuan.",
+  alternates: { canonical: "/hubungi-spmb" },
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: "/hubungi-spmb",
+    title: "Hubungi Panitia SPMB",
+    description: "Kontak panitia SPMB SMK Plus Melati Samarinda untuk informasi pendaftaran dan bantuan.",
+    images: ["/images/hero.jpg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hubungi Panitia SPMB",
+    description: "Kontak panitia SPMB SMK Plus Melati Samarinda untuk informasi pendaftaran dan bantuan.",
+    images: ["/images/hero.jpg"],
+  },
 };
 
 export default function HubungiSPMBPage() {

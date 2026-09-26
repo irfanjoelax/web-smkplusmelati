@@ -24,7 +24,29 @@
       "title": "Karier Lulusan TJKT",
       "description": "Teknisi jaringan, administrator server, network engineer, teknisi komputer, hingga technopreneur di bidang IT."
     },
-    "image": "/uploads/1789610131465-3d30648526d6.png"
+    "image": "/uploads/1790407613490-aef12b455794.jpg",
+    "practiceImages": [
+      {
+        "image": "/uploads/1790405468543-6d3004eb3386.jpg",
+        "title": "pazriansopian"
+      },
+      {
+        "image": "/uploads/1790405486681-74bf334f9f51.jpg",
+        "title": "paztell"
+      },
+      {
+        "image": "/uploads/1790405498515-e8019e631825.jpg",
+        "title": "rijuun"
+      },
+      {
+        "image": "/uploads/1790406471983-7cd55141f79f.jpg",
+        "title": "parmen"
+      },
+      {
+        "image": "/uploads/1790408690999-5699f6513f47.jpg",
+        "title": "kemana"
+      }
+    ]
   },
   {
     "id": "kuliner",
@@ -51,6 +73,28 @@
       "title": "Karier Lulusan Kuliner",
       "description": "Chef, pastry, food stylist, manajer restoran, wirausahawan kuliner, hingga pelaku usaha catering dan UMKM makanan."
     },
-    "image": ""
+    "image": "",
+    "practiceImages": []
+  },
+  {
+    "id": "mm",
+    "name": "mm",
+    "fullName": "mmmm",
+    "image": "",
+    "description": "Deskripsi singkat jurusan.",
+    "whyTitle": "Mengapa Memilih mm?",
+    "whyText": "Jelaskan alasan memilih jurusan ini.",
+    "skills": [],
+    "card1": {
+      "chip": "Keunggulan",
+      "title": "Keunggulan Jurusan",
+      "description": "Jelaskan keunggulan jurusan."
+    },
+    "card2": {
+      "chip": "Prospek",
+      "title": "Prospek Lulusan",
+      "description": "Jelaskan prospek lulusan."
+    },
+    "practiceImages": []
   }
 ]

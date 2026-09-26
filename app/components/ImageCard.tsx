@@ -7,6 +7,8 @@ type ImageCardProps = {
   alt: string;
   title: string;
   description?: string;
+  badge?: string;
+  badgeTone?: "gold" | "blue";
   href?: string;
   aspect?: string;
 };
@@ -16,6 +18,8 @@ export default function ImageCard({
   alt,
   title,
   description,
+  badge,
+  badgeTone = "blue",
   href,
   aspect = "aspect-[4/3]",
 }: ImageCardProps) {
@@ -30,7 +34,20 @@ export default function ImageCard({
           className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
         />
       </div>
-      <div className="px-2 pb-2 pt-4">
+      <div className="flex flex-1 flex-col px-2 pb-2 pt-4">
+        {badge && (
+          <div className="mb-2.5">
+            <span
+              className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[0.7rem] font-extrabold ${
+                badgeTone === "gold"
+                  ? "border border-accent/40 bg-accent/15 text-amber-900"
+                  : "border border-primary/20 bg-primary-soft text-primary-dark"
+              }`}
+            >
+              {badge}
+            </span>
+          </div>
+        )}
         <h3 className="text-base font-extrabold text-primary-dark group-hover:text-primary">
           {title}
         </h3>

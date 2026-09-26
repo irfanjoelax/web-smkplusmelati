@@ -62,7 +62,7 @@ export const metadata: Metadata = {
         url: absoluteUrl("/images/hero.jpg"),
         width: 1200,
         height: 630,
-        alt: `Logo ${SITE_NAME}`,
+        alt: `Kegiatan siswa ${SITE_NAME}`,
       },
     ],
   },

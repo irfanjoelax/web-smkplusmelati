@@ -128,14 +128,16 @@ export default async function WebsiteLandingPage() {
                   Kenali Sekolah
                 </Link>
               </div>
-              <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-t border-white/20 pt-6 text-sm font-bold text-white/75">
-                <span>2 pilihan jurusan</span><span>3 program pengembangan</span><span>7 kegiatan siswa</span>
+              <div className="mt-10 flex flex-wrap gap-3 border-t border-white/20 pt-6">
+                {["2 pilihan jurusan", "3 program pengembangan", "7 kegiatan siswa"].map((stat) => (
+                  <span key={stat} className="rounded-full border border-white/15 bg-white/8 px-4 py-1.5 text-sm font-bold text-white/80">{stat}</span>
+                ))}
               </div>
             </Reveal>
 
             <Reveal delay={120}>
               <div className="relative rounded-[2.25rem] border border-white/25 bg-white/12 p-3 shadow-2xl backdrop-blur-xl">
-                <div className="relative aspect-[4/4.3] overflow-hidden rounded-[1.7rem] bg-primary-dark">
+                <div className="relative aspect-[3/4] overflow-hidden rounded-[1.7rem] bg-primary-dark">
                   <LocalImage src="/images/website/hero.jpg" alt="Kegiatan siswa SMK Plus Melati Samarinda" width={900} height={960} className="h-full w-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary-darker/90 via-transparent to-transparent" />
                   <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/20 bg-primary-darker/55 p-4 backdrop-blur-md">
@@ -156,8 +158,8 @@ export default async function WebsiteLandingPage() {
             {benefits.map((item, index) => (
               <Reveal key={item.title} delay={index * 70}>
                 <ClayCard className="h-full p-6">
-                  <span className="text-sm font-extrabold text-accent-dark">{item.number}</span>
-                  <h3 className="mt-5 text-xl font-extrabold text-primary-darker">{item.title}</h3>
+                  <span className="text-3xl font-extrabold leading-none text-accent/30">{item.number}</span>
+                  <h3 className="mt-4 text-xl font-extrabold text-primary-darker">{item.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-foreground/70">{item.text}</p>
                 </ClayCard>
               </Reveal>
@@ -166,7 +168,7 @@ export default async function WebsiteLandingPage() {
         </div>
       </section>
 
-      <section className="px-4 pb-20 sm:px-6 lg:pb-24">
+      <section className="px-4 py-20 sm:px-6 lg:py-24">
         <div className="mx-auto max-w-6xl rounded-[2.5rem] bg-primary-darker px-5 py-14 shadow-2xl sm:px-10 lg:px-14">
           <Reveal><SectionTitle light eyebrow="Pilih Bidangmu" title="Pilih Jurusan & Masa Depanmu" text="Mulai dari hal yang kamu sukai, lalu bangun keterampilan yang dapat terus dikembangkan." /></Reveal>
           <div className="mt-12 grid gap-6 md:grid-cols-2">
@@ -194,7 +196,7 @@ export default async function WebsiteLandingPage() {
         </div>
       </section>
 
-      <section className="px-4 pb-20 sm:px-6 lg:pb-24">
+      <section className="px-4 py-20 sm:px-6 lg:py-24">
         <div className="mx-auto max-w-6xl">
           <Reveal><SectionTitle eyebrow="Pengalaman Siswa" title="Bukan Cuma Belajar di Kelas" text="Kegiatan terarah membantu siswa belajar mandiri, berkolaborasi, menjalankan kebiasaan baik, dan menghasilkan karya." /></Reveal>
           <div className="mt-12 grid gap-6 lg:grid-cols-3">
@@ -264,8 +266,13 @@ export default async function WebsiteLandingPage() {
             {achievement.items.slice(0, 2).map((item, index) => (
               <Reveal key={item.title} delay={index * 80}>
                 <ClayCard className="grid h-full overflow-hidden p-3 sm:grid-cols-[.8fr_1.2fr]">
-                  <div className="min-h-52 overflow-hidden rounded-[1.35rem] bg-primary-soft"><LocalImage src={item.image} alt={item.title} width={520} height={560} className="h-full w-full object-cover" /></div>
-                  <div className="p-5"><span className="clay-chip-gold">Sertifikasi</span><h3 className="mt-4 text-xl font-extrabold text-primary-darker">{item.title}</h3><p className="mt-3 text-sm leading-relaxed text-foreground/70">{item.description}</p><p className="mt-4 text-xs font-bold text-foreground/45">Detail tahun akan diperbarui dari data resmi sekolah.</p></div>
+                  <div className="aspect-[4/3] overflow-hidden rounded-[1.35rem] bg-primary-soft sm:aspect-auto sm:min-h-52"><LocalImage src={item.image} alt={item.title} width={520} height={560} className="h-full w-full object-cover" /></div>
+                  <div className="p-5">
+                    <span className="clay-chip-gold">Sertifikasi</span>
+                    <h3 className="mt-4 text-xl font-extrabold text-primary-darker">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-foreground/70">{item.description}</p>
+                    <p className="mt-4 text-xs font-bold text-foreground/45">Detail tahun akan diperbarui dari data resmi sekolah.</p>
+                  </div>
                 </ClayCard>
               </Reveal>
             ))}
@@ -274,7 +281,7 @@ export default async function WebsiteLandingPage() {
         </div>
       </section>
 
-      <section className="px-4 pb-20 sm:px-6 lg:pb-24">
+      <section className="px-4 py-20 sm:px-6 lg:py-24">
         <div className="mx-auto max-w-6xl">
           <Reveal><SectionTitle eyebrow="Minat & Bakat" title="Temukan Potensimu" text="Kembangkan keberanian, kreativitas, kerja sama, dan pengalaman baru di luar pembelajaran kelas." /></Reveal>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -298,8 +305,8 @@ export default async function WebsiteLandingPage() {
               <span className="clay-chip-blue">Cerita Alumni</span>
               <h2 className="mt-5 text-3xl font-extrabold">Perjalanan Mereka Akan Hadir di Sini</h2>
               <p className="mt-4 leading-relaxed text-white/75">Cerita alumni sedang dipersiapkan berdasarkan data resmi sekolah agar setiap nama, perjalanan, dan testimoni dapat ditampilkan dengan tepat.</p>
-              <div className="mt-6 grid grid-cols-3 gap-3" aria-label="Placeholder cerita alumni">
-                {["Profil", "Perjalanan", "Cerita"].map((label) => <div key={label} className="rounded-2xl border border-dashed border-white/25 bg-white/5 p-3 text-center text-xs font-bold text-white/55"><span className="mx-auto mb-2 block h-9 w-9 rounded-full bg-white/10" />{label}</div>)}
+              <div className="mt-8 grid grid-cols-3 gap-4" aria-label="Placeholder cerita alumni">
+                {[["Profil", "M12 12a4 4 0 100-8 4 4 0 000 8zm0 2c-4 0-8 2-8 4v2h16v-2c0-2-4-4-8-4z"], ["Perjalanan", "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"], ["Cerita", "M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"]].map(([label, path]) => <div key={label} className="rounded-2xl border border-dashed border-white/25 bg-white/5 p-5 text-center text-xs font-bold text-white/55"><svg className="mx-auto mb-3 h-8 w-8 text-white/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={path} /></svg>{label}</div>)}
               </div>
               <Link href="/alumni" className="mt-7 inline-flex font-extrabold text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">Kunjungi Halaman Alumni&nbsp; <Arrow /></Link>
             </div>
@@ -309,8 +316,8 @@ export default async function WebsiteLandingPage() {
               <span className="clay-chip-blue">Kehidupan Sekolah</span>
               <h2 className="mt-5 text-3xl font-extrabold">Kabar Terbaru Sedang Disiapkan</h2>
               <p className="mt-4 leading-relaxed text-white/75">Berita dan dokumentasi kegiatan terpilih akan ditampilkan setelah data resmi sekolah selesai diperbarui.</p>
-              <div className="mt-6 grid grid-cols-3 gap-3" aria-label="Placeholder berita sekolah">
-                {["Kegiatan", "Prestasi", "Informasi"].map((label) => <div key={label} className="overflow-hidden rounded-2xl border border-dashed border-white/25 bg-white/5 text-center text-xs font-bold text-white/55"><span className="block h-14 bg-white/10" /><span className="block p-3">{label}</span></div>)}
+              <div className="mt-8 grid grid-cols-3 gap-4" aria-label="Placeholder berita sekolah">
+                {[["Kegiatan", "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"], ["Prestasi", "M5 3l3.057-1.528a1 1 0 01.886 0L12 3l3.057-1.528a1 1 0 01.886 0L19 3v16l-3.057 1.528a1 1 0 01-.886 0L12 19l-3.057 1.528a1 1 0 01-.886 0L5 19V3z"], ["Informasi", "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2"]].map(([label, path]) => <div key={label} className="overflow-hidden rounded-2xl border border-dashed border-white/25 bg-white/5 text-center text-xs font-bold text-white/55"><span className="flex h-20 items-center justify-center bg-white/8"><svg className="h-8 w-8 text-white/25" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={path} /></svg></span><span className="block p-3">{label}</span></div>)}
               </div>
               <Link href="/berita" className="mt-7 inline-flex font-extrabold text-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent">Lihat Semua Berita&nbsp; <Arrow /></Link>
             </div>
@@ -326,7 +333,7 @@ export default async function WebsiteLandingPage() {
               <div className="relative grid gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
                 <div><span className="clay-chip-gold">Kesempatanmu</span><h2 className="mt-5 text-3xl font-extrabold leading-tight text-primary-darker sm:text-4xl">Jangan Sampai Kesempatan Ini Kamu Lewatkan</h2><p className="mt-5 max-w-2xl leading-relaxed text-foreground/70">Masa SMK hanya berlangsung sekali. Memilih sekolah berarti memilih lingkungan tempat kamu belajar, berkembang, menemukan potensi, mencoba berbagai kegiatan, dan mulai menentukan arah masa depan.</p></div>
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                  {["Belajar di jurusan pilihan", "Mengikuti program pengembangan", "Mencoba kegiatan dan organisasi", "Mengasah keterampilan dan kemandirian"].map((item) => <div key={item} className="clay-inset flex items-center gap-3 p-4 text-sm font-bold text-primary-darker"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-primary-darker">✓</span>{item}</div>)}
+                  {["Belajar di jurusan pilihan", "Mengikuti program pengembangan", "Mencoba kegiatan dan organisasi", "Mengasah keterampilan dan kemandirian"].map((item) => <div key={item} className="clay-inset flex items-center gap-3 p-4 text-sm font-bold text-primary-darker"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-primary-darker"><svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg></span>{item}</div>)}
                 </div>
               </div>
             </ClayCard>
@@ -334,9 +341,9 @@ export default async function WebsiteLandingPage() {
         </div>
       </section>
 
-      <section className="px-4 pb-20 sm:px-6 lg:pb-24">
+      <section className="px-4 py-20 sm:px-6 lg:py-24">
         <Reveal>
-          <ClayCard variant="blue" className="relative mx-auto max-w-6xl overflow-hidden px-6 py-16 text-center sm:px-10">
+          <ClayCard variant="blue" className="relative mx-auto max-w-6xl overflow-hidden px-6 py-20 text-center sm:px-12 sm:py-24">
             <span className="clay-orb -left-20 -top-20 h-56 w-56 opacity-65" /><span className="clay-orb-ghost -bottom-20 -right-16 h-64 w-64" />
             <div className="relative mx-auto max-w-3xl">
               <span className="clay-chip-blue">SPMB 2026/2027</span>
@@ -351,14 +358,42 @@ export default async function WebsiteLandingPage() {
         </Reveal>
       </section>
 
-      <footer className="bg-primary-darker px-4 pb-8 pt-16 text-white sm:px-6">
+      <footer className="bg-primary-darker px-4 pb-10 pt-20 text-white sm:px-6">
         <div className="mx-auto max-w-6xl">
-          <div className="grid gap-10 border-b border-white/15 pb-12 lg:grid-cols-[1.15fr_.85fr_.7fr]">
-            <div><div className="flex items-center gap-3"><span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white p-1.5"><Image src="/logo melati.png" alt="Logo SMK Plus Melati Samarinda" width={52} height={52} className="h-full w-full object-contain" /></span><div><p className="font-extrabold">SMK Plus Melati Samarinda</p><p className="text-sm text-accent">{CONTACT.tagline}</p></div></div><p className="mt-5 max-w-md text-sm leading-relaxed text-white/65">Sekolah vokasi untuk belajar keterampilan, membangun karakter, dan mulai menyiapkan masa depan.</p></div>
-            <div><h2 className="font-extrabold text-accent">Hubungi Kami</h2><address className="mt-4 space-y-3 text-sm not-italic leading-relaxed text-white/70"><p>{CONTACT.address}</p><p><a className="hover:text-accent" href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp {CONTACT.phone}</a></p><p><a className="hover:text-accent" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></p><p><a className="hover:text-accent" href={mapUrl} target="_blank" rel="noopener noreferrer">Buka lokasi di Google Maps <Arrow /></a></p></address></div>
-            <div><h2 className="font-extrabold text-accent">Terhubung</h2><div className="mt-4 flex flex-col items-start gap-3 text-sm text-white/70">{SOCIALS.map((social) => <a key={social.label} href={social.url} target="_blank" rel="noopener noreferrer" className="hover:text-accent">{social.label} <Arrow /></a>)}<Link href="/" className="hover:text-accent">Website Utama <Arrow /></Link></div></div>
+          <div className="grid gap-12 border-b border-white/15 pb-14 sm:grid-cols-2 lg:grid-cols-[1.15fr_.85fr_.7fr]">
+            <div className="sm:col-span-2 lg:col-span-1">
+              <div className="flex items-center gap-3">
+                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white p-1.5">
+                  <Image src="/logo melati.png" alt="Logo SMK Plus Melati Samarinda" width={52} height={52} className="h-full w-full object-contain" />
+                </span>
+                <div>
+                  <p className="font-extrabold">SMK Plus Melati Samarinda</p>
+                  <p className="text-sm text-accent">{CONTACT.tagline}</p>
+                </div>
+              </div>
+              <p className="mt-5 max-w-md text-sm leading-relaxed text-white/65">Sekolah vokasi untuk belajar keterampilan, membangun karakter, dan mulai menyiapkan masa depan.</p>
+            </div>
+            <div>
+              <h2 className="font-extrabold text-accent">Hubungi Kami</h2>
+              <address className="mt-4 space-y-3 text-sm not-italic leading-relaxed text-white/70">
+                <p>{CONTACT.address}</p>
+                <p><a className="transition-colors hover:text-accent" href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer">WhatsApp {CONTACT.phone}</a></p>
+                <p><a className="transition-colors hover:text-accent" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></p>
+                <p><a className="transition-colors hover:text-accent" href={mapUrl} target="_blank" rel="noopener noreferrer">Buka lokasi di Google Maps <Arrow /></a></p>
+              </address>
+            </div>
+            <div>
+              <h2 className="font-extrabold text-accent">Terhubung</h2>
+              <div className="mt-4 flex flex-col items-start gap-3 text-sm text-white/70">
+                {SOCIALS.map((social) => <a key={social.label} href={social.url} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-accent">{social.label} <Arrow /></a>)}
+                <Link href="/" className="transition-colors hover:text-accent">Website Utama <Arrow /></Link>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col gap-2 pt-7 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between"><p>© {new Date().getFullYear()} SMK Plus Melati Samarinda.</p><p>SPMB 2026/2027</p></div>
+          <div className="flex flex-col gap-2 pt-8 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
+            <p>© {new Date().getFullYear()} SMK Plus Melati Samarinda.</p>
+            <p>SPMB 2026/2027</p>
+          </div>
         </div>
       </footer>
     </main>

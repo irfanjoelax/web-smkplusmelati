@@ -22,12 +22,14 @@ export const metadata: Metadata = {
     title: "Berita Sekolah | SMK Plus Melati Samarinda",
     description:
       "Informasi terbaru seputar kegiatan, prestasi, dan pengumuman dari SMK Plus Melati Samarinda.",
+    images: ["/images/hero.jpg"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Berita Sekolah | SMK Plus Melati Samarinda",
     description:
       "Informasi terbaru seputar kegiatan, prestasi, dan pengumuman dari SMK Plus Melati Samarinda.",
+    images: ["/images/hero.jpg"],
   },
 };
 
@@ -74,7 +76,7 @@ export default async function BeritaPage() {
               <div className="grid gap-10 lg:grid-cols-[minmax(0,1.55fr)_minmax(320px,0.85fr)] lg:gap-12">
                 <article className="group">
                   <Link href={`/berita/${headline.slug}`} className="block">
-                    <div className="aspect-[16/10] overflow-hidden bg-primary-soft/40">
+                    <div className="aspect-[16/10] overflow-hidden rounded-[1.75rem] border border-primary/10 bg-primary-soft/40">
                       <LocalImage
                         src={headline.image}
                         alt={headline.title}
@@ -100,7 +102,6 @@ export default async function BeritaPage() {
                       </p>
                       <span className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-primary">
                         Baca Selengkapnya
-                        <span aria-hidden="true">→</span>
                       </span>
                     </div>
                   </Link>
@@ -113,7 +114,7 @@ export default async function BeritaPage() {
                         href={`/berita/${item.slug}`}
                         className="grid grid-cols-[112px_minmax(0,1fr)] gap-5 sm:grid-cols-[150px_minmax(0,1fr)] lg:grid-cols-[120px_minmax(0,1fr)]"
                       >
-                        <div className="aspect-[4/3] overflow-hidden bg-primary-soft/40">
+                        <div className="aspect-[4/3] overflow-hidden rounded-xl border border-primary/10 bg-primary-soft/40">
                           <LocalImage
                             src={item.image}
                             alt={item.title}
@@ -166,7 +167,7 @@ export default async function BeritaPage() {
                   href="/berita/semua-berita"
                   className="text-sm font-extrabold text-primary transition-colors hover:text-primary-dark"
                 >
-                  Lihat Semua Berita →
+                  Lihat Semua Berita
                 </Link>
               </div>
 
@@ -174,7 +175,7 @@ export default async function BeritaPage() {
                 {otherNews.map((item) => (
                   <article key={item.slug} className="group">
                     <Link href={`/berita/${item.slug}`} className="block h-full">
-                      <div className="aspect-[4/3] overflow-hidden bg-white">
+                      <div className="aspect-[4/3] overflow-hidden rounded-[1.25rem] border border-primary/10 bg-white">
                         <LocalImage
                           src={item.image}
                           alt={item.title}
@@ -196,7 +197,6 @@ export default async function BeritaPage() {
                         </h3>
                         <span className="mt-4 inline-flex items-center gap-2 border-b border-primary/25 pb-1 text-sm font-bold text-primary">
                           Baca Selengkapnya
-                          <span aria-hidden="true">→</span>
                         </span>
                       </div>
                     </Link>

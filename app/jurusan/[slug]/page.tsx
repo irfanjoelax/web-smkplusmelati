@@ -5,6 +5,7 @@ import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
 import LocalImage from "@/app/components/LocalImage";
+import PracticeGallery from "@/app/components/PracticeGallery";
 import Reveal from "@/app/components/Reveal";
 import { getJurusanData } from "@/app/lib/jurusan";
 import { breadcrumbSchema, programSchema } from "@/app/lib/seo";
@@ -35,11 +36,13 @@ export async function generateMetadata({
       url: `/jurusan/${item.id}`,
       title: `Jurusan ${item.name} | SMK Plus Melati Samarinda`,
       description: `Jurusan ${item.fullName} SMK Plus Melati Samarinda.`,
+      images: [item.image || "/images/hero.jpg"],
     },
     twitter: {
       card: "summary_large_image",
       title: `Jurusan ${item.name} | SMK Plus Melati Samarinda`,
       description: `Jurusan ${item.fullName} SMK Plus Melati Samarinda.`,
+      images: [item.image || "/images/hero.jpg"],
     },
   };
 }
@@ -64,10 +67,7 @@ export default async function JurusanPage({
     <>
       <Header />
       <JsonLd
-        data={breadcrumbSchema([
-          { name: "Jurusan", path: `/jurusan/${item.id}` },
-          { name: item.name, path: `/jurusan/${item.id}` },
-        ])}
+        data={breadcrumbSchema([{ name: item.name, path: `/jurusan/${item.id}` }])}
       />
       <JsonLd
         data={programSchema({
@@ -141,6 +141,56 @@ export default async function JurusanPage({
             </Reveal>
           </div>
         </section>
+
+        {/* ===== GALERI KEGIATAN PRAKTIK ===== */}
+        {(() => {
+          const practiceList =
+            item.practiceImages && item.practiceImages.length > 0
+              ? item.practiceImages
+              : [
+                  { image: `/images/jurusan/${item.id}/praktek-1.jpg`, title: "Kegiatan Praktik 1" },
+                  { image: `/images/jurusan/${item.id}/praktek-2.jpg`, title: "Kegiatan Praktik 2" },
+                  { image: `/images/jurusan/${item.id}/praktek-3.jpg`, title: "Kegiatan Praktik 3" },
+                  { image: `/images/jurusan/${item.id}/praktek-4.jpg`, title: "Kegiatan Praktik 4" },
+                ];
+          return (
+            <section className="px-4 pb-16">
+              <div className="mx-auto max-w-6xl">
+                <Reveal>
+                  <PracticeGallery
+                    title={`Kegiatan Praktik ${item.name}`}
+                    subtitle={`Dokumentasi suasana praktik dan pembelajaran kejuruan siswa ${item.fullName}.`}
+                    totalItems={practiceList.length}
+                  >
+                    {practiceList.map((activity, idx) => (
+                      <div
+                        key={`${activity.image}-${idx}`}
+                        className="w-full shrink-0 snap-start sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.834rem)]"
+                      >
+                        <ClayCard hover className="h-full overflow-hidden p-3">
+                          <div className="aspect-[4/3] overflow-hidden rounded-[1.4rem] bg-primary-soft/60">
+                            <LocalImage
+                              src={activity.image}
+                              alt={`${activity.title} - ${item.name}`}
+                              width={600}
+                              height={450}
+                              className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                            />
+                          </div>
+                          <div className="p-3 text-center">
+                            <p className="text-sm font-extrabold text-primary-dark">
+                              {activity.title}
+                            </p>
+                          </div>
+                        </ClayCard>
+                      </div>
+                    ))}
+                  </PracticeGallery>
+                </Reveal>
+              </div>
+            </section>
+          );
+        })()}
 
         <section className="px-4 pb-24">
           <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
