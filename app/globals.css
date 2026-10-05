@@ -434,3 +434,98 @@
     animation: none;
   }
 }
+
+/* =========================================================
+   FUTURISTIC & CYBER ANIMATIONS
+   ========================================================= */
+@keyframes cyber-scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(1000%);
+  }
+}
+
+@keyframes neon-pulse {
+  0%, 100% {
+    opacity: 0.4;
+    filter: drop-shadow(0 0 12px rgba(63, 151, 216, 0.6));
+  }
+  50% {
+    opacity: 0.85;
+    filter: drop-shadow(0 0 24px rgba(245, 179, 1, 0.8));
+  }
+}
+
+@keyframes grid-drift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 40px;
+  }
+}
+
+@keyframes holo-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 4s ease-in-out infinite;
+}
+
+.cyber-grid-bg {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  animation: grid-drift 20s linear infinite;
+}
+
+.holo-card-glow {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.holo-card-glow:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 
+    0 20px 40px -15px rgba(16, 112, 176, 0.4),
+    0 0 20px rgba(63, 151, 216, 0.3),
+    inset 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+.hud-border {
+  position: relative;
+}
+
+.hud-border::before,
+.hud-border::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--accent);
+  pointer-events: none;
+}
+
+.hud-border::before {
+  top: -2px;
+  left: -2px;
+  border-top: 2px solid;
+  border-left: 2px solid;
+}
+
+.hud-border::after {
+  bottom: -2px;
+  right: -2px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+}
+

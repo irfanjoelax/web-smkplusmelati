@@ -122,7 +122,7 @@ export default async function Home() {
                   <Link href="/spmb" className="clay-btn clay-btn-accent">
                     SPMB 2026
                   </Link>
-                  <Link href="/hubungi-kami" className="clay-btn clay-btn-light">
+                  <Link href="/profil" className="clay-btn clay-btn-light">
                     Jelajah Sekolah
                   </Link>
                 </div>

@@ -33,5 +33,10 @@
     "name": "halo",
     "role": "ini",
     "image": "/uploads/1789352267914-494acd9dd505.png"
+  },
+  {
+    "name": "halo",
+    "role": "",
+    "image": ""
   }
 ]

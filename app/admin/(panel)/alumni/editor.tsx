@@ -48,7 +48,7 @@ export default function AlumniEditor({
   const [page, setPage] = useState(1);
   const [testimonialPageSize, setTestimonialPageSize] = useState(5);
   const [testimonialPage, setTestimonialPage] = useState(1);
-  const [testimonialDraft, setTestimonialDraft] = useState<string | null>(null);
+  const [testimonialDraft, setTestimonialDraft] = useState<{ text: string; name: string } | null>(null);
   const [editingTestimonialIdx, setEditingTestimonialIdx] = useState<number | null>(null);
 
   function addNew() {
@@ -109,7 +109,7 @@ export default function AlumniEditor({
 
   function editTestimonial(index: number) {
     setEditingTestimonialIdx(index);
-    setTestimonialDraft(testimonials[index].text);
+    setTestimonialDraft({ text: testimonials[index].text, name: testimonials[index].name ?? "" });
   }
 
   function cancelTestimonialEdit() {
@@ -118,11 +118,13 @@ export default function AlumniEditor({
   }
 
   async function saveTestimonial() {
-    const text = testimonialDraft?.trim() ?? "";
+    const text = testimonialDraft?.text.trim() ?? "";
+    const name = testimonialDraft?.name.trim() ?? "";
     if (!text) throw new Error("Isi testimoni wajib diisi.");
+    const entry: TestimoniOrtuItem = name ? { text, name } : { text };
     const next = editingTestimonialIdx === null
-      ? [...testimonials, { text }]
-      : testimonials.map((item, index) => index === editingTestimonialIdx ? { text } : item);
+      ? [...testimonials, entry]
+      : testimonials.map((item, index) => index === editingTestimonialIdx ? entry : item);
     await saveTestimonials(next);
     setTestimonials(tagPersistedItems(next));
     if (editingTestimonialIdx === null) {
@@ -154,7 +156,7 @@ export default function AlumniEditor({
           action={
             <div className="flex items-center gap-2">
               <button type="button" onClick={cancelEdit} className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50">
-                ← Kembali
+                Kembali
               </button>
               <SaveButton onSave={saveDraft} />
             </div>
@@ -217,20 +219,30 @@ export default function AlumniEditor({
           action={
             <div className="flex items-center gap-2">
               <button type="button" onClick={cancelTestimonialEdit} className="rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50">
-                ← Kembali
+                Kembali
               </button>
               <SaveButton onSave={saveTestimonial} />
             </div>
           }
         >
-          <Field label="Isi Testimoni">
-            <Textarea
-              value={testimonialDraft}
-              maxLength={500}
-              placeholder="Tulis testimoni orang tua"
-              onChange={(event) => setTestimonialDraft(event.target.value)}
+          <div className="space-y-4">
+          <Field label="Nama Orang Tua (opsional)">
+            <Input
+              value={testimonialDraft.name}
+              maxLength={100}
+              placeholder="Nama orang tua"
+              onChange={(event) => setTestimonialDraft({ ...testimonialDraft, name: event.target.value })}
             />
           </Field>
+          <Field label="Isi Testimoni">
+            <Textarea
+              value={testimonialDraft.text}
+              maxLength={500}
+              placeholder="Tulis testimoni orang tua"
+              onChange={(event) => setTestimonialDraft({ ...testimonialDraft, text: event.target.value })}
+            />
+          </Field>
+          </div>
         </Panel>
       </div>
     );
@@ -334,7 +346,7 @@ export default function AlumniEditor({
             >
               {PAGE_SIZE_OPTIONS.map((option) => <option key={option} value={option}>{option}</option>)}
             </select>
-            <AddButton onClick={() => setTestimonialDraft("")}>Tambah</AddButton>
+            <AddButton onClick={() => setTestimonialDraft({ text: "", name: "" })}>Tambah</AddButton>
           </div>
         }
       >
@@ -348,6 +360,9 @@ export default function AlumniEditor({
               <div key={`${item.text}-${index}`} className="flex items-start gap-4 rounded-xl border border-slate-200 bg-white p-4 transition hover:border-blue-200 hover:shadow-sm">
                 <p className="min-w-0 flex-1 whitespace-pre-wrap [overflow-wrap:anywhere] text-sm leading-relaxed text-slate-700">
                   {item.text}
+                  {item.name && (
+                    <span className="mt-1 block text-xs font-semibold text-yellow-600">{item.name}</span>
+                  )}
                 </p>
                 <div className="flex shrink-0 gap-1">
                   <IconBtn label={`Edit testimoni ${index + 1}`} onClick={() => editTestimonial(index)}><EditIcon className="h-4 w-4" /></IconBtn>

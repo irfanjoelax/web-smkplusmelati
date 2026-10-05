@@ -17,6 +17,7 @@ export type AlumniItem = {
 
 export type TestimoniOrtuItem = {
   text: string;
+  name?: string;
 };
 
 export type VisiMisi = {

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import ClayCard from "@/app/components/ClayCard";
+import CtaSection from "@/app/components/CtaSection";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
@@ -172,6 +173,8 @@ export default async function ProfilPage() {
             </Reveal>
           </div>
         </section>
+
+        <CtaSection />
       </main>
       <Footer />
     </>

@@ -27,6 +27,11 @@ export default function TestimonialMarquee({
             <blockquote className="whitespace-pre-wrap [overflow-wrap:anywhere] text-sm leading-relaxed text-white/90">
               {item.text}
             </blockquote>
+            {item.name && (
+              <figcaption className="mt-3 text-xs font-semibold text-yellow-300">
+                {item.name}
+              </figcaption>
+            )}
           </figure>
         ))}
       </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ClayCard from "@/app/components/ClayCard";
+import CtaSection from "@/app/components/CtaSection";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
@@ -218,6 +219,11 @@ export default async function JurusanPage({
             </Reveal>
           </div>
         </section>
+
+        <CtaSection
+          title={`Tertarik Masuk Jurusan ${item.name}?`}
+          description={`Daftarkan dirimu di SMK Plus Melati sekarang dan kembangkan keahlian di bidang ${item.fullName}.`}
+        />
       </main>
       <Footer />
     </>

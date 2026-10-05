@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import CtaSection from "@/app/components/CtaSection";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import ImageCard from "@/app/components/ImageCard";
@@ -68,6 +69,11 @@ export default async function ProgramPage({ params }: { params: Promise<{ slug: 
             </div>
           </section>
         )}
+
+        <CtaSection
+          title={`Tertarik dengan ${item.title}?`}
+          description="Bergabunglah bersama SMK Plus Melati Samarinda dan raih keunggulan kompetensi di era modern."
+        />
       </main>
       <Footer />
     </>

@@ -1,37 +1,37 @@
 [
   {
-    "action": "edit",
-    "collection": "berita",
-    "label": "Edit berita \"Juara Lomba Pidato Bahasa Inggris\"",
-    "id": "4a55f030-b170-4cf1-8436-f6879c7bfb27",
-    "timestamp": "2026-09-26T09:23:30.927Z"
+    "action": "add",
+    "collection": "guru",
+    "label": "Tambah guru \"halo\"",
+    "id": "845bf739-58a3-4c5f-a68a-1eafbbf33884",
+    "timestamp": "2026-10-01T02:06:55.452Z"
   },
   {
     "action": "edit",
-    "collection": "jurusan",
-    "label": "Edit jurusan \"TJKT\"",
-    "id": "14fcf609-a0d7-464f-aee4-08c75e2f53c4",
-    "timestamp": "2026-09-26T07:45:11.355Z"
+    "collection": "testimoniOrtu",
+    "label": "Edit testimoni orang tua \"yanto\"",
+    "id": "b7c25bb6-20d9-41d2-9d85-74ea5a0d48df",
+    "timestamp": "2026-09-28T12:28:55.515Z"
   },
   {
     "action": "edit",
-    "collection": "jurusan",
-    "label": "Edit jurusan \"TJKT\"",
-    "id": "8fe96c0a-2b6c-4ebb-94be-6c25c201c298",
-    "timestamp": "2026-09-26T07:32:56.285Z"
+    "collection": "testimoniOrtu",
+    "label": "Edit testimoni orang tua \"yanti\"",
+    "id": "45bff844-4472-4805-b3fa-35b0e9d2e173",
+    "timestamp": "2026-09-28T12:13:29.839Z"
   },
   {
     "action": "edit",
-    "collection": "jurusan",
-    "label": "Edit jurusan \"TJKT\"",
-    "id": "91ae3931-07c6-4da7-8f42-0175af650322",
-    "timestamp": "2026-09-26T07:32:19.255Z"
+    "collection": "testimoniOrtu",
+    "label": "Edit testimoni orang tua \"yuno\"",
+    "id": "1773664d-d1fe-4369-90a9-94f431c6f06f",
+    "timestamp": "2026-09-28T12:13:22.356Z"
   },
   {
     "action": "edit",
-    "collection": "jurusan",
-    "label": "Edit jurusan \"TJKT\"",
-    "id": "7a781f60-9abf-4994-a0fd-c0ca554ef455",
-    "timestamp": "2026-09-26T07:32:03.823Z"
+    "collection": "testimoniOrtu",
+    "label": "Edit testimoni orang tua \"yanto\"",
+    "id": "b4deb69a-08a1-42e0-89d6-7319a690da01",
+    "timestamp": "2026-09-28T12:13:14.060Z"
   }
 ]

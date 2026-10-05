@@ -10,7 +10,8 @@ export const CONTACT = {
   )}`,
   email: "smkmelatismd@gmail.com",
   ppdbUrl: "https://ppdb.smkplusmelati.sch.id",
-  googleFormUrl: "https://forms.gle/5TurwL5h66Lp19Tc6",
+  googleFormUrl:
+    "https://docs.google.com/forms/d/e/1FAIpQLSdBQjKgIQOVRJRFws5RsvtJjaqiFoQ8dSXXnCXqybBdlRgsHQ/viewform?usp=dialog",
   googleFormEmbedUrl:
     "https://docs.google.com/forms/d/e/1FAIpQLSdBQjKgIQOVRJRFws5RsvtJjaqiFoQ8dSXXnCXqybBdlRgsHQ/viewform?embedded=true",
 };
