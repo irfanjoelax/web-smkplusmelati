@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Sekolah SMK swasta keunggulan di Samarinda Seberang, Kalimantan Timur dengan jurusan TJKT dan Kuliner. SMK Wirausaha Muda.",
+    "Sekolah SMK swasta keunggulan di Samarinda Seberang, Kalimantan Timur dengan jurusan TJKT dan Kuliner. CREATE THE CREATOR.",
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME }],
   keywords: [

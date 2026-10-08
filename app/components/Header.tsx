@@ -88,7 +88,7 @@ export default function Header() {
 
   const isChildActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
-  const overlaysHero = pathname === "/";
+  const overlaysHero = pathname === "/" || pathname === "/profil";
 
   return (
     <header
@@ -111,8 +111,8 @@ export default function Header() {
             <span className="block text-sm font-extrabold text-primary-dark">
               SMK Plus Melati
             </span>
-            <span className="block text-[0.7rem] font-semibold text-primary/70">
-              SMK Wirausaha Muda
+            <span className="block text-[0.7rem] font-bold text-accent">
+              The Center of Future Digital Entrepreneurs
             </span>
           </span>
         </Link>

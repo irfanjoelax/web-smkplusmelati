@@ -1,39 +1,51 @@
 [
   {
-    "title": "PodSchool Zaman Now",
-    "desc": "Podcast milik SMK Plus Melati sebagai sarana siswa menggali informasi, dapat disaksikan di YouTube, Instagram, dan Facebook.",
-    "image": "/images/podschool.jpg"
+    "title": "Renang",
+    "desc": "Ekstrakurikuler Renang melatih keterampilan berenang, kebugaran, disiplin, dan keselamatan siswa di air",
+    "image": "/uploads/1791250183726-2ebaa5f553a6.jpg"
   },
   {
-    "title": "Konten Kreator",
-    "desc": "Tim kreator yang memanfaatkan teknologi dengan unsur pendidikan, hiburan, komedi, dan motivasi.",
-    "image": "/images/konten-kreator.jpg"
+    "title": "Barista",
+    "desc": "Ekstrakurikuler Barista melatih keterampilan membuat dan menyajikan berbagai jenis minuman serta meningkatkan kreativitas dan pelayanan",
+    "image": "/uploads/1791250259918-4241a475160f.jpg"
   },
   {
     "title": "English Club",
     "desc": "Melatih keberanian siswa berbahasa Inggris di luar jam pembelajaran.",
-    "image": "/images/english-club.jpg",
+    "image": "/uploads/1791250043805-c7660a653455.jpg",
     "required": true
   },
   {
-    "title": "Desain Grafis",
-    "desc": "Wadah berkreasi membuat karya rancangan gambar untuk kepentingan percetakan dan informasi.",
-    "image": "/images/desain-grafis.png"
+    "title": "Seni tari",
+    "desc": "Ekstrakurikuler Seni Tari melatih kreativitas, ekspresi, dan keterampilan siswa dalam berbagai jenis tarian",
+    "image": "/uploads/1791250283389-4c36dcbd3c6b.jpg"
   },
   {
     "title": "Pramuka",
     "desc": "Melatih kemandirian, kedisiplinan, mental, serta fisik melalui metode belajar interaktif progresif.",
-    "image": "/images/pramuka.jpg",
+    "image": "/uploads/1791250064177-7f530e374cdb.jpg",
     "required": true
   },
   {
-    "title": "Seni Vocal",
-    "desc": "Mengembangkan bakat vokal: beatbox, acapella, pernapasan, intonasi, dan artikulasi.",
-    "image": "/images/seni-vocal.png"
+    "title": "Coding club",
+    "desc": "Ekstrakurikuler Coding Club melatih kemampuan pemrograman, logika, kreativitas, dan pemecahan masalah",
+    "image": "/uploads/1791250342629-6a0e482b8a2e.jpg"
   },
   {
-    "title": "E-Sporttttt",
-    "desc": "Olahraga elektronik berbasis game kompetitif yang melatih sistem berpikir otak.",
-    "image": "/images/e-sport.png"
+    "title": "Conten creator",
+    "desc": "Ekstrakurikuler Content Creator melatih kreativitas siswa dalam membuat, mengedit, dan mengembangkan konten digital yang menarik dan informatif",
+    "image": "/uploads/1791250407275-af0b5dd2c6f9.jpg"
+  },
+  {
+    "title": "Seni musik",
+    "desc": "Ekstrakurikuler Seni Musik melatih keterampilan bermusik, kreativitas, ekspresi, dan kemampuan bekerja sama dalam bermusik",
+    "image": "/uploads/1791250420223-105b56f688cc.jpg",
+    "required": false
+  },
+  {
+    "title": "Tahfidz",
+    "desc": "Ekstrakurikuler Seni Musik melatih keterampilan bermusik, kreativitas, ekspresi, dan kemampuan bekerja sama dalam bermusik",
+    "image": "/uploads/1791250452030-853d51feda0f.jpg",
+    "required": false
   }
 ]

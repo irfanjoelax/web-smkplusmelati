@@ -29,7 +29,7 @@ export default function ProgramEditor({ initial }: { initial: ProgramData }) {
   const [activeId, setActiveId] = useState(initial[0]?.id ?? "");
   const [showAdd, setShowAdd] = useState(false);
   const [newTitle, setNewTitle] = useState("");
-  const [newSummary, setNewSummary] = useState("");
+  const [newDescription, setNewDescription] = useState("");
   const [addError, setAddError] = useState("");
   const [confirmProgram, setConfirmProgram] = useState(false);
   const [confirmCard, setConfirmCard] = useState<number | null>(null);
@@ -46,22 +46,21 @@ export default function ProgramEditor({ initial }: { initial: ProgramData }) {
   function closeAdd() {
     setShowAdd(false);
     setNewTitle("");
-    setNewSummary("");
+    setNewDescription("");
     setAddError("");
   }
 
   async function addProgram() {
     const title = newTitle.trim();
-    const summary = newSummary.trim();
+    const description = newDescription.trim();
     const id = makeId(title.replace(/^program\s+/i, ""));
-    if (!title || !summary) return setAddError("Nama dan deskripsi singkat wajib diisi.");
+    if (!title || !description) return setAddError("Nama dan deskripsi halaman wajib diisi.");
     if (!id) return setAddError("Nama program harus memiliki huruf atau angka.");
     if (items.some((item) => item.id === id)) return setAddError("Nama program sudah digunakan.");
     const next: ProgramEntity = {
       id,
       title: /^program\s/i.test(title) ? title : `Program ${title}`,
-      summary,
-      description: summary,
+      description,
       icon: "training",
       cards: [],
       section: { type: "list", title: "Kegiatan", items: [] },
@@ -144,7 +143,7 @@ export default function ProgramEditor({ initial }: { initial: ProgramData }) {
             <p className="mt-1 text-sm text-slate-500">Alamat halaman dibuat otomatis dari nama program.</p>
             <div className="mt-5 space-y-4">
               <Field label="Nama Program"><Input autoFocus value={newTitle} placeholder="Contoh: Magang Industri" onChange={(event) => { setNewTitle(event.target.value); setAddError(""); }} /></Field>
-              <Field label="Deskripsi Singkat"><Textarea value={newSummary} placeholder="Ringkasan program untuk halaman utama" onChange={(event) => { setNewSummary(event.target.value); setAddError(""); }} /></Field>
+              <Field label="Deskripsi Halaman"><Textarea value={newDescription} placeholder="Deskripsi program untuk halaman utama dan halaman detail" onChange={(event) => { setNewDescription(event.target.value); setAddError(""); }} /></Field>
             </div>
             {addError && <p className="mt-4 rounded-xl bg-red-50 px-3 py-2 text-sm font-semibold text-red-600">{addError}</p>}
             <div className="mt-6 flex justify-end gap-2"><Button type="button" variant="ghost" onClick={closeAdd}>Batal</Button><Button type="submit">Tambah</Button></div>
@@ -164,7 +163,6 @@ export default function ProgramEditor({ initial }: { initial: ProgramData }) {
           <Panel title={current.title} description={`Halaman publik: /program-${current.id}`} action={<div className="flex gap-2">{items.length > 1 && <Button variant="danger" onClick={() => setConfirmProgram(true)}>Hapus Program</Button>}<SaveButton onSave={save} /></div>}>
             <div className="space-y-4">
               <Field label="Nama Program"><Input value={current.title} onChange={(event) => updateCurrent({ ...current, title: event.target.value })} /></Field>
-              <Field label="Deskripsi Singkat"><Textarea value={current.summary} onChange={(event) => updateCurrent({ ...current, summary: event.target.value })} /></Field>
               <Field label="Deskripsi Halaman"><Textarea value={current.description} onChange={(event) => updateCurrent({ ...current, description: event.target.value })} /></Field>
             </div>
           </Panel>

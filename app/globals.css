@@ -37,6 +37,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     background-color: var(--background);
     background-image:
@@ -50,6 +54,16 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  [id] {
+    scroll-margin-top: 1.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   ::selection {
     background-color: var(--accent);
     color: var(--primary-darker);
@@ -57,6 +71,69 @@
 }
 
 @layer components {
+  /* website landing content: tighter editorial measure than global pages */
+  #top .max-w-7xl {
+    max-width: 72rem;
+  }
+
+  /* website palette matches blue shield in SMK Plus Melati logo */
+  #top {
+    --primary: #1f75b9;
+    --primary-dark: #1769a9;
+    --primary-darker: #0d4f86;
+    --primary-light: #3d91cf;
+    --primary-lighter: #83bce2;
+    --primary-soft: #e5f2fc;
+  }
+
+  #top footer > div > div > div:first-child::before {
+    content: "";
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    margin: 0 0.75rem 0.25rem 0;
+    border-radius: 0.75rem;
+    vertical-align: middle;
+    background: #fff url("/logo melati.png") center / contain no-repeat;
+  }
+
+  #top footer a[href="/"] {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 700;
+  }
+
+  #visi-misi > div > article {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #visi-misi > div > article > .relative {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  #visi-misi > div > article a.clay-btn {
+    margin-top: auto;
+  }
+
+  #keunggulan article > div.flex > span.rounded-full {
+    display: none;
+  }
+
+  #beasiswa article > p:first-child {
+    display: none;
+  }
+
+  #beasiswa article:last-child .grid > div {
+    text-align: right;
+  }
+
+  /* Building card uses text and layout only; no decorative house icon. */
+  #visi-misi article:last-child [aria-hidden="true"] {
+    display: none !important;
+  }
+
   /* =========================================================
      CLAY CARD — soft white extruded
      ========================================================= */
@@ -528,4 +605,3 @@
   border-bottom: 2px solid;
   border-right: 2px solid;
 }
-

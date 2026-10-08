@@ -30,14 +30,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "id_ID",
     url: "/",
-    title: "SMK Plus Melati Samarinda — SMK Wirausaha Muda",
+    title: "SMK Plus Melati Samarinda — CREATE THE CREATOR",
     description:
       "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TJKT dan Kuliner, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
     images: ["/images/hero.jpg"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SMK Plus Melati Samarinda — SMK Wirausaha Muda",
+    title: "SMK Plus Melati Samarinda — CREATE THE CREATOR",
     description:
       "Sekolah SMK swasta keunggulan di Samarinda Seberang. Jurusan TJKT dan Kuliner, program asrama, keagamaan, prestasi siswa, dan SPMB 2026.",
     images: ["/images/hero.jpg"],
@@ -71,7 +71,7 @@ export default async function Home() {
     ...programData.map((item) => ({
       id: item.id,
       title: item.title,
-      desc: item.summary,
+      desc: item.description,
       href: `/program-${item.id}`,
       icon: item.icon,
     })),
@@ -102,7 +102,7 @@ export default async function Home() {
           <div className="relative z-10 mx-auto w-full max-w-4xl text-center">
             <Reveal className="text-center">
                 <span className="clay-chip-blue mx-auto mb-5">
-                  👋 Selamat Datang di
+                  ✨ CREATE THE CREATOR
                 </span>
                 <h1 className="text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
                   SMK Plus Melati{" "}
@@ -111,7 +111,7 @@ export default async function Home() {
                   </span>
                 </h1>
                 <p className="mt-4 text-lg font-extrabold tracking-wider text-accent">
-                  SMK Wirausaha Muda
+                  GAK CUMA SEKOLAH, TAPI JADI PENGUSAHA!
                 </p>
                 <p className="mx-auto mt-5 max-w-xl leading-relaxed text-white/85">
                   Sekolah SMK Swasta Keunggulan di Samarinda Seberang. Mencetak
@@ -255,7 +255,7 @@ export default async function Home() {
                         {p.desc}
                       </p>
                       <p className="mt-5 text-sm font-bold text-primary transition-transform duration-300 group-hover:translate-x-1">
-                        Selengkapnya →
+                        Selengkapnya
                       </p>
                     </ClayCard>
                   </Link>

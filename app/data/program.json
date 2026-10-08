@@ -2,7 +2,6 @@
   {
     "id": "pelatihan",
     "title": "Program Pelatihan",
-    "summary": "Pembuatan aplikasi Android dan pencetak wirausaha dengan praktik langsung.",
     "description": "Membekali siswa keterampilan praktis yang bisa menjadi keahlian khusus dan bernilai jual tinggi.",
     "icon": "training",
     "cards": [
@@ -32,7 +31,6 @@
   {
     "id": "asrama",
     "title": "Program Asrama",
-    "summary": "Kedisiplinan, kebersamaan, dan pembinaan karakter melalui kehidupan asrama.",
     "description": "Membentuk kedisiplinan dan kemandirian siswa melalui kegiatan yang terjadwal setiap hari.",
     "icon": "dormitory",
     "cards": [
@@ -62,9 +60,8 @@
   },
   {
     "id": "keagamaan",
-    "title": "Program Keagamaan",
-    "summary": "Sholat dhuha, mengaji pagi, khataman Al-Qur'an, dan perayaan hari besar.",
-    "description": "Menanamkan keimanan dan ketaqwaan melalui pengalaman ajaran agama dalam keseharian siswa.",
+    "title": "Program Pinter Ngaji",
+    "description": " Jaminan bebas buta huruf Al-Qur’an dengan Metode Ummi",
     "icon": "religion",
     "cards": [
       {
@@ -94,6 +91,30 @@
       "items": [
         "Perayaan hari besar merupakan program rutinan keagamaan. Pada hari perayaan ini, siswa difokuskan untuk mengikuti kegiatan hingga selesai, dan tidak ada kegiatan belajar mengajar pada hari tersebut."
       ]
+    }
+  },
+  {
+    "id": "jago-inggris",
+    "title": "Program Jago Inggris",
+    "description": " Praktik presentasi bisnis standar Internasional sebagai mitra Cambridge University Press",
+    "icon": "training",
+    "cards": [],
+    "section": {
+      "type": "list",
+      "title": "Kegiatan",
+      "items": []
+    }
+  },
+  {
+    "id": "punya-bisnis",
+    "title": "Program Punya Bisnis",
+    "description": "Menggunakan Kurikulum Entrepreneurship Mastery untuk kemandirian ekonomi",
+    "icon": "training",
+    "cards": [],
+    "section": {
+      "type": "list",
+      "title": "Kegiatan",
+      "items": []
     }
   }
 ]

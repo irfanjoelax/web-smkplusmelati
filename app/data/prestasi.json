@@ -12,6 +12,11 @@
       "description": "MTCNA adalah sertifikasi jaringan komputer tingkat dasar berbasis teknologi Mikrotik. Selain skill yang dimiliki, SMK Plus Melati juga memiliki bukti akan kemampuan yang dimiliki oleh siswa/i-nya.",
       "image": "/images/mtcna.jpg",
       "alt": "Sertifikat MTCNA"
+    },
+    {
+      "title": "LSP",
+      "description": "Sertifikasi keahlian profesi yang diakui secara nasional, membantu meningkatkan daya saing di dunia kerja. ",
+      "image": ""
     }
   ]
 }

@@ -79,7 +79,6 @@ export default function PracticeGallery({
     <div className="w-full">
       {/* Header */}
       <div className="mb-6">
-        <span className="clay-chip-gold mb-2 inline-flex">Galeri Praktik</span>
         <h2 className="text-2xl font-extrabold text-primary-dark sm:text-3xl">
           {title}
         </h2>

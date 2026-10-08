@@ -1,37 +1,37 @@
 [
   {
+    "action": "edit",
+    "collection": "beranda",
+    "label": "Edit beranda",
+    "id": "1098bf94-6fb2-45c4-bee3-0d82b0b7a17d",
+    "timestamp": "2026-10-07T01:41:47.993Z"
+  },
+  {
+    "action": "edit",
+    "collection": "jurusan",
+    "label": "Edit jurusan \"E-Office\"",
+    "id": "5ad1ea3f-72c7-4059-83a2-59717cf346c1",
+    "timestamp": "2026-10-06T19:38:18.835Z"
+  },
+  {
+    "action": "edit",
+    "collection": "jurusan",
+    "label": "Edit jurusan \"E-Office\"",
+    "id": "ca0f29b6-214c-469c-a797-5823e71319ff",
+    "timestamp": "2026-10-06T19:38:06.638Z"
+  },
+  {
     "action": "add",
-    "collection": "guru",
-    "label": "Tambah guru \"halo\"",
-    "id": "845bf739-58a3-4c5f-a68a-1eafbbf33884",
-    "timestamp": "2026-10-01T02:06:55.452Z"
+    "collection": "jurusan",
+    "label": "Tambah jurusan \"e-office\"",
+    "id": "f217acc5-c38c-4e87-882c-27e76db8c3d5",
+    "timestamp": "2026-10-06T19:36:17.741Z"
   },
   {
-    "action": "edit",
-    "collection": "testimoniOrtu",
-    "label": "Edit testimoni orang tua \"yanto\"",
-    "id": "b7c25bb6-20d9-41d2-9d85-74ea5a0d48df",
-    "timestamp": "2026-09-28T12:28:55.515Z"
-  },
-  {
-    "action": "edit",
-    "collection": "testimoniOrtu",
-    "label": "Edit testimoni orang tua \"yanti\"",
-    "id": "45bff844-4472-4805-b3fa-35b0e9d2e173",
-    "timestamp": "2026-09-28T12:13:29.839Z"
-  },
-  {
-    "action": "edit",
-    "collection": "testimoniOrtu",
-    "label": "Edit testimoni orang tua \"yuno\"",
-    "id": "1773664d-d1fe-4369-90a9-94f431c6f06f",
-    "timestamp": "2026-09-28T12:13:22.356Z"
-  },
-  {
-    "action": "edit",
-    "collection": "testimoniOrtu",
-    "label": "Edit testimoni orang tua \"yanto\"",
-    "id": "b4deb69a-08a1-42e0-89d6-7319a690da01",
-    "timestamp": "2026-09-28T12:13:14.060Z"
+    "action": "add",
+    "collection": "jurusan",
+    "label": "Tambah jurusan \"Bisdig\"",
+    "id": "9469a1b3-c984-4a6a-ae7b-fbfa50026bb6",
+    "timestamp": "2026-10-06T19:35:06.838Z"
   }
 ]

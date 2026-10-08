@@ -158,7 +158,6 @@ export type ProgramSection = {
 export type ProgramEntity = {
   id: string;
   title: string;
-  summary: string;
   description: string;
   icon: IconKey;
   cards: ProgramCard[];

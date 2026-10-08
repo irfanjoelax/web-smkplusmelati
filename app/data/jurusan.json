@@ -77,14 +77,15 @@
     "practiceImages": []
   },
   {
-    "id": "mm",
-    "name": "mm",
-    "fullName": "mmmm",
+    "id": "bisdig",
+    "name": "Bisdig",
+    "fullName": "Bisnis Digital",
     "image": "",
     "description": "Deskripsi singkat jurusan.",
-    "whyTitle": "Mengapa Memilih mm?",
+    "whyTitle": "Mengapa Memilih Bisdig?",
     "whyText": "Jelaskan alasan memilih jurusan ini.",
     "skills": [],
+    "practiceImages": [],
     "card1": {
       "chip": "Keunggulan",
       "title": "Keunggulan Jurusan",
@@ -94,7 +95,27 @@
       "chip": "Prospek",
       "title": "Prospek Lulusan",
       "description": "Jelaskan prospek lulusan."
+    }
+  },
+  {
+    "id": "e-office",
+    "name": "E-Office",
+    "fullName": "Perkantoran Digital",
+    "image": "",
+    "description": "Deskripsi singkat jurusan.",
+    "whyTitle": "Mengapa Memilih E-Office?",
+    "whyText": "Jelaskan alasan memilih jurusan ini.",
+    "skills": [],
+    "practiceImages": [],
+    "card1": {
+      "chip": "Keunggulan",
+      "title": "Keunggulan Jurusan",
+      "description": "Jelaskan keunggulan jurusan."
     },
-    "practiceImages": []
+    "card2": {
+      "chip": "Prospek",
+      "title": "Prospek Lulusan",
+      "description": "Jelaskan prospek lulusan."
+    }
   }
 ]

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "SPMB 2026",
+  title: "SPMB 2026/2027 | SMK Plus Melati Samarinda",
   description:
-    "Kenali jurusan, pengalaman belajar, kegiatan siswa, fasilitas, dan SPMB 2026 SMK Plus Melati Samarinda.",
+    "Kenali jurusan, program, biaya, fasilitas, dan pendaftaran SPMB SMK Plus Melati Samarinda.",
   alternates: {
     canonical: "/website",
   },
@@ -12,16 +12,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "id_ID",
     url: "/website",
-    title: "Masa Depanmu Dimulai dari Pilihan Hari Ini",
+    title: "SMK Plus Melati Samarinda | Bangun Masa Depan",
     description:
-      "Landing page SPMB 2026 SMK Plus Melati Samarinda untuk calon siswa SMP/MTs dan orang tua.",
+      "Informasi jurusan, program belajar, biaya, fasilitas, dan SPMB untuk calon siswa dan orang tua.",
     images: ["/images/website/hero.jpg"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Masa Depanmu Dimulai dari Pilihan Hari Ini",
+    title: "SMK Plus Melati Samarinda | Bangun Masa Depan",
     description:
-      "Landing page SPMB 2026 SMK Plus Melati Samarinda untuk calon siswa SMP/MTs dan orang tua.",
+      "Informasi jurusan, program belajar, biaya, fasilitas, dan SPMB untuk calon siswa dan orang tua.",
     images: ["/images/website/hero.jpg"],
   },
 };

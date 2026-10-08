@@ -1,915 +1,121 @@
-import Image from "next/image";
 import Link from "next/link";
-import AnimatedNumber from "@/app/components/AnimatedNumber";
+import type { ReactNode } from "react";
 import ClayCard from "@/app/components/ClayCard";
-import CyberSlider from "@/app/components/CyberSlider";
 import LocalImage from "@/app/components/LocalImage";
 import Reveal from "@/app/components/Reveal";
 import { CONTACT, SOCIALS } from "@/app/components/site";
 import { getContent } from "@/app/lib/content";
 import { getJurusanData } from "@/app/lib/jurusan";
 import { getProgramData } from "@/app/lib/program";
-import type { EkskulItem, FasilitasItem, Prestasi, Teacher } from "@/app/lib/types";
+import type { AlumniItem, EkskulItem, FasilitasItem, Prestasi } from "@/app/lib/types";
+import type { ProfilData } from "@/app/lib/types";
+import WebsiteNav from "./WebsiteNav";
 
 export const revalidate = 60;
 
-const majorFallbacks: Record<string, string> = {
-  tjkt: "/images/website/jurusan-tjkt.jpg",
-  kuliner: "/images/website/jurusan-kuliner.jpg",
-};
-
-const programFallbacks: Record<string, string> = {
-  pelatihan: "/images/website/pengalaman-workshop.png",
+const fallbackImages: Record<string, string> = {
+  tjkt: "/images/pelatihan-android.jpg",
+  kuliner: "/images/pelatihan-wirausaha.jpg",
+  pelatihan: "/images/pelatihan-workshop.png",
   asrama: "/images/asrama-sholat.jpg",
   keagamaan: "/images/mengaji.jpg",
 };
 
-const benefits = [
-  {
-    number: "01",
-    tag: "PRAKTIK 60%",
-    title: "Vokasi & Keahlian Terapan",
-    text: "Porsi 60% kurikulum fokus pada praktik langsung di bengkel kerja berstandar teknologi industri terkini.",
-  },
-  {
-    number: "02",
-    tag: "ERA DIGITAL",
-    title: "Jurusan Berorientasi Masa Depan",
-    text: "Teknik Jaringan Komputer & Telekomunikasi (TJKT) serta Kuliner / Gastronomi Kreatif berbasis digital.",
-  },
-  {
-    number: "03",
-    tag: "KARAKTER & MORAL",
-    title: "Kedisiplinan & Nilai Luhur",
-    text: "Program asrama dan pembinaan keagamaan membentuk integritas, kepemimpinan, dan akhlak mulia.",
-  },
-  {
-    number: "04",
-    tag: "KREATIVITAS 4.0",
-    title: "Inovasi & Bakat Digital",
-    text: "Wadah minat bakat modern mulai dari podcasting studio, desain grafis, hingga kompetisi e-sport.",
-  },
-];
+function Arrow() {
+  return <span aria-hidden="true" className="text-accent">↗</span>;
+}
 
-function SectionHeading({
-  eyebrow,
-  title,
-  text,
-  light = false,
-  center = true,
-}: {
+function SectionHeading({ eyebrow, title, description, light = false }: {
   eyebrow: string;
-  title: string;
-  text?: string;
+  title: ReactNode;
+  description: string;
   light?: boolean;
-  center?: boolean;
 }) {
   return (
-    <div className={`max-w-2xl ${center ? "mx-auto text-center" : "text-left"}`}>
-      <span className={light ? "clay-chip-blue" : "clay-chip-gold"}>
-        <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse mr-1" />
-        {eyebrow}
-      </span>
-      <h2
-        className={`mt-4 text-balance text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl ${
-          light ? "text-white" : "text-primary-darker"
-        }`}
-      >
-        {title}
-      </h2>
-      {text && (
-        <p
-          className={`mt-4 text-pretty text-base leading-relaxed sm:text-lg ${
-            light ? "text-white/80" : "text-foreground/70"
-          }`}
-        >
-          {text}
-        </p>
-      )}
+    <div className="max-w-3xl">
+      <p className={`text-xs font-extrabold uppercase tracking-[0.18em] ${light ? "text-accent" : "text-accent-dark"}`}>{eyebrow}</p>
+      <h2 className={`mt-4 text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl ${light ? "text-white" : "text-primary-darker"}`}>{title}</h2>
+      <p className={`mt-4 max-w-2xl text-sm leading-7 sm:text-base ${light ? "text-white/75" : "text-foreground/70"}`}>{description}</p>
     </div>
   );
 }
 
+function Check({ children, light = false }: { children: ReactNode; light?: boolean }) {
+  return <li className="flex items-start gap-3 text-sm leading-6"><span aria-hidden="true" className={`mt-1 text-base ${light ? "text-accent" : "text-primary"}`}>✓</span><span className={light ? "text-white/80" : "text-foreground/75"}>{children}</span></li>;
+}
+
 export default async function WebsiteLandingPage() {
-  const [majors, programs, facilities, teachers, achievement, extracurriculars] = await Promise.all([
+  const [profil, majors, programs, facilities, prestasi, alumni, ekskul] = await Promise.all([
+    getContent<ProfilData>("profil"),
     getJurusanData(),
     getProgramData(),
     getContent<FasilitasItem[]>("fasilitas"),
-    getContent<Teacher[]>("guru"),
     getContent<Prestasi>("prestasi"),
+    getContent<AlumniItem[]>("alumni"),
     getContent<EkskulItem[]>("ekskul"),
   ]);
-
-  const featuredTeachers = teachers
-    .filter((teacher) => teacher.name.trim().length > 3 && teacher.role.trim().length > 3)
-    .slice(0, 3);
-  const featuredExtracurriculars = extracurriculars
-    .filter((item) => !item.title.toLowerCase().includes("tttt"));
-  const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT.address)}`;
+  const heroImage = "/images/website/hero.jpg";
 
   return (
-    <main className="overflow-x-hidden bg-primary-soft text-foreground selection:bg-accent selection:text-primary-darker">
-      {/* =========================================================================
-          HERO SECTION — High Impact Blue Header
-      ========================================================================= */}
-      <section className="relative isolate min-h-[92vh] overflow-hidden bg-primary-darker px-4 pb-20 pt-6 text-white sm:px-6 lg:pb-28">
-        {/* Glow ambient background matching home */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_82%_18%,rgba(63,151,216,0.45),transparent_32%),radial-gradient(circle_at_10%_80%,rgba(245,179,1,0.16),transparent_28%)]" />
-        <span className="clay-orb-ghost -right-24 top-24 h-80 w-80 opacity-40" />
-        <span className="clay-orb-ghost -left-24 bottom-4 h-64 w-64 opacity-30" />
+    <main id="top" className="overflow-hidden bg-primary-soft text-foreground">
+      <a href="#content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-3 focus:text-sm focus:font-bold focus:text-primary-darker focus:shadow-xl">Lewati ke konten utama</a>
 
-        <div className="relative mx-auto max-w-6xl">
-          {/* Futuristic Floating Header */}
-          <nav className="flex items-center justify-between gap-4 rounded-full border border-white/20 bg-white/10 px-5 py-3 shadow-lg backdrop-blur-md">
-            <Link
-              href="/"
-              className="group inline-flex items-center gap-3 rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-            >
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white p-1 shadow-md shadow-primary-darker/50 transition-transform duration-300 group-hover:scale-110">
-                <Image
-                  src="/logo melati.png"
-                  alt="Logo SMK Plus Melati Samarinda"
-                  width={38}
-                  height={38}
-                  className="h-full w-full object-contain"
-                />
-              </span>
-              <div className="hidden sm:block">
-                <p className="text-sm font-extrabold leading-tight text-white">
-                  SMK Plus Melati
-                </p>
-                <p className="text-xs font-bold text-accent">
-                  Samarinda • Vokasi Unggulan
-                </p>
-              </div>
-            </Link>
-            
-            <div className="flex items-center gap-3">
-              <span className="hidden items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-extrabold text-accent md:inline-flex">
-                <span className="h-2 w-2 rounded-full bg-accent animate-ping" />
-                STATUS: SPMB OPEN
-              </span>
-              <Link
-                href="/spmb"
-                className="clay-btn clay-btn-accent !px-4 !py-2 text-xs font-extrabold shadow-lg"
-              >
-                Daftar SPMB 2026
-              </Link>
-            </div>
-          </nav>
+      <WebsiteNav />
 
-          {/* Hero Content Grid */}
-          <div className="grid items-center gap-12 pt-12 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:pt-20">
-            <Reveal>
-              <span className="clay-chip-blue">
-                <span className="h-2 w-2 rounded-full bg-accent animate-pulse mr-1" />
-                SMK Wirausaha Muda & Vokasi Unggulan
-              </span>
-
-              <h1 className="mt-6 text-balance text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
-                Masa Depanmu Dimulai dari{" "}
-                <span className="bg-gradient-to-r from-accent via-[#ffd766] to-accent bg-clip-text text-transparent">
-                  Pilihan Hari Ini.
-                </span>
-              </h1>
-
-              <p className="mt-6 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
-                Gerbang menuju dunia industri dan wirausaha modern. Kurikulum berbasis praktik kejuruan, pembinaan karakter Islami, dan lingkungan belajar serba terpadu.
-              </p>
-
-              <div className="mt-8 flex flex-col gap-3.5 sm:flex-row sm:items-center">
-                <Link
-                  href="/spmb"
-                  className="clay-btn clay-btn-accent min-h-12 text-center text-sm font-extrabold transition-transform hover:scale-105"
-                >
-                  Daftar SPMB Online
-                </Link>
-                <Link
-                  href="/profil"
-                  className="clay-btn clay-btn-light min-h-12 text-center text-sm font-extrabold transition-transform hover:scale-105"
-                >
-                  Kenali Sekolah
-                </Link>
-              </div>
-
-              {/* Stats Matrix Clay Style */}
-              <div className="mt-12 grid grid-cols-3 gap-3.5 border-t border-white/15 pt-8">
-                <div className="rounded-2xl border border-white/15 bg-white/10 p-4 text-center backdrop-blur-md">
-                  <p className="text-3xl font-extrabold text-accent">
-                    <AnimatedNumber value="2" />
-                  </p>
-                  <p className="mt-1 text-xs font-bold text-white/75">Jurusan Utama</p>
-                </div>
-                <div className="rounded-2xl border border-white/15 bg-white/10 p-4 text-center backdrop-blur-md">
-                  <p className="text-3xl font-extrabold text-white">
-                    <AnimatedNumber value="3" />
-                  </p>
-                  <p className="mt-1 text-xs font-bold text-white/75">Program Unggulan</p>
-                </div>
-                <div className="rounded-2xl border border-white/15 bg-white/10 p-4 text-center backdrop-blur-md">
-                  <p className="text-3xl font-extrabold text-accent">
-                    <AnimatedNumber value="7+" />
-                  </p>
-                  <p className="mt-1 text-xs font-bold text-white/75">Kegiatan Siswa</p>
-                </div>
-              </div>
-            </Reveal>
-
-            {/* Floating Visual Hero */}
-            <Reveal delay={120}>
-              <div className="relative mx-auto w-full max-w-md animate-float-slow lg:max-w-none">
-                <div className="relative rounded-[2.5rem] border border-white/25 bg-white/12 p-3 shadow-2xl backdrop-blur-xl">
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-primary-dark">
-                    <LocalImage
-                      src="/images/website/hero.jpg"
-                      alt="Kegiatan siswa SMK Plus Melati Samarinda"
-                      width={900}
-                      height={1125}
-                      className="h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary-darker/90 via-transparent to-transparent" />
-                    
-                    {/* Floating Hero Badge */}
-                    <div className="absolute inset-x-4 bottom-4 rounded-2xl border border-white/20 bg-primary-darker/70 p-4 shadow-xl backdrop-blur-md">
-                      <div className="flex items-center gap-3.5">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent text-primary-darker font-extrabold">
-                          ★
-                        </span>
-                        <div className="min-w-0">
-                          <p className="text-xs font-extrabold uppercase tracking-widest text-accent">
-                            SMK Wirausaha Muda
-                          </p>
-                          <p className="truncate text-sm font-extrabold text-white">
-                            SMK Plus Melati Samarinda
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          BENEFITS SECTION — Clay Cards
-      ========================================================================= */}
-      <section id="keunggulan" className="relative px-4 py-20 sm:px-6 lg:py-28">
-        <div className="mx-auto max-w-6xl">
+      <section aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-primary-darker px-4 pb-28 pt-36 text-white sm:px-8 lg:min-h-[760px] lg:pt-44">
+        <div className="pointer-events-none absolute inset-0 bg-primary-dark/20" />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[.9fr_1.1fr]">
           <Reveal>
-            <SectionHeading
-              eyebrow="Keunggulan Utama"
-              title="Visi Masa Depan untuk Generasi Berdaya Saing"
-              text="Pendidikan kejuruan terpadu yang memadukan keahlian praktis, wawasan industri, dan pembinaan karakter kuat."
-            />
+            <p className="inline-flex rounded-full border border-accent/40 bg-accent/10 px-3 py-1 text-xs font-extrabold uppercase tracking-[0.16em] text-accent">PPDB Tahun Ajaran 2026/2027 Telah Dibuka</p>
+            <p className="mt-4 flex flex-wrap gap-2 text-[11px] font-extrabold uppercase tracking-[0.18em]"><span className="rounded-full bg-accent px-3 py-1 text-primary-darker">Create The Creator</span></p>
+            <h1 id="hero-title" className="mt-6 max-w-3xl text-balance text-5xl font-extrabold leading-[.98] tracking-[-0.05em] sm:text-6xl lg:text-[5.5rem]">Gak cuma sekolah, <span className="text-accent">tapi jadi pengusaha!</span></h1>
+            <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.22em] text-white/60">The Center of Future Digital Entrepreneurs</p>
+            <p className="mt-4 max-w-xl text-base leading-7 text-white/80 sm:text-lg">SMK Plus Melati bukan hanya tempat untuk belajar. Di sini siswa dibentuk menjadi generasi berkarakter, kompeten, percaya diri, siap kuliah, siap kerja, dan berani membangun masa depan sendiri.</p>
+            <div className="mt-7 grid max-w-xl gap-3 sm:grid-cols-2"><article className="rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur-sm"><p className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-accent">SPP Bulanan</p><p className="mt-2 text-3xl font-black text-white">Rp300.000</p><p className="mt-1 text-xs font-semibold text-white/65">per bulan</p><p className="mt-4 text-xs leading-5 text-white/75">Informasi biaya utama tersedia terbuka. Rincian lengkap dapat dikonfirmasi kepada panitia SPMB.</p></article><article className="rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur-sm"><p className="text-[11px] font-extrabold uppercase tracking-[0.14em] text-accent">Fasilitas Pendukung</p><p className="mt-2 text-xl font-black text-white">Praktik & Asrama</p><p className="mt-1 text-xs font-semibold text-white/65">belajar lebih terarah</p><p className="mt-4 text-xs leading-5 text-white/75">Tersedia laboratorium, kitchen, WiFi, lapangan, masjid, dan asrama sesuai data fasilitas sekolah.</p></article></div>
+            <div className="mt-8 flex flex-wrap gap-3"><Link href="/spmb" className="clay-btn clay-btn-accent min-h-12 font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Daftar Sekarang <Arrow /></Link><a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="clay-btn clay-btn-light min-h-12 font-extrabold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent">Tanya via WhatsApp</a></div>
           </Reveal>
-
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {benefits.map((item, index) => (
-              <Reveal key={item.title} delay={index * 70}>
-                <ClayCard hover className="flex h-full flex-col justify-between p-7">
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-4xl font-extrabold leading-none text-accent drop-shadow-sm">
-                        {item.number}
-                      </span>
-                      <span className="rounded-full border border-primary/20 bg-primary-soft px-2.5 py-0.5 text-[0.65rem] font-extrabold uppercase tracking-wider text-primary-dark">
-                        {item.tag}
-                      </span>
-                    </div>
-                    <h3 className="mt-5 text-xl font-extrabold text-primary-darker">
-                      {item.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-foreground/70">
-                      {item.text}
-                    </p>
-                  </div>
-                  <div className="mt-6 border-t border-primary/10 pt-4">
-                    <span className="text-xs font-bold text-primary">
-                      Standar Vokasi Unggulan
-                    </span>
-                  </div>
-                </ClayCard>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          MAJORS SECTION — Pilihan Jurusan
-      ========================================================================= */}
-      <section className="relative px-4 py-16 sm:px-6 lg:py-24">
-        <div className="mx-auto max-w-6xl rounded-[2.75rem] bg-primary-darker px-6 py-16 shadow-2xl sm:px-10 lg:px-16">
-          <Reveal>
-            <SectionHeading
-              light
-              eyebrow="Bidang Keahlian"
-              title="Pilih Jurusan yang Relevan dengan Industri"
-              text="Laboratorium canggih, bengkel kerja modern, dan instruktur berpengalaman mendampingi proses belajarmu."
-            />
-          </Reveal>
-
-          <div className="mt-14 grid gap-8 md:grid-cols-2">
-            {majors.slice(0, 2).map((major, index) => (
-              <Reveal key={major.id} delay={index * 90}>
-                <article className="group flex h-full flex-col overflow-hidden rounded-[2.25rem] border border-white/20 bg-white/10 p-3.5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
-                  <div className="aspect-[16/10] overflow-hidden rounded-[1.75rem] bg-primary-dark">
-                    <LocalImage
-                      src={major.image || majorFallbacks[major.id] || ""}
-                      alt={`Kegiatan jurusan ${major.fullName}`}
-                      width={900}
-                      height={560}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-5 text-white sm:p-6">
-                    <span className="text-xs font-extrabold uppercase tracking-widest text-accent">
-                      Jurusan Unggulan 0{index + 1}
-                    </span>
-                    <h3 className="mt-2 text-2xl font-extrabold leading-tight text-white">
-                      {major.fullName}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-white/80">
-                      {major.description}
-                    </p>
-
-                    <div className="mt-6 flex flex-wrap gap-2">
-                      {major.skills.slice(0, 4).map((skill) => (
-                        <span
-                          key={skill}
-                          className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold text-white/90"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="mt-auto pt-8">
-                      <Link
-                        href={`/jurusan/${major.id}`}
-                        className="clay-btn clay-btn-accent inline-flex w-full text-center text-sm font-extrabold shadow-lg sm:w-auto"
-                      >
-                        Pelajari Jurusan {major.name}
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          PROGRAMS SECTION — Slider Interaktif Program
-      ========================================================================= */}
-      <section className="relative px-4 py-20 sm:px-6 lg:py-28">
-        <div className="mx-auto max-w-6xl">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Program Terpadu"
-              title="Pengalaman Belajar Komprehensif"
-              text="Geser untuk menjelajahi program pelatihan intensif, asrama disiplin, dan pembinaan karakter keagamaan."
-            />
-          </Reveal>
-
-          <div className="mt-14">
-            <CyberSlider totalItems={programs.length}>
-              {programs.map((program, index) => (
-                <div
-                  key={program.id}
-                  className="w-full shrink-0 snap-start sm:w-[calc(50%-0.625rem)] lg:w-[calc(33.333%-0.834rem)]"
-                >
-                  <Link
-                    href={`/program-${program.id}`}
-                    className="group block h-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-                  >
-                    <ClayCard hover className="flex h-full flex-col overflow-hidden p-3.5">
-                      <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-primary-soft">
-                        <LocalImage
-                          src={program.cards[0]?.image || programFallbacks[program.id] || ""}
-                          alt={program.title}
-                          width={700}
-                          height={440}
-                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                      </div>
-                      <div className="flex flex-1 flex-col p-5">
-                        <span className="text-xs font-extrabold uppercase tracking-wider text-accent-dark">
-                          Program 0{index + 1}
-                        </span>
-                        <h3 className="mt-1 text-xl font-extrabold text-primary-darker group-hover:text-primary">
-                          {program.title}
-                        </h3>
-                        <p className="mt-3 text-sm leading-relaxed text-foreground/70">
-                          {program.summary}
-                        </p>
-                        <span className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-extrabold text-primary">
-                          Lihat Selengkapnya
-                        </span>
-                      </div>
-                    </ClayCard>
-                  </Link>
-                </div>
-              ))}
-            </CyberSlider>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          FACILITIES & TEACHERS SECTION (Slider Interaktif Fasilitas)
-      ========================================================================= */}
-      <section className="relative bg-white/50 px-4 py-20 sm:px-6 lg:py-28">
-        <div className="mx-auto max-w-6xl">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Infrastruktur & Pendidik"
-              title="Fasilitas Lengkap & Guru Ahli"
-              text="Geser galeri fasilitas untuk melihat sarana praktikum kejuruan, olahraga, dan ruang belajar modern."
-            />
-          </Reveal>
-
-          <div className="mt-14 grid gap-8 lg:grid-cols-[1.25fr_0.75fr]">
-            {/* Interactive Fasilitas Slider */}
-            <div className="w-full">
-              <CyberSlider totalItems={facilities.length}>
-                {facilities.map((facility) => (
-                  <div
-                    key={facility.title}
-                    className="w-full shrink-0 snap-start sm:w-[calc(50%-0.625rem)]"
-                  >
-                    <ClayCard hover className="h-full overflow-hidden p-3">
-                      <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-primary-soft/40">
-                        <LocalImage
-                          src={facility.image}
-                          alt={facility.title}
-                          width={640}
-                          height={400}
-                          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                        />
-                      </div>
-                      <div className="p-4">
-                        <h3 className="font-extrabold text-primary-darker">
-                          {facility.title}
-                        </h3>
-                        <p className="mt-2 text-sm leading-relaxed text-foreground/65">
-                          {facility.description}
-                        </p>
-                      </div>
-                    </ClayCard>
-                  </div>
-                ))}
-              </CyberSlider>
-            </div>
-
-            {/* Pendidik Panel */}
-            <Reveal delay={100}>
-              <ClayCard variant="blue" className="flex h-full flex-col justify-between p-7 sm:p-8">
-                <div>
-                  <span className="clay-chip-blue">Pendidik Vokasi</span>
-                  <h3 className="mt-5 text-2xl font-extrabold text-white">
-                    Belajar Bersama Guru Kami
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-white/85">
-                    Guru dan instruktur kompeten siap mengarahkan potensi siswa menuju pencapaian terbaik.
-                  </p>
-
-                  <div className="mt-6 space-y-3">
-                    {featuredTeachers.map((teacher) => (
-                      <div
-                        key={teacher.name}
-                        className="flex items-center gap-3.5 rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur-md"
-                      >
-                        <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-white/15">
-                          <LocalImage
-                            src={teacher.image}
-                            alt={teacher.name}
-                            width={96}
-                            height={96}
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
-                        <div className="min-w-0">
-                          <p className="truncate text-sm font-extrabold text-white">
-                            {teacher.name}
-                          </p>
-                          <p className="truncate text-xs text-white/70">
-                            {teacher.role}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Link href="/fasilitas" className="clay-btn clay-btn-accent text-xs font-extrabold">
-                    Lihat Fasilitas
-                  </Link>
-                  <Link href="/guru" className="clay-btn clay-btn-light text-xs font-extrabold">
-                    Daftar Guru
-                  </Link>
-                </div>
-              </ClayCard>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          ACHIEVEMENT / SERTIFIKASI SECTION
-      ========================================================================= */}
-      <section className="relative px-4 py-20 sm:px-6 lg:py-28">
-        <div className="mx-auto max-w-6xl">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Standar Kompetensi"
-              title="Bukti Nyata Kualitas Pembelajaran"
-              text="Pengakuan sertifikasi dan prestasi menjadi tolok ukur kesiapan siswa di dunia kerja."
-            />
-          </Reveal>
-
-          <div className="mt-14 grid gap-6 md:grid-cols-2">
-            {achievement.items.slice(0, 2).map((item, index) => (
-              <Reveal key={item.title} delay={index * 80}>
-                <ClayCard className="grid h-full overflow-hidden p-3.5 sm:grid-cols-[0.85fr_1.15fr]">
-                  <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-primary-soft sm:aspect-auto sm:min-h-56">
-                    <LocalImage
-                      src={item.image}
-                      alt={item.title}
-                      width={520}
-                      height={560}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <div className="flex flex-col justify-between p-5">
-                    <div>
-                      <span className="clay-chip-gold">Sertifikasi</span>
-                      <h3 className="mt-4 text-xl font-extrabold text-primary-darker">
-                        {item.title}
-                      </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-foreground/70">
-                        {item.description}
-                      </p>
-                    </div>
-                    <p className="mt-4 text-xs font-bold text-foreground/45">
-                      Kurikulum & sertifikasi resmi sekolah.
-                    </p>
-                  </div>
-                </ClayCard>
-              </Reveal>
-            ))}
-          </div>
-
-          <div className="mt-10 text-center">
-            <Link href="/prestasi-siswa" className="clay-btn text-sm font-extrabold">
-              Lihat Semua Prestasi
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          EXTRACURRICULAR SECTION (Slider Interaktif Ekskul)
-      ========================================================================= */}
-      <section className="relative px-4 py-20 sm:px-6 lg:py-28">
-        <div className="mx-auto max-w-6xl">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Bakat & Minat"
-              title="Salurkan Potensimu di Luar Jam Kelas"
-              text="Geser untuk melihat ragam kegiatan ekstrakurikuler kepemimpinan, seni kreatif, dan olahraga."
-            />
-          </Reveal>
-
-          <div className="mt-14">
-            <CyberSlider totalItems={featuredExtracurriculars.length}>
-              {featuredExtracurriculars.map((item) => (
-                <div
-                  key={item.title}
-                  className="w-[280px] shrink-0 snap-start sm:w-[320px] lg:w-[calc(25%-0.9375rem)]"
-                >
-                  <ClayCard hover className="h-full overflow-hidden p-3">
-                    <div className="aspect-square overflow-hidden rounded-2xl bg-primary-soft/60">
-                      <LocalImage
-                        src={item.image}
-                        alt={item.title}
-                        width={560}
-                        height={560}
-                        className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <span className="inline-flex rounded-full bg-accent/15 px-2.5 py-0.5 text-[0.7rem] font-extrabold text-amber-900">
-                        {item.required ? "Wajib" : "Pilihan"}
-                      </span>
-                      <h3 className="mt-2 text-base font-extrabold text-primary-darker">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1.5 text-xs leading-relaxed text-foreground/65">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </ClayCard>
-                </div>
-              ))}
-            </CyberSlider>
-          </div>
-
-          <div className="mt-10 text-center">
-            <Link href="/ekskul" className="clay-btn text-sm font-extrabold">
-              Lihat Seluruh Ekstrakurikuler
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          ALUMNI & NEWS HIGHLIGHTS
-      ========================================================================= */}
-      <section className="relative bg-primary-darker px-4 py-20 text-white sm:px-6 lg:py-28">
-        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-2">
-          {/* Alumni Story */}
-          <Reveal>
-            <div className="flex h-full flex-col justify-between rounded-[2.25rem] border border-white/20 bg-white/10 p-8 backdrop-blur-xl sm:p-10">
-              <div>
-                <span className="clay-chip-blue">Cerita Alumni</span>
-                <h2 className="mt-5 text-3xl font-extrabold leading-tight text-white">
-                  Jejak Langkah Lulusan
-                </h2>
-                <p className="mt-4 leading-relaxed text-white/80">
-                  Perjalanan para lulusan SMK Plus Melati yang telah berkiprah di industri profesional dan merintis wirausaha mandiri.
-                </p>
-
-                <div className="mt-8 grid grid-cols-3 gap-4" aria-label="Placeholder cerita alumni">
-                  {[
-                    ["Profil", "M12 12a4 4 0 100-8 4 4 0 000 8zm0 2c-4 0-8 2-8 4v2h16v-2c0-2-4-4-8-4z"],
-                    ["Karier", "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"],
-                    ["Wirausaha", "M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"],
-                  ].map(([label, path]) => (
-                    <div
-                      key={label}
-                      className="rounded-2xl border border-dashed border-white/25 bg-white/5 p-5 text-center text-xs font-bold text-white/60"
-                    >
-                      <svg
-                        className="mx-auto mb-3 h-8 w-8 text-accent"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={1.5}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        aria-hidden="true"
-                      >
-                        <path d={path} />
-                      </svg>
-                      {label}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-10">
-                <Link
-                  href="/alumni"
-                  className="clay-btn clay-btn-accent text-xs font-extrabold"
-                >
-                  Kunjungi Halaman Alumni
-                </Link>
-              </div>
-            </div>
-          </Reveal>
-
-          {/* School Life & News */}
-          <Reveal delay={80}>
-            <div className="flex h-full flex-col justify-between rounded-[2.25rem] border border-white/20 bg-white/10 p-8 backdrop-blur-xl sm:p-10">
-              <div>
-                <span className="clay-chip-blue">Warta Sekolah</span>
-                <h2 className="mt-5 text-3xl font-extrabold leading-tight text-white">
-                  Kabar & Agenda Terkini
-                </h2>
-                <p className="mt-4 leading-relaxed text-white/80">
-                  Ikuti berita terbaru tentang prestasi siswa, agenda akademik, workshop kejuruan, dan kegiatan sekolah.
-                </p>
-
-                <div className="mt-8 grid grid-cols-3 gap-4" aria-label="Placeholder berita sekolah">
-                  {[
-                    ["Kegiatan", "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"],
-                    ["Prestasi", "M5 3l3.057-1.528a1 1 0 01.886 0L12 3l3.057-1.528a1 1 0 01.886 0L19 3v16l-3.057 1.528a1 1 0 01-.886 0L12 19l-3.057 1.528a1 1 0 01-.886 0L5 19V3z"],
-                    ["Informasi", "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2"],
-                  ].map(([label, path]) => (
-                    <div
-                      key={label}
-                      className="overflow-hidden rounded-2xl border border-dashed border-white/25 bg-white/5 text-center text-xs font-bold text-white/60"
-                    >
-                      <span className="flex h-16 items-center justify-center bg-white/10">
-                        <svg
-                          className="h-7 w-7 text-accent"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={1.5}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          aria-hidden="true"
-                        >
-                          <path d={path} />
-                        </svg>
-                      </span>
-                      <span className="block p-3">{label}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mt-10">
-                <Link
-                  href="/berita"
-                  className="clay-btn clay-btn-accent text-xs font-extrabold"
-                >
-                  Lihat Berita Sekolah
-                </Link>
-              </div>
-            </div>
+          <Reveal delay={100}>
+              <div className="relative ml-auto w-full max-w-3xl"><div className="aspect-[4/3] overflow-hidden rounded-[2rem] border border-white/25 bg-primary-dark p-2 shadow-2xl lg:aspect-[4/5]"><LocalImage src={heroImage} alt="Kegiatan siswa SMK Plus Melati Samarinda" width={900} height={1125} className="h-full w-full rounded-[1.5rem] object-cover" /></div></div>
           </Reveal>
         </div>
       </section>
 
-      {/* =========================================================================
-          KEY TAKEAWAYS — Checklist Nilai Sekolah
-      ========================================================================= */}
-      <section className="px-4 py-20 sm:px-6 lg:py-28">
-        <div className="mx-auto max-w-6xl">
-          <Reveal>
-            <ClayCard className="relative overflow-hidden p-8 sm:p-12 lg:p-16">
-              <span className="clay-orb-ghost -right-16 -top-16 h-64 w-64" />
-              <div className="relative grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
-                <div>
-                  <span className="clay-chip-gold">Nilai Unggulan</span>
-                  <h2 className="mt-5 text-3xl font-extrabold leading-tight text-primary-darker sm:text-4xl">
-                    Pilihan Tepat untuk Masa Depan Cerah
-                  </h2>
-                  <p className="mt-5 max-w-2xl text-base leading-relaxed text-foreground/75 sm:text-lg">
-                    Lingkungan belajar terarah yang membentuk keahlian vokasi nyata, kemandirian karakter, dan daya saing tinggi.
-                  </p>
-                </div>
+       <section aria-label="Kepercayaan orang tua" className="bg-primary px-4 py-7 text-white sm:px-8"><div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">{["Pendidikan vokasi modern", "Guru berpengalaman", "Fasilitas praktik", "Entrepreneurship", "Penguatan karakter", "Siap kuliah & kerja"].map((item) => <div key={item} className="flex items-center gap-2 text-sm font-bold text-white/85"><span aria-hidden="true" className="text-lg text-accent">✓</span>{item}</div>)}</div></section>
 
-                <div className="grid gap-3.5">
-                  {[
-                    "Bengkel & lab praktik berstandar industri",
-                    "Program pembinaan karakter & asrama keagamaan",
-                    "Peluang magang & kerjasama mitra usaha",
-                    "Kemandirian wirausaha sejak dini",
-                  ].map((item) => (
-                    <div
-                      key={item}
-                      className="clay-inset flex items-center gap-3.5 rounded-2xl p-4 text-sm font-bold text-primary-darker"
-                    >
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-primary-darker font-extrabold">
-                        ✓
-                      </span>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </ClayCard>
-          </Reveal>
-        </div>
-      </section>
+       <div id="content" />
+        <section id="profil" aria-labelledby="profil-title" className="px-4 py-24 sm:px-8 lg:py-32"><div className="mx-auto max-w-7xl"><SectionHeading eyebrow="3 PILAR KEUNGGULAN UTAMA" title={<span id="profil-title">Lebih dari Sekadar Sekolah</span>} description="SMK Plus Melati memadukan keterampilan, karakter, dan pengalaman belajar untuk membantu siswa siap melangkah ke masa depan." /><div className="mt-12 grid gap-5 md:grid-cols-3">{[["01", "Pinter Ngaji", "Jaminan bebas buta huruf Al-Qur’an melalui pembiasaan sholat dhuha, mengaji pagi, dan Metode Ummi.", "/program-keagamaan"], ["02", "Jago Inggris", "Latihan presentasi bisnis berstandar internasional untuk membangun kemampuan komunikasi dan kepercayaan diri siswa.", "/program-jago-inggris"], ["03", "Punya Bisnis", "Kurikulum Entrepreneurship Mastery yang mengenalkan siswa pada keterampilan bisnis dan kemandirian ekonomi.", "/program-punya-bisnis"]].map(([number, title, text, href]) => <ClayCard key={number} hover className="relative overflow-hidden p-7 sm:p-8"><span className="text-5xl font-black text-primary/10">{number}</span><h3 className="mt-5 text-xl font-extrabold text-primary-darker">{title}</h3><p className="mt-3 text-sm leading-7 text-foreground/70">{text}</p><Link href={href} className="mt-6 inline-flex min-h-11 items-center text-sm font-extrabold text-primary focus-visible:outline-2 focus-visible:outline-accent">Lihat program <Arrow /></Link></ClayCard>)}</div></div></section>
+        <section id="keunggulan" aria-labelledby="keunggulan-title" className="bg-primary-darker px-4 py-24 text-white sm:px-8 lg:py-32"><div className="mx-auto max-w-7xl"><SectionHeading light eyebrow="KURIKULUM UNGGULAN 3 TAHUN" title={<span id="keunggulan-title">3 Tahun, 1 Tujuan: Siap Menciptakan Peluang Sendiri</span>} description="Setiap tahun memiliki target yang jelas: membangun dasar, belajar dari industri, lalu mengoperasikan usaha secara mandiri." /><div className="mt-12 grid gap-5 md:grid-cols-3">{[["01", "KELAS X", "Mulai Cari Cuan", "Belajar membangun aset digital dan praktik jualan online sejak tahun pertama.", "Fondasi digital · Online selling · Content creation"], ["02", "KELAS XI", "Curi Ilmu", "Magang strategis dengan riset langsung pada sistem bisnis pengusaha sukses.", "Magang industri · Business research · Market observation"], ["03", "KELAS XII", "Siap Jadi Pengusaha", "Validasi bisnis melalui laporan keuangan riil dan operasional usaha mandiri.", "Business validation · Financial report · Independent business"]].map(([number, grade, title, text, tags]) => <article key={number} className="relative overflow-hidden rounded-2xl border border-white/15 bg-white/10 p-7 transition hover:-translate-y-1 hover:bg-white/15"><div className="absolute inset-x-0 top-0 h-1 bg-accent" /><div className="flex items-center justify-between gap-3"><span className="text-3xl font-black text-accent">{number}</span><span className="rounded-full border border-white/20 px-3 py-1 text-xs font-bold text-white/75">{grade}</span></div><h3 className="mt-6 text-2xl font-extrabold">{title}</h3><p className="mt-4 text-sm leading-7 text-white/75">{text}</p><p className="mt-6 border-t border-white/15 pt-4 text-xs font-bold uppercase leading-6 tracking-wide text-accent">{tags}</p></article>)}</div><div className="mt-6 rounded-2xl border border-accent/30 bg-accent/10 p-6 text-center sm:p-8"><p className="text-lg font-extrabold text-accent">Belajar Bisnis → Praktik Langsung → Membangun Usaha Mandiri</p><p className="mt-2 text-sm text-white/70">Bukan hanya lulus sekolah. Siswa membawa pengalaman, karya, dan keberanian untuk melangkah.</p></div></div></section>
+       <section id="visi-misi" aria-labelledby="visi-title" className="bg-primary-soft px-4 py-24 sm:px-8 lg:py-32"><div className="mx-auto max-w-7xl"><SectionHeading eyebrow="KOMITMEN TRANSPARANSI" title={<span id="visi-title">Pendidikan Berkualitas Tidak Harus Mahal</span>} description="Komitmen pendidikan yang transparan, lingkungan belajar yang pasti, dan biaya yang dapat dikonsultasikan sejak awal." /><div className="mt-12 grid gap-6 lg:grid-cols-2"><article className="relative overflow-hidden rounded-[2rem] border border-accent/30 bg-white p-7 shadow-xl sm:p-10"><div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-accent/15" /><div className="absolute -bottom-16 -left-10 h-36 w-36 rounded-full bg-primary-soft" /><div className="relative"><div className="flex items-start justify-between gap-4"><span className="inline-flex rounded-full bg-accent-soft px-3 py-1 text-xs font-extrabold uppercase tracking-[0.14em] text-accent-dark">Penawaran Utama</span><span className="rounded-full bg-tertiary-fixed px-3 py-1 text-xs font-extrabold text-tertiary">Terjangkau</span></div><p className="mt-7 text-sm font-extrabold uppercase tracking-[0.16em] text-primary">SPP Bulanan</p><div className="mt-2 flex flex-wrap items-end gap-2"><p className="text-5xl font-black tracking-tight text-primary-darker sm:text-6xl">Rp300.000</p><p className="pb-2 text-sm font-bold text-foreground/60">/ bulan</p></div><p className="mt-4 max-w-md text-sm leading-6 text-foreground/70">Sekolah berkualitas dengan informasi biaya yang disampaikan terbuka kepada calon siswa dan orang tua.</p><div className="mt-6 grid gap-3 sm:grid-cols-2"><div className="rounded-xl bg-primary-soft p-4"><p className="text-2xl font-black text-primary">01</p><p className="mt-1 text-xs font-bold text-foreground/70">Biaya utama jelas sejak awal</p></div><div className="rounded-xl bg-accent-soft p-4"><p className="text-2xl font-black text-accent-dark">02</p><p className="mt-1 text-xs font-bold text-foreground/70">Rincian lengkap via WhatsApp</p></div></div><a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="clay-btn clay-btn-accent mt-7 min-h-12 w-full font-extrabold focus-visible:outline-2 focus-visible:outline-accent">Cek Rincian Biaya <Arrow /></a></div></article><article className="clay-card-blue relative overflow-hidden rounded-[2rem] p-7 text-white sm:p-10"><div className="absolute -right-14 -top-14 h-44 w-44 rounded-full bg-accent/15" /><div className="relative"><span className="inline-flex rounded-full bg-white/10 px-3 py-1 text-xs font-extrabold uppercase tracking-[0.14em] text-accent">Kepastian Lingkungan Belajar</span><div className="mt-7 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-4xl" aria-hidden="true">⌂</div><h3 className="mt-6 text-3xl font-extrabold">Gedung Milik Sendiri</h3><p className="mt-4 text-sm leading-7 text-white/75">Lingkungan belajar yang permanen, nyaman, dan dikelola untuk mendukung perjalanan pendidikan siswa SMK Plus Melati.</p><div className="mt-7 space-y-3 text-sm font-bold text-white/85"><p className="flex items-center gap-3"><span className="text-accent">✓</span>Lingkungan belajar lebih pasti</p><p className="flex items-center gap-3"><span className="text-accent">✓</span>Ruang belajar dan praktik yang mendukung</p><p className="flex items-center gap-3"><span className="text-accent">✓</span>Tempat tumbuh untuk karakter dan kompetensi</p></div><Link href="#fasilitas" className="clay-btn clay-btn-light mt-8 min-h-12 w-full font-extrabold focus-visible:outline-2 focus-visible:outline-accent">Kenali Lingkungan Sekolah <Arrow /></Link></div></article></div></div></section>
+       <section id="guru" aria-labelledby="guru-title" className="px-4 py-24 sm:px-8 lg:py-32"><div className="mx-auto max-w-7xl"><SectionHeading eyebrow="EARLY BIRD LIMITED PERIOD" title={<span id="guru-title">Daftar Lebih Awal, Dapatkan Potongan Lebih Besar</span>} description="Manfaatkan periode pendaftaran lebih awal sesuai jalur yang tersedia. Kuota dan ketentuan mengikuti informasi resmi panitia SPMB." /><div className="mt-12 grid gap-6 lg:grid-cols-2"><article className="clay-card p-7 sm:p-9"><div className="flex items-start justify-between gap-4"><span className="rounded-full bg-primary px-3 py-1 text-xs font-extrabold uppercase tracking-[0.12em] text-white">Jalur Alumni / Keluarga</span><span className="text-2xl font-black text-primary">01</span></div><h3 className="mt-6 text-2xl font-extrabold text-primary-darker">Khusus Alumni SMP Melati & Afiliasi</h3><p className="mt-2 text-sm leading-6 text-foreground/70">Apresiasi untuk keluarga besar alumni dan afiliasi pendidikan SMK Plus Melati.</p><div className="mt-7 space-y-3"><div className="flex items-center justify-between gap-4 rounded-2xl bg-primary-soft p-4"><div><p className="font-extrabold text-primary-darker">Gelombang 1 (Januari–Maret)</p><p className="mt-1 text-xs text-foreground/65">Potongan langsung biaya pangkal masuk</p></div><strong className="whitespace-nowrap text-2xl font-black text-error">50% OFF</strong></div><div className="flex items-center justify-between gap-4 rounded-2xl bg-accent-soft p-4"><div><p className="font-extrabold text-primary-darker">Gelombang 2 & 3 (April–Juli)</p><p className="mt-1 text-xs text-foreground/65">Potongan apresiasi pendaftaran berkala</p></div><strong className="whitespace-nowrap text-2xl font-black text-accent-dark">25% OFF</strong></div></div><a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="clay-btn mt-7 min-h-12 w-full text-center text-sm font-extrabold">Ambil Promo Alumni</a></article><article className="clay-card p-7 sm:p-9"><div className="flex items-start justify-between gap-4"><span className="rounded-full bg-accent px-3 py-1 text-xs font-extrabold uppercase tracking-[0.12em] text-primary-darker">Jalur Umum</span><span className="text-2xl font-black text-accent-dark">02</span></div><h3 className="mt-6 text-2xl font-extrabold text-primary-darker">Pendaftaran Terbuka Seluruh SMP/MTs</h3><p className="mt-2 text-sm leading-6 text-foreground/70">Terbuka untuk seluruh lulusan SMP/MTs sederajat.</p><div className="mt-7 space-y-3"><div className="flex items-center justify-between gap-4 rounded-2xl bg-primary-soft p-4"><div><p className="font-extrabold text-primary-darker">Gelombang 1 (Januari–Maret)</p><p className="mt-1 text-xs text-foreground/65">Potongan istimewa pendaftar cepat</p></div><strong className="whitespace-nowrap text-2xl font-black text-error">30% OFF</strong></div><div className="flex items-center justify-between gap-4 rounded-2xl bg-accent-soft p-4"><div><p className="font-extrabold text-primary-darker">Gelombang 2 (April–Mei)</p><p className="mt-1 text-xs text-foreground/65">Potongan kuota reguler bertahap</p></div><strong className="whitespace-nowrap text-2xl font-black text-accent-dark">20% OFF</strong></div></div><a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="clay-btn clay-btn-accent mt-7 min-h-12 w-full text-center text-sm font-extrabold">Ambil Promo Umum</a></article></div></div></section>
+      <section id="beasiswa" aria-labelledby="beasiswa-title" className="bg-primary-soft px-4 py-24 sm:px-8 lg:py-32"><div className="mx-auto max-w-7xl"><SectionHeading eyebrow="APRESIASI PENUH" title={<span id="beasiswa-title">Prestasi dan Potensimu Kami Hargai</span>} description="Pintu pendidikan SMK Plus Melati terbuka untuk talenta unggul, penghafal Qur'an, dan siswa yang bertekad mengubah masa depan. Ketentuan dan verifikasi mengikuti informasi resmi panitia SPMB." /><div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3"><article className="clay-card p-7"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-accent-dark">Card 1 / Jalur Prestasi</p><h3 className="mt-3 text-xl font-extrabold text-primary-darker">Potongan Uang Pangkal Juara Lomba</h3><p className="mt-2 text-sm leading-6 text-foreground/70">Untuk juara lomba akademik, olahraga, maupun seni.</p><div className="mt-5 space-y-2 text-sm"><div className="flex items-center justify-between gap-3 rounded-xl bg-primary-soft p-3"><span>Tingkat Kota / Kabupaten</span><strong className="text-primary">Potongan 25%</strong></div><div className="flex items-center justify-between gap-3 rounded-xl bg-primary-soft p-3"><span>Tingkat Provinsi</span><strong className="text-primary">Potongan 30%</strong></div><div className="flex items-center justify-between gap-3 rounded-xl bg-accent-soft p-3"><span>Tingkat Nasional</span><strong className="text-accent-dark">Potongan 50%</strong></div></div></article><article className="clay-card p-7"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-accent-dark">Card 2 / Tahfidz & Keagamaan</p><h3 className="mt-3 text-xl font-extrabold text-primary-darker">Penghargaan Penjaga Kalam Ilahi</h3><p className="mt-2 text-sm leading-6 text-foreground/70">Uji hafalan mengikuti ketentuan tim penguji sekolah.</p><div className="mt-5 space-y-2 text-sm"><div className="flex items-center justify-between gap-3 rounded-xl bg-primary-soft p-3"><span>Hafal Juz 30 Mutqin</span><strong className="text-primary">Potongan 25%</strong></div><div className="flex items-center justify-between gap-3 rounded-xl bg-accent-soft p-3"><span>Hafal 1–30 Juz</span><strong className="text-accent-dark">Free 100% Pangkal</strong></div></div></article><article className="clay-card p-7"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-accent-dark">Card 3 / Jalur Keluarga</p><h3 className="mt-3 text-xl font-extrabold text-primary-darker">Keringanan Saudara Kandung Aktif</h3><p className="mt-2 text-sm leading-6 text-foreground/70">Memiliki saudara yang sedang aktif bersekolah di SMK Plus Melati.</p><div className="mt-5 rounded-xl bg-primary-soft p-4 text-right"><p className="text-xs text-foreground/65">Potongan biaya pangkal</p><strong className="text-2xl font-black text-primary">Potongan 25%</strong></div></article><article className="clay-card p-7"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-accent-dark">Card 4 / Jalur Sosial Anak Yatim</p><h3 className="mt-3 text-xl font-extrabold text-primary-darker">Beasiswa Penuh 100%</h3><p className="mt-2 text-sm leading-6 text-foreground/70">Diberikan bagi 1 siswa terpilih melalui proses asesmen dan survei khusus komite yayasan.</p><div className="mt-5 rounded-xl bg-accent-soft p-4 text-right"><p className="text-xs text-foreground/65">Beasiswa penuh</p><strong className="text-2xl font-black text-accent-dark">100%</strong></div></article><article className="clay-card p-7 md:col-span-2 lg:col-span-2"><p className="text-xs font-extrabold uppercase tracking-[0.14em] text-accent-dark">Card 5 / Jalur Karyawan & Guru Yayasan Melati</p><h3 className="mt-3 text-xl font-extrabold text-primary-darker">Apresiasi Keluarga Besar Yayasan Melati</h3><p className="mt-2 text-sm leading-6 text-foreground/70">Ketentuan masa pengabdian mengikuti aturan yayasan.</p><div className="mt-5 grid gap-3 sm:grid-cols-2"><div className="rounded-xl bg-primary-soft p-4"><p className="text-xs font-bold text-foreground/65">Uang pangkal masuk</p><strong className="text-xl font-black text-primary">Free 100% Uang Pangkal</strong></div><div className="rounded-xl bg-accent-soft p-4"><p className="text-xs font-bold text-foreground/65">SPP tiap bulan</p><strong className="text-xl font-black text-accent-dark">Potongan SPP 25%</strong></div></div><a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="clay-btn mt-6 min-h-12 w-full text-center text-sm font-extrabold">Konsultasi Jalur Beasiswa</a></article></div></div></section>
 
-      {/* =========================================================================
-          FINAL CALL TO ACTION — Portal Menuju Pendaftaran
-      ========================================================================= */}
-      <section className="px-4 pb-20 sm:px-6 lg:pb-28">
-        <Reveal>
-          <ClayCard
-            variant="blue"
-            className="relative mx-auto max-w-6xl overflow-hidden rounded-[2.75rem] px-6 py-20 text-center shadow-2xl sm:px-12 sm:py-24"
-          >
-            <span className="clay-orb -left-20 -top-20 h-64 w-64 opacity-60" />
-            <span className="clay-orb-ghost -bottom-20 -right-16 h-72 w-72" />
-            
-            <div className="relative mx-auto max-w-3xl">
-              <span className="clay-chip-blue">SPMB 2026/2027</span>
-              <h2 className="mt-6 text-balance text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl">
-                Wujudkan Cita-Citamu Bersama Kami
-              </h2>
-              <p className="mt-5 text-base text-white/85 sm:text-lg">
-                Penerimaan Peserta Didik Baru SMK Plus Melati Samarinda telah dibuka. Daftarkan dirimu dan raih masa depan gemilang.
-              </p>
-              
-              <div className="mt-9 flex flex-col justify-center gap-4 sm:flex-row">
-                <Link
-                  href="/spmb"
-                  className="clay-btn clay-btn-accent min-h-12 text-sm font-extrabold shadow-xl transition-transform hover:scale-105"
-                >
-                  Daftar SPMB Online Sekarang
-                </Link>
-                <a
-                  href={CONTACT.whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="clay-btn clay-btn-light min-h-12 text-sm font-extrabold transition-transform hover:scale-105"
-                >
-                  Konsultasi dengan Admin
-                </a>
-              </div>
-            </div>
-          </ClayCard>
-        </Reveal>
-      </section>
 
-      {/* =========================================================================
-          FUTURISTIC FOOTER
-      ========================================================================= */}
-      <footer className="relative bg-primary-darker px-4 pb-10 pt-20 text-white sm:px-6">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid gap-12 border-b border-white/10 pb-14 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.7fr]">
-            <div className="sm:col-span-2 lg:col-span-1">
-              <div className="flex items-center gap-3.5">
-                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white p-1.5 shadow-lg shadow-black/50">
-                  <Image
-                    src="/logo melati.png"
-                    alt="Logo SMK Plus Melati Samarinda"
-                    width={52}
-                    height={52}
-                    className="h-full w-full object-contain"
-                  />
-                </span>
-                <div>
-                  <p className="font-extrabold leading-tight text-white">SMK Plus Melati Samarinda</p>
-                  <p className="text-sm font-semibold text-accent">{CONTACT.tagline}</p>
-                </div>
-              </div>
-              <p className="mt-5 max-w-md text-sm leading-relaxed text-white/70">
-                Sekolah menengah kejuruan swasta keunggulan di Samarinda Seberang. Menyiapkan SDM terampil, disiplin, dan berjiwa wirausaha di era modern.
-              </p>
-            </div>
+       <section id="jurusan" aria-labelledby="majors-title" className="bg-primary-darker px-4 py-24 sm:px-8 lg:py-32"><div className="mx-auto max-w-7xl"><div id="majors-title"><SectionHeading light eyebrow="JURUSAN" title="Temukan jurusan yang sesuai dengan masa depanmu" description="Program keahlian dengan pembelajaran praktik dan arah karier yang nyata." /></div><div className="mt-12 grid gap-8 md:grid-cols-2">{majors.map((major, index) => <Reveal key={major.id} delay={index * 80}><article className="group overflow-hidden rounded-[1.75rem] border border-white/20 bg-white/10"><div className="aspect-[16/9] overflow-hidden"><LocalImage src={major.image || fallbackImages[major.id] || "/images/hero.jpg"} alt={major.fullName} width={900} height={560} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /></div><div className="p-7 sm:p-9"><p className="text-xs font-extrabold uppercase tracking-[0.18em] text-accent">0{index + 1} · PROGRAM KEAHLIAN</p><h3 className="mt-4 text-2xl font-extrabold text-white sm:text-3xl">{major.fullName}</h3><p className="mt-3 text-sm leading-7 text-white/70">{major.description}</p>{major.skills.length > 0 && <div className="mt-7 flex flex-wrap gap-2">{major.skills.slice(0, 6).map((skill) => <span key={skill} className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white/80">{skill}</span>)}</div>}<Link href={`/jurusan/${major.id}`} className="mt-7 inline-flex min-h-11 items-center text-sm font-extrabold text-accent focus-visible:outline-2 focus-visible:outline-accent">Selengkapnya <Arrow /></Link></div></article></Reveal>)}</div></div></section>
 
-            <div>
-              <h2 className="font-extrabold text-accent">Kontak & Lokasi</h2>
-              <address className="mt-4 space-y-3 text-sm not-italic leading-relaxed text-white/75">
-                <p>{CONTACT.address}</p>
-                <p>
-                  <a
-                    className="transition-colors hover:text-accent"
-                    href={CONTACT.whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    WhatsApp: {CONTACT.phone}
-                  </a>
-                </p>
-                <p>
-                  <a className="transition-colors hover:text-accent" href={`mailto:${CONTACT.email}`}>
-                    Email: {CONTACT.email}
-                  </a>
-                </p>
-                <p>
-                  <a
-                    className="inline-flex items-center gap-1.5 font-bold text-accent transition-colors hover:text-white"
-                    href={mapUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Buka Google Maps
-                  </a>
-                </p>
-              </address>
-            </div>
+       <section id="program" aria-labelledby="program-title" className="hidden"><div className="mx-auto max-w-7xl"><div id="program-title" className="hidden"><SectionHeading eyebrow="PROGRAM SEKOLAH" title="Belajar tidak berhenti di ruang kelas." description="Program sekolah membentuk kebiasaan, keterampilan, karakter, dan tanggung jawab." /></div><div className="mt-12 grid gap-5 md:grid-cols-3">{programs.map((program, index) => <Link key={program.id} href={`/program-${program.id}`} className="group block focus-visible:outline-2 focus-visible:outline-accent"><ClayCard hover className="overflow-hidden p-3"><div className="aspect-[16/10] overflow-hidden rounded-2xl bg-primary-soft">{program.cards[0]?.image ? <LocalImage src={program.cards[0].image} alt={program.title} width={700} height={440} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center text-4xl font-black text-primary/20">{String(index + 1).padStart(2, "0")}</div>}</div><div className="p-5"><p className="text-xs font-extrabold uppercase tracking-[0.18em] text-accent-dark">Program {String(index + 1).padStart(2, "0")}</p><h3 className="mt-2 text-xl font-extrabold text-primary-darker">{program.title}</h3><p className="mt-2 text-sm leading-6 text-foreground/70">{program.description}</p><span className="mt-5 block text-sm font-extrabold text-primary">Lihat program <Arrow /></span></div></ClayCard></Link>)}</div></div></section>
 
-            <div>
-              <h2 className="font-extrabold text-accent">Media Sosial & Tautan</h2>
-              <div className="mt-4 flex flex-col items-start gap-3 text-sm text-white/75">
-                {SOCIALS.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition-colors hover:text-accent"
-                  >
-                    {social.label}
-                  </a>
-                ))}
-                <Link href="/" className="font-bold text-accent transition-colors hover:text-white">
-                  Website Utama
-                </Link>
-              </div>
-            </div>
-          </div>
+       <section id="roadmap" aria-labelledby="roadmap-title" className="hidden"><div className="mx-auto max-w-7xl"><div id="roadmap-title"><SectionHeading light eyebrow="LEBIH DARI SEKADAR SEKOLAH" title={<span className="text-accent">Belajar untuk Menghadapi Kehidupan Nyata</span>} description="Di SMK Plus Melati, siswa tidak hanya belajar untuk ujian. Mereka membangun bekal yang digunakan dalam kehidupan nyata." /></div><div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{[["01", "Skill Siap Kerja", "Kompetensi praktis yang relevan dengan kebutuhan dunia kerja."], ["02", "Entrepreneurship", "Ruang untuk belajar mengenali peluang dan membangun kemandirian ekonomi."], ["03", "Penguatan Karakter", "Pembelajaran berjalan bersama pembiasaan disiplin dan nilai keagamaan."], ["04", "Teknologi Digital", "Keahlian teknologi dan digital menjadi bagian dari pembelajaran vokasi."], ["05", "Komunikasi", "Siswa dilatih percaya diri, bekerja sama, dan berani menyampaikan gagasan."], ["06", "Siap Kuliah", "Lulusan tetap memiliki kesempatan untuk melanjutkan pendidikan tinggi."]].map(([number, title, text]) => <article key={number} className="rounded-2xl border border-white/15 bg-white/10 p-6 transition hover:-translate-y-1 hover:bg-white/15"><span className="text-3xl font-black text-accent">{number}</span><h3 className="mt-5 text-xl font-extrabold">{title}</h3><p className="mt-3 text-sm leading-7 text-white/70">{text}</p></article>)}</div></div></section>
 
-          <div className="flex flex-col gap-3 pt-8 text-xs text-white/40 sm:flex-row sm:items-center sm:justify-between">
-            <p>© {new Date().getFullYear()} SMK Plus Melati Samarinda. All rights reserved.</p>
-            <p className="font-semibold text-accent/80">SMK Wirausaha Muda • SPMB 2026/2027</p>
-          </div>
-        </div>
-      </footer>
+      <section id="biaya" aria-labelledby="cost-title" className="hidden"><div className="mx-auto max-w-7xl"><div id="cost-title"><SectionHeading eyebrow="BIAYA" title="Pendidikan berkualitas tetap transparan." description="Mulai dari informasi biaya utama sampai pilihan konsultasi. Detail terbaru dapat dikonfirmasi langsung kepada panitia SPMB." /></div><div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_.9fr]"><ClayCard className="p-7 sm:p-10"><p className="text-xs font-extrabold uppercase tracking-[0.18em] text-accent-dark">SPP bulanan</p><p className="mt-4 text-5xl font-extrabold tracking-tight text-primary-darker">Rp300.000</p><p className="mt-1 text-sm text-foreground/60">per bulan</p><ul className="mt-8 space-y-3"><Check>Biaya disampaikan sejak awal proses pendaftaran.</Check><Check>Program pembinaan dan praktik tersedia sesuai ketentuan sekolah.</Check><Check>Rincian biaya lengkap dapat diminta melalui WhatsApp.</Check></ul><a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="clay-btn mt-8 min-h-12 font-extrabold focus-visible:outline-2 focus-visible:outline-accent">Minta Rincian Biaya <Arrow /></a></ClayCard><div className="clay-card-blue rounded-[2rem] p-7 sm:p-10"><p className="text-xs font-extrabold uppercase tracking-[0.18em] text-accent">Jalur bantuan</p><h3 className="mt-4 text-2xl font-extrabold text-white">Potensi siswa layak mendapat perhatian.</h3><p className="mt-3 text-sm leading-7 text-white/75">Tanyakan langsung jalur prestasi, tahfidz, keluarga, sosial, atau program lain yang tersedia pada periode SPMB berjalan.</p><ul className="mt-7 space-y-3"><Check light>Syarat mengikuti ketentuan resmi panitia.</Check><Check light>Besaran dan kuota dapat berbeda setiap periode.</Check><Check light>Tim sekolah membantu menjelaskan pilihan yang sesuai.</Check></ul><Link href="/spmb" className="clay-btn clay-btn-accent mt-8 min-h-12 font-extrabold focus-visible:outline-2 focus-visible:outline-accent">Lihat SPMB <Arrow /></Link></div></div></div></section>
+
+       <section id="fasilitas" aria-labelledby="facility-title" className="px-4 py-24 sm:px-8 lg:py-32"><div className="mx-auto max-w-7xl"><div id="facility-title"><SectionHeading eyebrow="SARANA DAN PRASARANA" title="Belajar di Tempat yang Mendukung" description="Sarana dan prasarana sekolah mendukung proses belajar, praktik, pembinaan karakter, serta aktivitas siswa sehari-hari." /></div><div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">{facilities.slice(0, 4).map((facility) => <article key={facility.title} className="group rounded-2xl bg-primary-soft p-4 text-center"><div className="aspect-square overflow-hidden rounded-xl bg-white">{facility.image ? <LocalImage src={facility.image} alt={facility.title} width={700} height={440} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center p-5 text-center text-sm font-bold text-primary/40">{facility.title}</div>}</div><h3 className="mt-4 text-sm font-extrabold text-primary-darker">{facility.title}</h3></article>)}</div><div className="mt-8 text-center"><Link href="/fasilitas" className="clay-btn min-h-11 font-extrabold">Selengkapnya <Arrow /></Link></div></div></section>
+
+      <section id="prestasi" aria-labelledby="achievement-title" className="hidden"><div className="mx-auto max-w-7xl"><div id="achievement-title"><SectionHeading eyebrow="BUKTI KOMPETENSI" title="Keterampilan lebih kuat saat punya bukti." description={prestasi.quote || "Sertifikasi dan pengalaman menjadi bagian dari perjalanan siswa."} /></div><div className="mt-12 grid gap-5 md:grid-cols-3">{prestasi.items?.map((item) => <ClayCard key={item.title} className="overflow-hidden p-3"><div className="aspect-[16/10] overflow-hidden rounded-2xl bg-primary-soft">{item.image ? <LocalImage src={item.image} alt={item.title} width={700} height={440} className="h-full w-full object-cover" /> : <div className="flex h-full items-center justify-center text-4xl font-black text-primary/20">CERT</div>}</div><div className="p-5"><h3 className="font-extrabold text-primary-darker">{item.title}</h3><p className="mt-2 text-sm leading-7 text-foreground/70">{item.description}</p></div></ClayCard>)}</div></div></section>
+
+      <section id="ekskul" aria-labelledby="ekskul-title" className="px-4 py-24 sm:px-8 lg:py-32"><div className="mx-auto max-w-7xl"><div id="ekskul-title"><SectionHeading eyebrow="MINAT & BAKAT" title="Temukan ruang untuk berkembang." description="Kegiatan di luar kelas melatih kepemimpinan, komunikasi, kreativitas, dan kebersamaan." /></div><div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">{ekskul.slice(0, 4).map((item) => <Link key={item.title} href="/ekskul" className="group rounded-2xl bg-primary-soft p-4 text-center focus-visible:outline-2 focus-visible:outline-accent"><div className="aspect-square overflow-hidden rounded-xl bg-white">{item.image ? <LocalImage src={item.image} alt={item.title} width={300} height={300} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" /> : <div className="flex h-full items-center justify-center text-2xl font-black text-primary/20">+</div>}</div><h3 className="mt-4 text-sm font-extrabold text-primary-darker">{item.title}</h3></Link>)}</div><div className="mt-8 text-center"><Link href="/ekskul" className="clay-btn min-h-11 font-extrabold">Selengkapnya <Arrow /></Link></div></div></section>
+
+      <section id="alumni" aria-labelledby="alumni-title" className="bg-primary-darker px-4 py-24 text-white sm:px-8 lg:py-32"><div className="mx-auto max-w-7xl"><div id="alumni-title"><SectionHeading light eyebrow="CERITA ALUMNI" title="Dari pengalaman sekolah menuju langkah berikutnya." description="Cerita alumni menjadi gambaran bahwa setiap siswa dapat memilih jalannya sendiri." /></div><div className="mt-12 grid gap-5 md:grid-cols-3">{alumni.slice(0, 3).map((item) => <article key={item.name} className="rounded-2xl border border-white/15 bg-white/10 p-6"><div className="flex items-center gap-3">{item.image ? <div className="h-12 w-12 overflow-hidden rounded-full"><LocalImage src={item.image} alt={item.name} width={80} height={80} className="h-full w-full object-cover" /></div> : null}<div><h3 className="font-extrabold capitalize">{item.name}</h3><p className="text-xs text-accent">{item.major} · {item.status}</p></div></div><p className="mt-6 text-sm leading-7 text-white/75">“{item.testimonial}”</p></article>)}</div></div></section>
+
+      <section id="faq" aria-labelledby="faq-title" className="bg-primary-soft px-4 py-24 sm:px-8 lg:py-32"><div className="mx-auto max-w-4xl"><div id="faq-title"><SectionHeading eyebrow="FAQ" title="Pertanyaan penting, jawaban yang jelas." description="Masih ingin memastikan pilihan sekolah? Berikut pertanyaan yang paling sering disampaikan calon siswa dan orang tua." /></div><div className="mt-12 space-y-3">{[["Berapa biaya SPP SMK Plus Melati?", "SPP yang ditampilkan pada halaman ini adalah Rp300.000 per bulan. Untuk komponen biaya lain, silakan minta rincian terbaru kepada panitia SPMB."], ["Jurusan apa saja yang tersedia?", "Saat ini halaman utama menampilkan TJKT dan Kuliner. Detail kompetensi serta prospek dapat dilihat pada halaman masing-masing jurusan."], ["Apakah tersedia program asrama dan keagamaan?", "Ya. Program asrama dan keagamaan tersedia sebagai bagian dari pengalaman belajar dan pembinaan siswa."], ["Bagaimana cara mendaftar?", "Buka halaman SPMB atau hubungi panitia melalui WhatsApp untuk mendapatkan alur, jadwal, serta dokumen yang diperlukan."], ["Apakah lulusan dapat melanjutkan kuliah atau bekerja?", "Pembelajaran vokasi dirancang untuk mendukung pilihan siswa setelah lulus: melanjutkan kuliah, memasuki dunia kerja, atau membangun usaha."]].map(([question, answer]) => <details key={question} className="group rounded-2xl bg-white p-5 shadow-sm"><summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 font-extrabold text-primary-darker focus-visible:outline-2 focus-visible:outline-accent">{question}<span aria-hidden="true" className="text-2xl text-accent transition group-open:rotate-45">+</span></summary><p className="max-w-3xl pt-4 text-sm leading-7 text-foreground/70">{answer}</p></details>)}</div></div></section>
+
+       <section id="hubungi-kami" aria-labelledby="contact-title" className="hidden"><div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[.8fr_1.2fr]"><div><SectionHeading eyebrow="HUBUNGI KAMI" title={<span id="contact-title">Mari terhubung dengan SMK Plus Melati</span>} description="Tim sekolah siap membantu menjelaskan jurusan, program, biaya, dan proses pendaftaran." /><div className="mt-8 space-y-4 text-sm leading-6 text-foreground/75"><p><strong className="block text-primary-darker">Alamat</strong>{CONTACT.address}</p><p><strong className="block text-primary-darker">Telepon / WhatsApp</strong>{CONTACT.phone}</p><p><strong className="block text-primary-darker">Email</strong>{CONTACT.email}</p><div className="flex flex-wrap gap-3 pt-2"><a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="clay-btn clay-btn-accent min-h-11 text-sm font-extrabold">Chat via WhatsApp</a><a href={`mailto:${CONTACT.email}`} className="clay-btn min-h-11 text-sm font-extrabold">Kirim Email</a></div></div></div><div className="clay-card-blue flex min-h-72 flex-col justify-between rounded-[2rem] p-8 text-white"><div><p className="text-xs font-extrabold uppercase tracking-[0.18em] text-accent">Langkah berikutnya</p><h3 className="mt-4 text-3xl font-extrabold">Siap menjadi bagian dari SMK Plus Melati?</h3><p className="mt-4 max-w-lg text-sm leading-7 text-white/75">Kenali lebih dekat, temukan potensimu, dan mulai langkahmu menuju masa depan.</p></div><div className="flex flex-wrap gap-3"><Link href="/spmb" className="clay-btn clay-btn-accent min-h-11 text-sm font-extrabold">Daftar Sekarang <Arrow /></Link><a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="clay-btn clay-btn-light min-h-11 text-sm font-extrabold">Hubungi Kami</a></div></div></div></section>
+
+       <section aria-labelledby="cta-title" className="px-4 py-24 sm:px-8 lg:py-32"><div className="mx-auto max-w-7xl rounded-[2rem] bg-primary-darker px-6 py-14 text-center text-white shadow-2xl sm:px-14 sm:py-20"><p className="text-xs font-extrabold uppercase tracking-[0.18em] text-accent">SPMB 2026/2027</p><h2 id="cta-title" className="mx-auto mt-5 max-w-3xl text-balance text-3xl font-extrabold sm:text-5xl">Mari bicara tentang pilihan terbaik untuk anak Anda.</h2><p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-white/75 sm:text-base">Tim kami siap menjelaskan jurusan, program, biaya, dan proses pendaftaran secara langsung.</p><div className="mt-8 flex flex-wrap justify-center gap-3"><Link href="/spmb" className="clay-btn clay-btn-accent min-h-12 font-extrabold focus-visible:outline-2 focus-visible:outline-accent">Daftar Sekarang <Arrow /></Link><a href={CONTACT.whatsappUrl} target="_blank" rel="noopener noreferrer" className="clay-btn clay-btn-light min-h-12 font-extrabold focus-visible:outline-2 focus-visible:outline-accent">Hubungi Kami</a><Link href="/" className="clay-btn min-h-12 font-extrabold focus-visible:outline-2 focus-visible:outline-accent">Ke Beranda Utama</Link></div></div></section>
+
+      <footer className="bg-primary-darker px-4 py-12 text-white sm:px-8"><div className="mx-auto max-w-7xl"><div className="grid gap-8 border-b border-white/15 pb-8 md:grid-cols-[1.2fr_1fr_1fr]"><div><strong className="text-white">{CONTACT.name}</strong><p className="mt-3 max-w-xl text-sm leading-6 text-white/65">{profil.paragraphs[0]}</p></div><div><h3 className="font-extrabold text-accent">Quick Links</h3><div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-white/70">{[["Beranda", "top"], ["Profil", "profil"], ["Keunggulan", "keunggulan"], ["Transparansi", "visi-misi"], ["Promo Pendaftaran", "guru"], ["Beasiswa", "beasiswa"], ["Jurusan", "jurusan"], ["Sarana & Prasarana", "fasilitas"], ["Eskul", "eskul"], ["Alumni", "alumni"], ["FAQ", "faq"]].map(([label, id]) => <a key={id} href={`#${id}`} className="hover:text-accent">{label}</a>)}</div></div><div><h3 className="font-extrabold text-accent">Ikuti Kami</h3><div className="mt-3 flex flex-wrap gap-3 text-sm text-white/70">{SOCIALS.map((social) => <a key={social.label} href={social.url} target="_blank" rel="noopener noreferrer" className="hover:text-accent">{social.label}</a>)}</div><p className="mt-4 text-sm text-white/65">{CONTACT.phone}<br />{CONTACT.email}</p></div></div><div className="flex flex-col gap-2 pt-6 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between"><p>© 2026 SMK Plus Melati #sekolahnyawirausahamuda.</p><Link href="/" className="hover:text-accent">Website Utama</Link></div></div></footer>
     </main>
   );
 }
+
+
+

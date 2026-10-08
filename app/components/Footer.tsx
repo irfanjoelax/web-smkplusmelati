@@ -23,8 +23,8 @@ export default function Footer() {
               </span>
               <div className="leading-tight">
                 <p className="text-lg font-extrabold text-white">SMK Plus Melati</p>
-                <p className="text-sm font-semibold text-white/80">
-                  SMK Wirausaha Muda
+                <p className="text-sm font-semibold text-accent">
+                  The Center of Future Digital Entrepreneurs
                 </p>
               </div>
             </div>
@@ -102,8 +102,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="relative border-t border-white/15 bg-white/10 px-8 py-4 text-center text-xs font-medium text-white/70">
-          © <span suppressHydrationWarning>{new Date().getFullYear()}</span> SMK Plus Melati Samarinda. Terampil
-          Berakhlak.
+          © <span suppressHydrationWarning>{new Date().getFullYear()}</span> SMK Plus Melati Samarinda. #SekolahnyaWirausahaMuda
         </div>
       </div>
     </footer>

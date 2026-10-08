@@ -18,7 +18,6 @@ export function normalizeProgramData(data: unknown): ProgramData {
     {
       id: "pelatihan",
       title: "Program Pelatihan",
-      summary: "Pembuatan aplikasi Android dan pencetak wirausaha dengan praktik langsung.",
       description: "Membekali siswa keterampilan praktis yang bisa menjadi keahlian khusus dan bernilai jual tinggi.",
       icon: "training",
       cards: legacy.pelatihan.cards ?? [],
@@ -31,7 +30,6 @@ export function normalizeProgramData(data: unknown): ProgramData {
     {
       id: "asrama",
       title: "Program Asrama",
-      summary: "Kedisiplinan, kebersamaan, dan pembinaan karakter melalui kehidupan asrama.",
       description: "Membentuk kedisiplinan dan kemandirian siswa melalui kegiatan yang terjadwal setiap hari.",
       icon: "dormitory",
       cards: legacy.asrama.cards ?? [],
@@ -44,7 +42,6 @@ export function normalizeProgramData(data: unknown): ProgramData {
     {
       id: "keagamaan",
       title: "Program Keagamaan",
-      summary: "Sholat dhuha, mengaji pagi, khataman Al-Qur'an, dan perayaan hari besar.",
       description: "Menanamkan keimanan dan ketaqwaan melalui pengalaman ajaran agama dalam keseharian siswa.",
       icon: "religion",
       cards: legacy.keagamaan.cards ?? [],
@@ -77,7 +74,7 @@ export function isProgramData(value: unknown): value is ProgramData {
       typeof item.id !== "string" ||
       !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(item.id) ||
       ids.has(item.id) ||
-      ![item.title, item.summary, item.description].every(
+       ![item.title, item.description].every(
         (field) => typeof field === "string" && field.trim().length > 0,
       ) ||
       !ICONS.includes(item.icon as IconKey) ||

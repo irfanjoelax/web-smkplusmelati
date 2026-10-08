@@ -1,6 +1,6 @@
 export const CONTACT = {
   name: "SMK Plus Melati Samarinda",
-  tagline: "SMK Wirausaha Muda",
+  tagline: "The Center of Future Digital Entrepreneurs",
   address:
     "Jl. H. A. M. M. Rifaddin No.1, RT.25, Harapan Baru, Kec. Loa Janan Ilir, Kota Samarinda, Kalimantan Timur 75132",
   phone: "0851-9157-6889",

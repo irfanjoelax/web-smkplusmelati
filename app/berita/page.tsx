@@ -58,7 +58,7 @@ export default async function BeritaPage() {
       <Header />
       <JsonLd data={breadcrumbSchema([{ name: "Berita", path: "/berita" }])} />
       <main className="flex-1 bg-white">
-        <section className="px-4 pb-20 pt-32 sm:pt-36 lg:pb-24">
+        <section className="px-4 pb-20 pt-24 sm:pt-28 lg:pb-24">
           <div className="mx-auto max-w-6xl">
             <div className="mb-10 flex items-end justify-between border-b border-primary/15 pb-5">
               <div>

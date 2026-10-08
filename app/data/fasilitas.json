@@ -15,8 +15,28 @@
     "image": "/images/kolam-renang.jpg"
   },
   {
-    "title": "Joging Track",
-    "description": "Fasilitas untuk bersantai sambil berolahraga di lokasi yang nyaman dan sejuk.",
-    "image": "/images/joging-track.jpg"
+    "title": "Lapangan Bola",
+    "description": "Lapangan bola merupakan fasilitas olahraga yang dapat digunakan untuk berbagai kegiatan olahraga dan aktivitas fisik. Dengan area yang luas dan nyaman, fasilitas ini cocok digunakan untuk bermain sepak bola, latihan, maupun kegiatan olahraga bersama.\n",
+    "image": ""
+  },
+  {
+    "title": "Wifi",
+    "description": "Fasilitas internet yang disediakan untuk mendukung kebutuhan akses informasi dan komunikasi",
+    "image": ""
+  },
+  {
+    "title": "Asrama",
+    "description": "Merupakan fasilitas tempat tinggal yang nyaman dan aman bagi siswa atau peserta selama mengikuti kegiatan",
+    "image": ""
+  },
+  {
+    "title": "Kitchen",
+    "description": "Fasilitas dapur yang disediakan untuk mendukung kebutuhan praktikum memasak dan menyiapkan makanan ",
+    "image": ""
+  },
+  {
+    "title": "Laboratorium",
+    "description": "Laboratorium merupakan fasilitas pembelajaran dan praktik yang dilengkapi dengan peralatan pendukung untuk menunjang kegiatan belajar, penelitian, dan pengembangan keterampilan secara langsung",
+    "image": ""
   }
 ]

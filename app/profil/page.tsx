@@ -5,12 +5,12 @@ import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
 import LocalImage from "@/app/components/LocalImage";
-import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
 import SectionHeading from "@/app/components/SectionHeading";
 import { IMAGES } from "@/app/components/images";
 import { getContent } from "@/app/lib/content";
-import type { ProfilData } from "@/app/lib/types";
+import type { Beranda, ProfilData } from "@/app/lib/types";
+import { getYouTubeVideoId } from "@/app/lib/youtube";
 import { breadcrumbSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -58,18 +58,44 @@ const reasons = [
 ];
 
 export default async function ProfilPage() {
-  const profil = await getContent<ProfilData>("profil");
+  const [profil, beranda] = await Promise.all([
+    getContent<ProfilData>("profil"),
+    getContent<Beranda>("beranda"),
+  ]);
+  // ponytail: reuses beranda video URL, add separate profilVideoUrl field if profil needs its own video
+  const heroVideoId = getYouTubeVideoId(beranda.heroVideoUrl ?? "");
 
   return (
     <>
       <Header />
       <JsonLd data={breadcrumbSchema([{ name: "Profil", path: "/profil" }])} />
       <main className="flex-1">
-        <PageHero
-          eyebrow="Tentang Kami"
-          title="Profil SMK Plus Melati"
-          description="Menjadi garda terdepan demi tercapainya sumber daya manusia yang berilmu dan beradab di Kalimantan Timur."
-        />
+        <section className="relative isolate flex min-h-svh w-full items-center justify-center overflow-hidden bg-primary-darker px-4 pb-16 pt-32 sm:pb-20 sm:pt-36">
+          {heroVideoId && (
+            <div className="absolute inset-0 overflow-hidden">
+              <iframe
+                className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.77777778vh] min-w-full -translate-x-1/2 -translate-y-1/2 scale-[1.15] border-0"
+                src={`https://www.youtube-nocookie.com/embed/${heroVideoId}?autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&cc_load_policy=0&cc=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&playsinline=1&rel=0`}
+                title="Video latar halaman profil SMK Plus Melati"
+                allow="autoplay; encrypted-media"
+                referrerPolicy="strict-origin-when-cross-origin"
+                tabIndex={-1}
+              />
+            </div>
+          )}
+          <div className="absolute inset-0 bg-primary-dark/20" />
+          <div className="relative z-10 mx-auto w-full max-w-4xl text-center">
+            <Reveal className="text-center">
+              <span className="clay-chip-blue mx-auto mb-5">Tentang Kami</span>
+              <h1 className="text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
+                Profil SMK Plus Melati
+              </h1>
+              <p className="mx-auto mt-5 max-w-xl leading-relaxed text-white/85">
+                Menjadi garda terdepan demi tercapainya sumber daya manusia yang berilmu dan beradab di Kalimantan Timur.
+              </p>
+            </Reveal>
+          </div>
+        </section>
 
         {/* Section 1: Profil Singkat */}
         <section className="px-4 py-14">
@@ -96,9 +122,8 @@ export default async function ProfilPage() {
                 />
                 <div className="mt-5 space-y-4 leading-relaxed text-foreground/75">
                   <p>
-                    Dinobatkan sebagai ibukota baru Indonesia, pendidikan yang
-                    merata dan berkualitas menjadi prioritas dalam pembangunan
-                    sumber daya manusia guna menyokong kebutuhan industri.
+                    {profil.paragraphs?.[0] ??
+                      "SMK Plus Melati Samarinda adalah institusi pendidikan vokasi pertama di Samarinda yang mengusung konsep Inkubator Bisnis. Kami fokus mencetak generasi muda yang mandiri secara ekonomi melalui kurikulum enterpreneurship, tanpa meninggalkan akar spiritual keislaman yang kuat. Di sini, siswa tidak hanya dipersiapkan untuk mencari kerja, tetapi dilatih untuk menjadi pencipta peluang kerja."}
                   </p>
                   <p>
                     Yayasan Melati, menjadi bagian dari

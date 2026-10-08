@@ -69,31 +69,27 @@
   ],
   "ekskulPreview": [
     {
+      "name": "Barista",
+      "href": "/ekskul",
+      "image": "/uploads/1791250259918-4241a475160f.jpg"
+    },
+    {
       "name": "English Club",
       "href": "/ekskul",
-      "image": "/images/english-club.jpg"
+      "image": "/uploads/1791250043805-c7660a653455.jpg"
     },
     {
       "name": "Pramuka",
       "href": "/ekskul",
-      "image": "/images/pramuka.jpg"
+      "image": "/uploads/1791250064177-7f530e374cdb.jpg"
     },
     {
-      "name": "E-Sporttttt",
+      "name": "Conten creator",
       "href": "/ekskul",
-      "image": "/images/e-sport.png"
-    },
-    {
-      "name": "PodSchool Zaman Now",
-      "href": "/ekskul",
-      "image": "/images/podschool.jpg"
+      "image": "/uploads/1791250407275-af0b5dd2c6f9.jpg"
     }
   ],
   "facilities": [
-    {
-      "name": "Joging Track",
-      "image": "/images/joging-track.jpg"
-    },
     {
       "name": "Ruang Kelas",
       "image": "/images/ruang-kelas.jpg"
@@ -105,6 +101,10 @@
     {
       "name": "Kolam Renang",
       "image": "/images/kolam-renang.jpg"
+    },
+    {
+      "name": "Laboratorium",
+      "image": "/images/hero.jpg"
     }
   ]
 }
