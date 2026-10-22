@@ -5,6 +5,8 @@ import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
+import LocalImage from "@/app/components/LocalImage";
+import { IMAGES } from "@/app/components/images";
 import { CONTACT, SOCIALS } from "@/app/components/site";
 import { breadcrumbSchema } from "@/app/lib/seo";
 
@@ -142,24 +144,22 @@ export default function HubungiKamiPage() {
                     Pesan Cepat
                   </span>
                   <h2 className="text-2xl font-extrabold text-primary-dark sm:text-3xl">
-                    Kirim Pertanyaanmu
+                    SMK Plus Melati
                   </h2>
                   <p className="mt-3 max-w-xl text-sm leading-7 text-foreground/70">
-                    Lengkapi formulir resmi SMK Plus Melati untuk menyampaikan
-                    pertanyaan atau permohonan informasi.
+                    Informasi penerimaan peserta didik baru SMK Plus Melati.
                   </p>
                 </div>
 
                 <div className="p-4 sm:p-6">
                   <div className="overflow-hidden rounded-2xl border border-primary/10 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_10px_30px_rgba(16,112,176,0.08)]">
-                    <iframe
-                      src={CONTACT.googleFormEmbedUrl}
-                      title="Formulir kontak SMK Plus Melati Samarinda"
-                      className="block h-[480px] w-full border-0 sm:h-[560px]"
-                      loading="lazy"
-                    >
-                      Memuat formulir kontak…
-                    </iframe>
+                    <LocalImage
+                      src={IMAGES.ppdb2}
+                      alt="SPMB SMK Plus Melati"
+                      width={800}
+                      height={600}
+                      className="block h-auto max-h-[560px] w-full object-cover"
+                    />
                   </div>
                 </div>
 

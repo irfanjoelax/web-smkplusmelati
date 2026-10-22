@@ -16,6 +16,7 @@ const COLLECTION_LABELS: Record<ContentKey, string> = {
   program: "program",
   profil: "profil",
   testimoniOrtu: "testimoni orang tua",
+  spmbSetting: "pengaturan SPMB",
 };
 
 function itemLabel(value: unknown): string | undefined {

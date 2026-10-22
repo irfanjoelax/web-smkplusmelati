@@ -36,6 +36,7 @@ const REVALIDATE_ROUTES: Record<ContentKey, string[]> = {
   program: [],
   profil: ["/profil"],
   testimoniOrtu: ["/alumni"],
+  spmbSetting: ["/spmb"],
 };
 
 const DELETE_SECTIONS: Record<ContentKey, (string | null)[]> = {
@@ -51,6 +52,7 @@ const DELETE_SECTIONS: Record<ContentKey, (string | null)[]> = {
   program: [null],
   profil: ["paragraphs", "reasons"],
   testimoniOrtu: [null],
+  spmbSetting: ["steps"],
 };
 
 const IMAGE_SECTIONS: Partial<Record<ContentKey, (string | null)[]>> = {
@@ -149,6 +151,26 @@ export async function PUT(
       { error: "Data program tidak valid. Pastikan semua kolom terisi dan nama program unik." },
       { status: 400 },
     );
+  }
+  if (
+    collection === "spmbSetting" &&
+    (!("steps" in body) ||
+      !Array.isArray(body.steps) ||
+      !("label" in body) ||
+      typeof body.label !== "string" ||
+      !("title" in body) ||
+      typeof body.title !== "string" ||
+      body.steps.some(
+        (step) =>
+          !step ||
+          typeof step !== "object" ||
+          typeof step.title !== "string" ||
+          typeof step.desc !== "string" ||
+          !step.title.trim() ||
+          !step.desc.trim(),
+      ))
+  ) {
+    return NextResponse.json({ error: "Data prosedur SPMB tidak valid." }, { status: 400 });
   }
   if (
     collection === "berita" &&

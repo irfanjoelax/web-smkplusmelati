@@ -1,0 +1,27 @@
+{
+  "label": "Jalur Prestasi",
+  "title": "Prosedur SPMB Online 2026/2027",
+  "googleFormEmbedUrl": "https://docs.google.com/forms/d/e/1FAIpQLSdBQjKgIQOVRJRFws5RsvtJjaqiFoQ8dSXXnCXqybBdlRgsHQ/viewform?embedded=true",
+  "steps": [
+    {
+      "title": "Daftar Online",
+      "desc": "Calon peserta didik mendaftar secara online melalui website SPMB SMK Plus Melati."
+    },
+    {
+      "title": "Cetak Bukti Pendaftaran",
+      "desc": "Calon peserta didik mencetak bukti hasil pendaftaran online mandiri."
+    },
+    {
+      "title": "Verifikasi Berkas",
+      "desc": "Bawa dan tunjukkan berkas persyaratan beserta bukti pendaftaran pada panitia SPMB untuk verifikasi."
+    },
+    {
+      "title": "Menunggu Pengumuman",
+      "desc": "Setelah data terverifikasi sesuai syarat, peserta menunggu hasil pengumuman."
+    },
+    {
+      "title": "Daftar Ulang",
+      "desc": "Pengumuman disampaikan di website SMK Plus Melati. Siswa yang lulus melanjutkan ke tahap daftar ulang."
+    }
+  ]
+}

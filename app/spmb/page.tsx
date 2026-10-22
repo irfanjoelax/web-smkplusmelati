@@ -3,10 +3,11 @@ import ClayCard from "@/app/components/ClayCard";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import JsonLd from "@/app/components/JsonLd";
-import LocalImage from "@/app/components/LocalImage";
 import PageHero from "@/app/components/PageHero";
 import Reveal from "@/app/components/Reveal";
-import { IMAGES } from "@/app/components/images";
+import { CONTACT } from "@/app/components/site";
+import { getContent } from "@/app/lib/content";
+import type { SpmbSetting } from "@/app/lib/types";
 import { breadcrumbSchema, faqSchema } from "@/app/lib/seo";
 
 export const metadata: Metadata = {
@@ -53,30 +54,9 @@ const faqItems = [
   },
 ];
 
-const steps = [
-  {
-    title: "Daftar Online",
-    desc: "Calon peserta didik mendaftar secara online melalui website SPMB SMK Plus Melati.",
-  },
-  {
-    title: "Cetak Bukti Pendaftaran",
-    desc: "Calon peserta didik mencetak bukti hasil pendaftaran online mandiri.",
-  },
-  {
-    title: "Verifikasi Berkas",
-    desc: "Bawa dan tunjukkan berkas persyaratan beserta bukti pendaftaran pada panitia SPMB untuk verifikasi.",
-  },
-  {
-    title: "Menunggu Pengumuman",
-    desc: "Setelah data terverifikasi sesuai syarat, peserta menunggu hasil pengumuman.",
-  },
-  {
-    title: "Daftar Ulang",
-    desc: "Pengumuman disampaikan di website SMK Plus Melati. Siswa yang lulus melanjutkan ke tahap daftar ulang.",
-  },
-];
+export default async function SPMBPage() {
+  const spmbSetting = await getContent<SpmbSetting>("spmbSetting");
 
-export default function SPMBPage() {
   return (
     <>
       <Header />
@@ -95,14 +75,11 @@ export default function SPMBPage() {
               <div className="clay-card overflow-hidden rounded-[2.5rem]">
                 <div className="grid items-center gap-8 p-8 sm:p-12 lg:grid-cols-2">
                 <div>
-                  <span className="clay-chip clay-chip-primary mb-4">
-                    Jalur Prestasi
-                  </span>
                   <h2 className="text-2xl font-extrabold text-primary-dark sm:text-3xl">
-                    Prosedur SPMB Online 2026/2027
+                    {spmbSetting.title}
                   </h2>
                   <ol className="mt-8 space-y-4">
-                    {steps.map((step, i) => (
+                    {spmbSetting.steps.map((step, i) => (
                       <li key={step.title} className="flex items-start gap-4">
                         <span className="clay-inset flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-extrabold text-primary">
                           {i + 1}
@@ -119,14 +96,15 @@ export default function SPMBPage() {
                     ))}
                   </ol>
                 </div>
-                <div className="clay-inset flex justify-center overflow-hidden rounded-[2rem] p-2 w-full">
-                  <LocalImage
-                    src={IMAGES.ppdb2}
-                    alt="SPMB SMK Plus Melati"
-                    width={800}
-                    height={600}
-                    className="w-full h-auto max-h-80 rounded-[1.6rem] object-fill"
-                  />
+                <div className="clay-inset w-full overflow-hidden rounded-[2rem] p-2">
+                  <iframe
+                    src={spmbSetting.googleFormEmbedUrl ?? CONTACT.googleFormEmbedUrl}
+                    title="Formulir kontak SMK Plus Melati Samarinda"
+                    className="block h-[480px] w-full rounded-[1.6rem] border-0 sm:h-[560px]"
+                    loading="lazy"
+                  >
+                    Memuat formulir kontak…
+                  </iframe>
                 </div>
               </div>
               </div>

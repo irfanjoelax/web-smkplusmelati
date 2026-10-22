@@ -50,6 +50,7 @@ export const NAV_LINKS: NavLink[] = [
       { label: "Visi Misi", href: "/visi-misi" },
       { label: "Daftar Guru", href: "/guru" },
       { label: "Fasilitas", href: "/fasilitas" },
+      { label: "Promo", href: "/website" },
     ],
   },
   {

@@ -54,6 +54,128 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  #keunggulan {
+    display: none;
+  }
+
+  .website-marquee {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .website-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: website-marquee 28s linear infinite;
+  }
+
+  .website-marquee:hover .website-marquee-track,
+  .website-marquee:focus-within .website-marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes website-marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  #guru article {
+    display: flex;
+    flex-direction: column;
+    min-height: 24rem;
+    overflow: hidden;
+    color: var(--foreground);
+    background: linear-gradient(160deg, #f9fdff, #e7f2fb);
+  }
+
+  #guru article:first-of-type {
+    background-image: none;
+  }
+
+  #guru article:nth-of-type(2) {
+    background-image: none;
+  }
+
+  #guru article::before {
+    display: block;
+    height: 13.75rem;
+    width: 100%;
+    order: 2;
+    margin: 1.5rem auto 0;
+    content: "";
+    border-radius: 0;
+    background-position: center;
+    background-size: cover;
+  }
+
+  #guru article:first-of-type::before {
+    background-image: url("/images/pelatihan-wirausaha.jpg");
+  }
+
+  #guru article:nth-of-type(2)::before {
+    background-image: url("/images/pelatihan-android.jpg");
+  }
+
+  #guru article > .mt-7.space-y-3 {
+    display: none !important;
+  }
+
+  #guru article > div:first-child > span:last-child {
+    display: none;
+  }
+
+  #guru article h3,
+  #guru article p {
+    color: var(--foreground);
+  }
+
+  #beasiswa article {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  #beasiswa article > .mt-5.space-y-2 {
+    display: none !important;
+  }
+
+  #beasiswa article::after {
+    display: block;
+    min-height: 13.75rem;
+    margin: 1.5rem 0 0;
+    content: "";
+    background-position: center;
+    background-size: cover;
+  }
+
+  #beasiswa article:nth-of-type(1)::after {
+    background-image: url("/images/pelatihan-wirausaha.jpg");
+  }
+
+  #beasiswa article:nth-of-type(2)::after {
+    background-image: url("/images/mengaji.jpg");
+  }
+
+  #beasiswa article:nth-of-type(3)::after {
+    background-image: url("/images/asrama-sholat.jpg");
+  }
+
+  #beasiswa article:nth-of-type(n + 4)::after {
+    display: none;
+  }
+
+  #guru article > a {
+    order: 3;
+    margin: 1.5rem 0 0;
+  }
+
+  @media (max-width: 640px) {
+    #guru article::before {
+      height: 11.25rem;
+    }
+  }
+
   [id] {
     scroll-margin-top: 1.5rem;
   }
@@ -61,6 +183,11 @@
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
+    }
+
+    .website-marquee-track {
+      animation: none;
+      transform: none;
     }
   }
 

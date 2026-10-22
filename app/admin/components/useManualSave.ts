@@ -15,7 +15,8 @@ export type ContentSaveKey =
   | "berita"
   | "program"
   | "profil"
-  | "testimoniOrtu";
+  | "testimoniOrtu"
+  | "spmbSetting";
 
 export function useManualSave(key: ContentSaveKey, data: unknown) {
   const [isSaving, setIsSaving] = useState(false);

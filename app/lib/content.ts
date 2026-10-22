@@ -18,7 +18,8 @@ export type ContentKey =
   | "berita"
   | "program"
   | "profil"
-  | "testimoniOrtu";
+  | "testimoniOrtu"
+  | "spmbSetting";
 
 export const COLLECTION_FILES: Record<ContentKey, string> = {
   alumni: "alumni.json",
@@ -33,6 +34,7 @@ export const COLLECTION_FILES: Record<ContentKey, string> = {
   program: "program.json",
   profil: "profil.json",
   testimoniOrtu: "testimoni-ortu.json",
+  spmbSetting: "spmb-setting.json",
 };
 
 /**

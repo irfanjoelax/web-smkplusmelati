@@ -25,6 +25,15 @@ export type VisiMisi = {
   misi: string[];
 };
 
+export type SpmbStep = { title: string; desc: string };
+
+export type SpmbSetting = {
+  label: string;
+  title: string;
+  googleFormEmbedUrl?: string;
+  steps: SpmbStep[];
+};
+
 export type JurusanCard = {
   chip: string;
   title: string;

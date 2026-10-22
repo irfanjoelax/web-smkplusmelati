@@ -88,7 +88,7 @@ export default function Header() {
 
   const isChildActive = (href: string) =>
     pathname === href || pathname.startsWith(href + "/");
-  const overlaysHero = pathname === "/" || pathname === "/profil";
+  const overlaysHero = pathname === "/";
 
   return (
     <header
