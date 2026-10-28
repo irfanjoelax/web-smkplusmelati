@@ -71,6 +71,7 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
   const [items, setItems] = useState(() => tagPersistedItems(initial));
   const [activeId, setActiveId] = useState(initial[0]?.id ?? "");
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [confirmPracticeImage, setConfirmPracticeImage] = useState<number | null>(null);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [newName, setNewName] = useState("");
   const [newFullName, setNewFullName] = useState("");
@@ -96,21 +97,17 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
   async function removePracticeImage(index: number) {
     if (!current) return;
     const image = current.practiceImages?.[index]?.image ?? "";
-    const snapshot = getPersistedSnapshot(current) as { practiceImages?: unknown } | undefined;
-    const persistedImages = Array.isArray(snapshot?.practiceImages)
-      ? snapshot.practiceImages
-      : [];
-    const persistedImage = persistedImages.some(
-      (activity) =>
-        activity && typeof activity === "object" &&
-        (activity as { image?: unknown }).image === image,
-    );
-    if (image && !persistedImage) {
+    const practiceImages = (current.practiceImages ?? []).filter((_, i) => i !== index);
+    const updated = { ...current, practiceImages };
+    const nextItems = items.map((item, i) => (i === activeIndex ? updated : item));
+    await save(nextItems);
+    setItems(nextItems);
+    setImageEditor(null);
+    if (image) {
       await fetch(`/api/admin/upload?cleanup=1&path=${encodeURIComponent(image)}`, {
         method: "DELETE",
       });
     }
-    updatePracticeImage(index, "");
   }
 
   function updatePracticeTitle(index: number, title: string) {
@@ -213,16 +210,6 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
     return removePersistedImage("jurusan", null, current, current.image);
   }
 
-  async function removeHeroImage() {
-    if (!current?.image) return;
-    const cleanupUpload = await removeCurrentImage();
-    if (cleanupUpload) {
-      await fetch(`/api/admin/upload?cleanup=1&path=${encodeURIComponent(current.image)}`, {
-        method: "DELETE",
-      });
-    }
-    updateCurrent({ ...current, image: "" });
-  }
 
   return (
     <div>
@@ -231,6 +218,15 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
         message={`Yakin ingin menghapus jurusan ${current?.name ?? "ini"}? Jurusan akan langsung dihapus dari website.`}
         onConfirm={deleteCurrent}
         onCancel={() => setConfirmDelete(false)}
+      />
+      <ConfirmDialog
+        open={confirmPracticeImage !== null}
+        message="Yakin ingin menghapus foto kegiatan praktik ini? Foto akan langsung dihapus dari website."
+        onConfirm={async () => {
+          await removePracticeImage(confirmPracticeImage!);
+          setConfirmPracticeImage(null);
+        }}
+        onCancel={() => setConfirmPracticeImage(null)}
       />
       {showAddDialog && (
         <div
@@ -368,7 +364,6 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
                   </div>
                   <div className="flex gap-1">
                     <IconBtn label="Edit foto hero" onClick={() => setImageEditor("hero")}><EditIcon className="h-4 w-4" /></IconBtn>
-                    {current.image && <IconBtn label="Hapus foto hero" danger onClick={removeHeroImage}><TrashIcon className="h-4 w-4" /></IconBtn>}
                   </div>
                 </div>
               )}
@@ -426,8 +421,10 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
                   <ImagePicker
                     value={current.practiceImages?.[imageEditor]?.image ?? ""}
                     large
-                    onChange={(image) => updatePracticeImage(imageEditor, image)}
-                    onRemove={() => removePracticeImage(imageEditor)}
+                    onChange={(image) => {
+                      if (image) updatePracticeImage(imageEditor, image);
+                      else void removePracticeImage(imageEditor);
+                    }}
                   />
                   <Field label="Nama Kegiatan" className="mt-4">
                     <Input
@@ -453,7 +450,7 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
                       </div>
                       <div className="flex shrink-0 gap-1">
                         <IconBtn label={`Edit foto praktik ${index + 1}`} onClick={() => setImageEditor(index)}><EditIcon className="h-4 w-4" /></IconBtn>
-                        <IconBtn label={`Hapus foto praktik ${index + 1}`} danger onClick={() => removePracticeImage(index)}><TrashIcon className="h-4 w-4" /></IconBtn>
+                        <IconBtn label={`Hapus foto praktik ${index + 1}`} danger onClick={() => setConfirmPracticeImage(index)}><TrashIcon className="h-4 w-4" /></IconBtn>
                       </div>
                     </div>
                   ))}
@@ -507,6 +504,13 @@ export default function JurusanEditor({ initial }: { initial: JurusanData }) {
               value={current.skills}
               sortable={false}
               onChange={(skills) => updateCurrent({ ...current, skills })}
+              onRemove={async (_index, next) => {
+                if (!current) return;
+                const updated = { ...current, skills: next };
+                const nextItems = items.map((item, i) => (i === activeIndex ? updated : item));
+                await save(nextItems);
+                setItems(nextItems);
+              }}
             />
           </div>
 

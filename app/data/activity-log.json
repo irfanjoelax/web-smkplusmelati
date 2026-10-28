@@ -1,37 +1,37 @@
 [
   {
     "action": "edit",
-    "collection": "profil",
-    "label": "Edit profil",
-    "id": "c5466d1d-1a7a-4dca-83ad-3055956e18d4",
-    "timestamp": "2026-10-21T00:32:27.796Z"
+    "collection": "spmbSetting",
+    "label": "Edit pengaturan SPMB",
+    "id": "61ade238-8306-42ce-894f-088b5cae7057",
+    "timestamp": "2026-10-28T01:54:53.887Z"
   },
   {
     "action": "edit",
-    "collection": "profil",
-    "label": "Edit profil",
-    "id": "62f96f86-5ac3-4ee4-8eb6-ea881e55eb11",
-    "timestamp": "2026-10-21T00:11:47.938Z"
+    "collection": "spmbSetting",
+    "label": "Edit pengaturan SPMB",
+    "id": "2ec6c2c4-76ec-4611-a4b3-dab52ac83c79",
+    "timestamp": "2026-10-28T01:54:47.392Z"
   },
   {
-    "action": "edit",
-    "collection": "profil",
-    "label": "Edit profil",
-    "id": "bf7bf2b3-0faa-4e6e-9d40-041c4d2a1636",
-    "timestamp": "2026-10-21T00:11:27.631Z"
+    "action": "delete",
+    "collection": "berita",
+    "label": "Hapus berita \"jnjfngf\"",
+    "id": "f3e78393-6e2f-42b5-86ef-9735fd3c7979",
+    "timestamp": "2026-10-28T01:54:26.523Z"
   },
   {
-    "action": "edit",
-    "collection": "fasilitas",
-    "label": "Edit fasilitas \"Laboratorium\"",
-    "id": "d0cf3f9d-a5b5-4e59-888f-542a9d2c90bd",
-    "timestamp": "2026-10-21T00:05:46.276Z"
+    "action": "delete",
+    "collection": "berita",
+    "label": "Hapus berita \"ldklfkdlkf\"",
+    "id": "3d25ee1e-c4ac-4ddf-bf3a-127e2ef76a67",
+    "timestamp": "2026-10-28T01:54:24.234Z"
   },
   {
-    "action": "edit",
-    "collection": "fasilitas",
-    "label": "Edit fasilitas \"Wifi\"",
-    "id": "c8cf5c15-5797-4ba7-830a-5123cfbc9e6e",
-    "timestamp": "2026-10-21T00:05:30.049Z"
+    "action": "delete",
+    "collection": "berita",
+    "label": "Hapus berita \"jfjhfjh\"",
+    "id": "8d327b18-8ede-4a7c-b467-60afa238e6af",
+    "timestamp": "2026-10-28T01:54:20.880Z"
   }
 ]

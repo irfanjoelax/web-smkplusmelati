@@ -192,6 +192,16 @@ export default function ProgramEditor({ initial }: { initial: ProgramData }) {
                   ...current,
                   section: { ...current.section!, type: "list", items: values },
                 })}
+                onRemove={async (_index, next) => {
+                  if (!current?.section) return;
+                  const updated: ProgramEntity = {
+                    ...current,
+                    section: { ...current.section, type: "list", items: next },
+                  };
+                  const nextItems = items.map((item, i) => (i === activeIndex ? updated : item));
+                  await save(nextItems);
+                  setItems(nextItems);
+                }}
               />
             </Panel>
           )}
