@@ -4,6 +4,7 @@ import AnimatedNumber from "@/app/components/AnimatedNumber";
 import ClayCard from "@/app/components/ClayCard";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
+import HeroVideo from "@/app/components/HeroVideo";
 import LocalImage from "@/app/components/LocalImage";
 import Reveal from "@/app/components/Reveal";
 import SectionHeading from "@/app/components/SectionHeading";
@@ -85,18 +86,10 @@ export default async function Home() {
       <main className="flex-1">
         {/* ===== HERO ===== */}
         <section className="relative isolate flex min-h-svh w-full items-center justify-center overflow-hidden bg-primary-darker px-4 pb-16 pt-32 sm:pb-20 sm:pt-36">
-          {heroVideoId && (
-            <div className="absolute inset-0 overflow-hidden">
-              <iframe
-                className="pointer-events-none absolute left-1/2 top-1/2 h-[56.25vw] min-h-full w-[177.77777778vh] min-w-full -translate-x-1/2 -translate-y-1/2 scale-[1.15] border-0"
-                src={`https://www.youtube-nocookie.com/embed/${heroVideoId}?autoplay=1&mute=1&loop=1&playlist=${heroVideoId}&controls=0&cc_load_policy=0&cc=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&playsinline=1&rel=0`}
-                title="Video latar SMK Plus Melati Samarinda"
-                allow="autoplay; encrypted-media"
-                referrerPolicy="strict-origin-when-cross-origin"
-                tabIndex={-1}
-              />
-            </div>
-          )}
+          <HeroVideo
+            key={heroVideoId ?? "hero-video"}
+            videoId={heroVideoId}
+          />
           <div className="absolute inset-0 bg-primary-dark/20" />
 
           <div className="relative z-10 mx-auto w-full max-w-4xl text-center">
@@ -204,17 +197,17 @@ export default async function Home() {
             <div className="mt-10">
               <LogoMarquee
                 logos={[
-                  { src: "/images/partners/asiakomputer.jpg", alt: "Asia Computer" },
-                  { src: "/images/partners/decafe.jpg", alt: "Decafe" },
-                  { src: "/images/partners/hotelmesra.jpg", alt: "Hotel Mesra" },
+                  { src: "/images/partners/asiakomputer.webp", alt: "Asia Computer" },
+                  { src: "/images/partners/decafe.webp", alt: "Decafe" },
+                  { src: "/images/partners/hotelmesra.webp", alt: "Hotel Mesra" },
                   {
-                    src: "/images/partners/kaltim multi boga utama bontang.jpg",
+                    src: "/images/partners/kaltim multi boga utama bontang.webp",
                     alt: "Kaltim Multi Boga Utama Bontang",
                   },
-                  { src: "/images/partners/lintasmaya.jpg", alt: "Lintasmaya Multimedia" },
-                  { src: "/images/partners/pln.png", alt: "PLN Nusantara Renewables" },
-                  { src: "/images/partners/polda kaltim.png", alt: "Polda Kaltim" },
-                  { src: "/images/partners/smartcomputer.jpg", alt: "Smart Computer" },
+                  { src: "/images/partners/lintasmaya.webp", alt: "Lintasmaya Multimedia" },
+                  { src: "/images/partners/pln.webp", alt: "PLN Nusantara Renewables" },
+                  { src: "/images/partners/polda kaltim.webp", alt: "Polda Kaltim" },
+                  { src: "/images/partners/smartcomputer.webp", alt: "Smart Computer" },
                 ]}
               />
             </div>
@@ -240,7 +233,7 @@ export default async function Home() {
               />
               <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 {programs.map((p) => (
-                  <Link key={p.title} href={p.href} className="group">
+                  <Link key={p.title} href={p.href} className="group block h-full">
                     <ClayCard
                       hover
                       className="relative flex h-full flex-col overflow-hidden p-6"
@@ -254,7 +247,7 @@ export default async function Home() {
                       <p className="mt-2 text-sm leading-relaxed text-foreground/70">
                         {p.desc}
                       </p>
-                      <p className="mt-5 text-sm font-bold text-primary transition-transform duration-300 group-hover:translate-x-1">
+                      <p className="mt-auto pt-5 text-sm font-bold text-primary transition-transform duration-300 group-hover:translate-x-1">
                         Selengkapnya
                       </p>
                     </ClayCard>

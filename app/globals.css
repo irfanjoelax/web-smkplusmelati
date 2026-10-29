@@ -69,11 +69,6 @@
     animation: website-marquee 28s linear infinite;
   }
 
-  .website-marquee:hover .website-marquee-track,
-  .website-marquee:focus-within .website-marquee-track {
-    animation-play-state: paused;
-  }
-
   @keyframes website-marquee {
     to {
       transform: translateX(-50%);

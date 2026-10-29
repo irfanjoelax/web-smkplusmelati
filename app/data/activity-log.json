@@ -1,6 +1,20 @@
 [
   {
     "action": "edit",
+    "collection": "program",
+    "label": "Edit program \"Program Pelatihan\"",
+    "id": "9dbce4eb-eccf-4bec-977f-321b216db31c",
+    "timestamp": "2026-10-28T02:13:34.804Z"
+  },
+  {
+    "action": "edit",
+    "collection": "program",
+    "label": "Edit program \"Program Pelatihan\"",
+    "id": "ad31cf28-fda3-42ab-9690-310394d972a6",
+    "timestamp": "2026-10-28T02:13:28.456Z"
+  },
+  {
+    "action": "edit",
     "collection": "spmbSetting",
     "label": "Edit pengaturan SPMB",
     "id": "61ade238-8306-42ce-894f-088b5cae7057",
@@ -19,19 +33,5 @@
     "label": "Hapus berita \"jnjfngf\"",
     "id": "f3e78393-6e2f-42b5-86ef-9735fd3c7979",
     "timestamp": "2026-10-28T01:54:26.523Z"
-  },
-  {
-    "action": "delete",
-    "collection": "berita",
-    "label": "Hapus berita \"ldklfkdlkf\"",
-    "id": "3d25ee1e-c4ac-4ddf-bf3a-127e2ef76a67",
-    "timestamp": "2026-10-28T01:54:24.234Z"
-  },
-  {
-    "action": "delete",
-    "collection": "berita",
-    "label": "Hapus berita \"jfjhfjh\"",
-    "id": "8d327b18-8ede-4a7c-b467-60afa238e6af",
-    "timestamp": "2026-10-28T01:54:20.880Z"
   }
 ]
